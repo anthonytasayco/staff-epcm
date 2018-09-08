@@ -1,0 +1,130 @@
+{% extends "common/_base.html" %}
+{% load core_tags thumbnail %}
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 18 -->
+
+<section class="b18">
+    <div class="b18-cnt">
+        <div class="b18-titulo">
+            <h3>Bolsa de compras</h3>
+            <p>Aprovecha el 15% de descuento en tu primera compra</p>
+        </div>
+        <div class="b18-bolsa" id="bolsa-update">
+            <div class="b18-tabla">
+                <form action="">
+                    <div class="b18-tabla-top">
+                        <div class="b18-top-titulo b18-titulo1">Producto</div>
+                        <div class="b18-top-titulo b18-titulo2">cantidad</div>
+                        <div class="b18-top-titulo b18-titulo3">Precio</div>
+                        <div class="b18-top-titulo b18-titulo4"></div>
+                    </div>
+                    <div class="b18-tabla-bottom">
+                        {% if result %}
+                        {% for i in result %}
+                        <div class="b18-item" data-ida="{{i.id}}">
+                            <div class="b18-inside-item">
+                                <div class="b18-item-table b18-contenido1">
+                                    <div class="b18-img">
+                                        <img src="{{i.imagen|thumbnail_by_name:'152x152'}}" alt="">
+                                    </div>
+                                    <div class="b18-detalle">
+                                        <div class="b18-cnt-clone">
+                                            <div class="b18-titular">
+                                                <h3>{{i.nombre}}</h3>
+                                                <h4><strong>{{i.marca}}</strong><span>{{i.codigo}}</span></h4>
+                                                {% if i.color %}<p><strong>Color:</strong> {{i.color}}</p>{%endif%}
+
+                                            </div>
+                                            <a href="{% url 'catalogo:productos_detalle' i.slug %}" class="b18-editar">Ver Producto</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="b18-item-table b18-contenido2">
+                                    <div class="b18-clone-res">
+                                        <div class="b18-select">
+                                            <div class="g-input">
+                                                <select class="del-item-select">
+                                                    <option value="1" {% if i.cantidad == 1 %}selected{% endif%}>1</option>
+                                                    <option value="2" {% if i.cantidad == 2 %}selected{% endif%}>2</option>
+                                                    <option value="3" {% if i.cantidad == 3 %}selected{% endif%}>3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="b18-precio">S/ {{i.pt|fd}}</div>
+                                    </div>
+                                </div>
+                                <div class="b18-item-table b18-contenido3">
+                                    <a href="" class="b18-cerrar icon-close del-item-car"></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+
+                        <div class="b18-item" >
+                            NO HAY PRODUCTOS EN TU BOLSA DE COMPRAS
+                        </div>
+
+                        {% endif %}
+                    </div>
+                    <div class="b18-total">
+                        <div class="b18-total-top">
+                            <span>Total:</span>
+                            <div class="b18-total-precio">
+                                S/ {{suma|fd}}
+                            </div>
+                        </div>
+                        <span>*No incluye costo de envío</span>
+                    </div>
+                    <div class="b18-botones">
+                        <a class="bt_gnrl bt_1 " href=""><span>Actualizar bolsa de compras</span></a>
+                        <a class="bt_gnrl bt_1 " href="{% url 'catalogo:datos_facturacion' %}"><span>continuar con la compra</span></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+        function update_carrito(opc, ida, can){
+            url_filtro = "{% url 'catalogo:carrito' %}";
+            cad = '?partial=1&opc='+ opc + '&ida='+ida+'&can='+can;
+            console.log(url_filtro+cad)
+            $.get(url_filtro + cad, function(data){
+                //$('#carga-web-pago').fadeOut();
+                if (data != "") {
+                    //$('.box-items-catalogo').html('');
+                    $("#bolsa-update").html('').append(data);
+                }
+            });
+        }
+
+        $('#bolsa-update').on('click', '.del-item-car', function(e){
+            e.preventDefault();
+            ida = $(this).closest('.b18-item').attr('data-ida');
+            update_carrito('3', ida, '');
+        });
+
+        $('#bolsa-update').on('change', '.del-item-select', function(e){
+            e.preventDefault();
+            ida = $(this).closest('.b18-item').attr('data-ida');
+            can = $(this).val();
+            update_carrito('2', ida, can);
+        });
+
+
+
+    });
+</script>
+{% endblock %}

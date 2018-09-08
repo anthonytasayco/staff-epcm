@@ -1,0 +1,136 @@
+.b22
+	width 100%
+	padding 55px 0 65px 0
+	.formError .formErrorContent
+		background c-4
+	.formError .formErrorArrow div
+		background c-4
+.b22-cnt
+	max-width 920px
+.b-title-bien
+	text-align center
+	h2
+		margin 0
+		padding 20px 0
+		text-transform uppercase
+		font-size 25px
+		font-weight normal
+		color c-4
+		position relative
+		&:before
+			position absolute
+			top 0
+			left 0
+			right 0
+			margin auto
+			color c-4
+			opacity .2
+			font-size 65px
+			font-family icomoon
+			content "\e917"
+	strong
+		font-family t-2
+		color c-3
+		font-weight normal
+.b22-menu-ctn
+	font-size 0
+.b22-menu-item
+	font-size 18px
+	vertical-align top
+	display inline-block
+	width 50%
+	margin-top 80px
+	h3
+		text-transform uppercase
+		font-size 18px
+		strong
+			font-weight normal
+			color c-4
+			font-family t-2
+	form
+		margin 20px 0 0 0
+		position relative
+		box-sizing border-box
+		padding 0 0 0 30px	
+	.g-input
+		margin 0 0 18px 0
+	placeholder(c-10,t-0)
+	.btn1
+		border 0
+		font-family t-0
+		font-size 15px
+		margin-top 19px
+	&:last-child
+		font-size 0
+		.btn1
+			background c-3
+		.g-input
+			&:nth-child(2), &:nth-child(3)
+				width 48%
+				margin-right 4%
+				display inline-block
+			&:nth-child(3)
+				margin-right 0
+
+.b-menu-links-bien
+	margin-top 30px
+	width 100%
+	font-size 0
+	li
+		width 50%
+		vertical-align top
+		display inline-block
+	span
+		padding-right 13px
+	a
+		width 100%
+		display block
+		text-align center
+		background c-2
+		padding 10px 0
+		color c-0
+		font-family t-2
+		font-size 18px
+		transition all .5s ease-in
+		&.active
+			background c-3
+			color blanco
+		@media screen and (min-width: 1025px)
+			&:hover
+				background c-3
+				color blanco
+@media screen and (max-width: 1024px)
+	.b22
+		padding 50px 0
+	.b22-menu-item
+		margin-top 50px 
+		form
+			padding-left 5%
+		.g-input label
+			font-size 13px
+			padding-left 0
+@media screen and (max-width: 768px)
+	.b22-menu-item
+		display block
+		width 100%
+		form
+			padding-left 0
+		&:last-child
+			margin-top 30px
+@media screen and (max-width: 640px)
+	.b22
+		padding 30px 0
+	.b22-menu-item
+		margin-top 30px
+		.btn1
+			margin-top 12px
+		&:last-child
+			&:nth-child(2), &:nth-child(3)
+				.g-input
+					display block
+					width 100%
+					margin-right 0
+@media screen and (max-width: 480px)
+	.b-menu-links-bien li
+		width 100%
+		display block

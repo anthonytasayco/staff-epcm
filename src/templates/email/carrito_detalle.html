@@ -1,0 +1,131 @@
+{% spaceless %}
+{% load thumbnail app_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body style="font-family: Arial,sans-serif;font-size:11px !important;">
+    <div style="margin: auto;width: 600px;">
+        <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td>
+                        <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" >
+                            <tr>
+                                <td>
+                                    {# inicio tabla #}
+                                    <table style="width: 100%; border-spacing: 0px;">
+                                        <tr>
+                                            <td style="text-align: left;vertical-align: bottom;">
+                                                <img src="{{STATIC_URL}}img/header-logo-2.png" alt="EPCM" style="margin-left: 10px;" height="100"/>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <p style="text-align: right;">
+                                                    <b>EPCM Todos los Derechos Reservados &copy; {% now "Y" %}</b><br>
+                                                    Central: {{ info.telefono|html_tel:" / " }}<br>
+                                                    Visitenos en <a href="{{ info.site }}" target="_blank" style="color: #000; text-decoration: none; font-weight: bold;">{{ info.site }}</a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="detalle">
+                                                <hr>
+                                                <div style="width:65%;color:#666666;display:inline-block;vertical-align: top;border-spacing: 0px;">
+                                                    <p style="margin: 0 0 0 5px;">
+                                                            CLIENTE: <strong>{{ pedido.usuario_nombres }} {{ pedido.usuario_apellidos }}</strong><br />
+                                                            {{ pedido.usuario_tipodocumento|upper }}: {{ pedido.usuario_nrodocumento }}<br>
+                                                            EMAIL: {{ pedido.usuario_email }}<br>
+                                                            TLF: {{ pedido.usuario_telefono }}<br>
+                                                            PAÍS: {{ pedido.usuario_pais }}<br>
+                                                            <strong>FACTURA:</strong> {{ pedido.factura_razonsocial }} | {{ pedido.factura_ruc }}
+                                                    </p>
+                                                    </div>
+                                                    <div style="width:35%;color:#666666;display:inline-block;vertical-align: top;border-spacing: 0px;">
+                                                        <p style="margin: 0px; text-align: right;">
+                                                            Lima, {{ pedido.created|date:'DATE_FORMAT' }}<br>
+                                                            Orden de Compra Nº <strong>{{ pedido.codigo }}</strong><br>
+                                                            Método de Pago: {{ pedido.metodopago }}<br>
+                                                            {% if pedido.desc_cod %}
+                                                            Código de descuento: {{ pedido.desc_cod }} (-{{ pedido.desc_num }}%)<br>
+                                                            {% endif %}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="detalle">
+                                                    <hr>
+                                                    <div style="width:100%;color:#666666;display:inline-block;vertical-align: top;border-spacing: 0px;">
+                                                        <p style="margin: 0 0 0 5px;">
+                                                            Detalle de orden de Compra realizada.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <hr>
+                                        {# DETALLE DE LA ORDEN #}
+                                        <table style="width: 100%; border-spacing: 0px;">
+                                            <tr>
+                                                <th style="border-bottom:1px solid #000;width:5%;">Nº</th>
+                                                <th style="border-bottom:1px solid #000;width:10%;">Código</th>
+                                                <th style="border-bottom:1px solid #000;">Descripción</th>
+                                                <th style="border-bottom:1px solid #000;width:8%;">Cant.</th>
+                                                <th style="border-bottom:1px solid #000;width:15%;">Presentación</th>
+                                                <th style="border-bottom:1px solid #000;width:10%;">Precio unt</th>
+                                                <th style="border-bottom:1px solid #000;width:10%;">Importe</th>
+                                            </tr>
+                                            {% for prod in pedido.detalle_pedido %}
+                                            <tr>
+                                                <td style="border-bottom:1px solid #000;text-align:center;">
+                                                    {{ forloop.counter }}
+                                                </td>
+                                                <td style="border-bottom:1px solid #000;text-align:center;">
+                                                    {{ prod.producto_codigo|default:'---' }}
+                                                </td>
+                                                <td style="border-bottom:1px solid #000;">
+                                                    {{ prod.producto_nombre|safe }}<br>
+                                                    {{prod.producto_precio|safe}}
+
+                                                </td>
+                                                <td style="border-bottom:1px solid #000;text-align:center;">{{ prod.cantidad }}</td>
+                                                <td style="border-bottom:1px solid #000;text-align:center;">{{ prod.producto_nombre }}</td>
+                                                <td style="border-bottom:1px solid #000;text-align:right;">S/ {{ prod.producto_precio|floatformat:2 }}</td>
+                                                <td style="border-bottom:1px solid #000;text-align:right;">{{ prod.importe|floatformat:2 }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                        <table style="width:100%;border-spacing: 0px;font-size:11px;text-align:right">
+                                            <tr>
+                                                <td style="text-align:right;font-weight: bold;">SUB-TOTAL</td>
+                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_totalcompra|floatformat:2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-weight: bold;">DESCUENTO</td>
+                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_descuento|floatformat:2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;font-weight: bold;">TOTAL</td>
+                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_total|floatformat:2 }}</td>
+                                            </tr>
+                                        </table>
+                                    <br>
+                                    {% if pedido.metodopago == 'deposito' %}
+                                    <div style="margin: 5px;">
+                                        <strong><u>Payment info | Información de pago</u></strong>
+                                        {{ pay.deposito|safe }}
+                                    </div>
+                                    {% endif %}
+                                    {# FIN DE DETALLE DE LA ORDEN #}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endspaceless %}

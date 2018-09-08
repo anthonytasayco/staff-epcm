@@ -1,0 +1,272 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b8 {
+  padding: 70px 0px;
+}
+.b8PrevLeft,
+.b8NextLeft,
+.b8PrevRight,
+.b8NextRight {
+  display: block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  top: 45%;
+}
+.b8PrevLeft .bx-prev,
+.b8NextLeft .bx-prev,
+.b8PrevRight .bx-prev,
+.b8NextRight .bx-prev,
+.b8PrevLeft .bx-next,
+.b8NextLeft .bx-next,
+.b8PrevRight .bx-next,
+.b8NextRight .bx-next {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.b8PrevLeft .bx-prev:before,
+.b8NextLeft .bx-prev:before,
+.b8PrevRight .bx-prev:before,
+.b8NextRight .bx-prev:before,
+.b8PrevLeft .bx-next:before,
+.b8NextLeft .bx-next:before,
+.b8PrevRight .bx-next:before,
+.b8NextRight .bx-next:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #394049;
+  font-family: 'icomoon';
+  text-align: center;
+  font-size: 30px;
+}
+.b8PrevLeft,
+.b8PrevRight {
+  left: -40px;
+}
+.b8PrevLeft .bx-prev:before,
+.b8PrevRight .bx-prev:before {
+  content: "\e607";
+}
+.b8NextLeft,
+.b8NextRight {
+  right: -40px;
+}
+.b8NextLeft .bx-next:before,
+.b8NextRight .bx-next:before {
+  content: "\e606";
+}
+.b8Title {
+  display: inline-block;
+  position: absolute;
+  top: 28px;
+}
+.b8Title h2 {
+  line-height: 1.2;
+  color: #394049;
+  font-family: 'Gotham-Book', sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+.b8Title strong {
+  display: block;
+  color: #05ce7b;
+  font-family: 'Gotham-Medium', sans-serif;
+  font-weight: normal;
+}
+.b8Main {
+  font-size: 0;
+}
+.b8Left,
+.b8Right {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+.b8Left {
+  padding-left: 160px;
+}
+.b8Left:after {
+  content: "";
+  width: 1px;
+  height: 74px;
+  background: #b3b3b3;
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
+.b8Left .b8Title {
+  width: 120px;
+  left: 0;
+}
+.b8Right {
+  padding-left: 280px;
+}
+.b8Right .b8Title {
+  width: 180px;
+  left: 65px;
+}
+.b8SliderLeft {
+  position: relative;
+}
+.b8SliderLeft ul {
+  font-size: 0;
+}
+.b8SliderLeft li {
+  display: inline-block;
+  vertical-align: top;
+  width: 170px;
+  padding-top: 20px;
+}
+.b8SliderLeft img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.b8NoSliderLeft li {
+  margin-right: 20px;
+}
+.b8ActiveLeft {
+  width: 360px;
+  margin-left: 0;
+  margin-right: auto;
+}
+.b8SliderRight {
+  position: relative;
+}
+.b8SliderRight ul {
+  font-size: 0;
+}
+.b8SliderRight li {
+  display: inline-block;
+  vertical-align: top;
+  width: 84px;
+  padding-top: 20px;
+}
+.b8SliderRight img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.b8NoSLiderRight li {
+  margin-right: 20px;
+}
+.b8ActiveRight {
+  width: 292px;
+  margin-left: 0;
+  margin-right: auto;
+}
+@media screen and (max-width: 1280px) {
+  .b8 {
+    padding: 50px 0;
+  }
+  .b8Title {
+    display: block;
+    position: static;
+  }
+  .b8Main {
+    text-align: center;
+  }
+  .b8Left,
+  .b8Right {
+    padding: 0 10px;
+  }
+  .b8Left .b8Title {
+    width: auto;
+  }
+  .b8Left:after {
+    height: 100%;
+    top: 0;
+  }
+  .b8NoSliderLeft li {
+    margin: 0 10px;
+  }
+  .b8ActiveLeft {
+    margin: auto;
+  }
+  .b8Right .b8Title {
+    width: auto;
+  }
+  .b8NoSLiderRight li {
+    margin: 0 10px;
+  }
+  .b8ActiveRight {
+    margin: auto;
+  }
+}
+@media screen and (max-width: 960px) {
+  .b8ActiveLeft {
+    width: 170px;
+  }
+  .b8ActiveLeft .b8RespLef {
+    width: 170px;
+    overflow: hidden;
+  }
+  .b8ActiveLeft .b8EnvolveLeft {
+    width: 240px;
+    margin: auto;
+  }
+  .b8ActiveRight {
+    width: 188px;
+  }
+  .b8ActiveRight .b8RespRight {
+    width: 188px;
+    overflow: hidden;
+  }
+  .b8ActiveRight .b8EnvolveRight {
+    width: 292px;
+    margin: auto;
+  }
+}
+@media screen and (max-width: 767px) {
+  .b8 {
+    padding: 30px 0;
+  }
+  .b8Left,
+  .b8Right {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+  .b8Left {
+    margin-bottom: 50px;
+  }
+  .b8Left:after {
+    display: none;
+  }
+  .b8ActiveLeft {
+    width: 100%;
+  }
+  .b8ActiveLeft .b8RespLef {
+    width: 100%;
+  }
+  .b8ActiveRight {
+    width: 292px;
+  }
+  .b8ActiveRight .b8RespRight {
+    width: 292px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .b8ArrowLeft,
+  .b8ArrowRight {
+    display: none;
+  }
+}

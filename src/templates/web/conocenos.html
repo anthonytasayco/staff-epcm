@@ -1,0 +1,315 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+    {{ request.get_full_path|getSEOTags }}
+{% else %}
+    <title>{{ info.titulo }} | {{ seccion.cabecera }}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<link href="{{ STATIC_URL }}js/slidlight/lightslider.css" rel="stylesheet" />
+
+<link href="{{ STATIC_URL }}js/fancy-full/lightgallery.css" rel="stylesheet" />
+<link href="{{ STATIC_URL }}js/fancy-full/lg-fb-comment-box.css" rel="stylesheet" />
+<link href="{{ STATIC_URL }}js/fancy-full/lg-transitions.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{STATIC_URL}}css/jquery.bxslider.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/owlcarousel/owl.carousel.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/owlcarousel/owl.theme.default.min.css">
+
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+    <div class="b9Main wancho">
+        <div class="b9Table">
+            <div class="b9Title">
+                <h1>{{ seccion.cabecera }}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 10 -->
+<section class="b10">
+    <div class="b10-ctn wancho">
+        <div class="b10-img">
+            <img  alt="{{ info.titulo }}" src="{{ seccion.img.path|thumbnail_by_name:'421x283' }}" width="421" height="283">
+        </div>
+        <div class="b10-tab">
+            <ul class="b10-menu">
+                <li><a href="#" data-id="tab-info-1" class="active">{{"Quienes somos"|t}}</a></li>
+                <li><a href="#" data-id="tab-info-2">{{"Project Academy"|t}} </a></li>
+                <li><a href="#" data-id="tab-info-3">{{"Misión"|t}}</a></li>
+                <li><a href="#" data-id="tab-info-4">{{"Visión"|t}}</a></li>
+            </ul>
+            <div class="b10-content-tab">
+                <div class="b10-ctn-tab content-text" id="tab-info-1">{{ seccion.qs|safe }}</div>
+                <div class="b10-ctn-tab content-text" id="tab-info-2">{{ seccion.pa|safe }}</div>
+                <div class="b10-ctn-tab content-text" id="tab-info-3">{{ seccion.ms|safe }}</div>
+                <div class="b10-ctn-tab content-text" id="tab-info-4">{{ seccion.vs|safe }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 11 -->
+<section class="b11" id="b11-anima" style="background-image: url('{{ seccion.bg_img.url }}');">
+    <div class="b11Main wancho">
+        <div class="b11Table b11-videoGallery">
+            <div class="b11Title">
+                <h2>{{ seccion.bg_titulo|renderIStr }}</h2>
+            </div>
+            {% if seccion.cf_vid_id %}
+            <a href="https://www.youtube.com/watch?v={{ seccion.cf_vid_id }}" class="b11Icono icon-ICONOS-SVG-09"></a>
+            {% elif seccion.cf_vimeo_id %}
+            <a href="https://vimeo.com/{{ seccion.cf_vimeo_id }}" class="b11Icono icon-ICONOS-SVG-09"></a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 12 -->
+
+<section class="b12">
+    <div class="b12-cnt">
+        <div class="b12-izquierda">
+            <div class="b12-titulo">
+                <h3>{{"por qué <strong>elegirnos"|t}}</strong></h3>
+            </div>
+            <div class="b12-cnt-items">
+            {% for row in p_e %}
+                <div class="b12-item">
+                    <div class="b12-img">
+                        <img src="{{ row.icon.url }}" alt="{{ row.nombre }}" width="56" height="56">
+                    </div>
+                    <div class="b12-inner-item">
+                        <h3>{{ row.nombre }}</h3>
+                        <p>{{ row.descript|safe }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="b12-derecha">
+            <span class="b12-adorno1"></span>
+            <div class="b12-tab-link">
+                <div class="b12-slider">
+                    <ul class="b12-pitcher-slider owl-carousel">
+                        {% for row in seccion.getTestimonios %}
+                            <li>
+                                <div class="b12-tab-pitcher b12-click" data-id="tab{{ forloop.counter }}">
+                                    <img src="{{ row.img.path|thumbnail_by_name:'128x128' }}" height="88" width="88" alt="">
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="b12-inner-derecha">
+                <div class="b12-table">
+
+                    <span class="b12-texto-adorno">CLIENTES</span>
+                    <div class="b12-tab-cnt">
+                    {% for row in seccion.getTestimonios %}
+                        <div class="b12-tab-item" id="tab{{ forloop.counter }}">
+                            <div class="b12-item-info">
+                                <div class="b12-texto">
+                                    <p>{{ row.descript|safe|linebreaksbr }}</p>
+                                </div>
+                                <div class="b12-cliente">
+                                    <h3>{{ row.nombre }}</h3>
+                                    <p>{{ row.cargo }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 13 -->
+<section class="b13">
+    <div class="b13-ctn wancho">
+        <div class="b13-content-title">
+            <div class="b13-title">
+                <h2>{{ seccion.ns_titulo|safe }}</h2>
+                {{ seccion.ns_descript|safe }}
+            </div>
+        </div>
+
+        <div class="b13-ctn-slider">
+            <ul class="b13-slider">
+                {% for row in docentes %}
+                <li class="b13-item">
+                    <div class="b13-item-ctn">
+                        <div class="b13-cnt-img">
+                            <figure>
+                                <img src="{{ row.img.path|thumbnail_by_name:'256x256' }}" alt="" width="172" height="172">
+                            </figure>
+                        </div>
+                        <h3>{{ row.nombres }} {{ row.apellidos }}</h3>
+                        <h4>{{ row.cargo }}</h4>
+                        {{ row.descript_simple|safe }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 14 -->
+<section class="b14">
+    <div class="b14-cnt">
+        <div class="b14-izquierda">
+            <div class="b14-titulo">
+                <h3>{{ seccion.nr_titulo }}</h3>
+            </div>
+            <div class="b14-texto">{{ seccion.nr_descript|safe }}</div>
+        </div>
+        <div class="b14-derecha">
+            <div class="b14-slider">
+                <div class="b14-slider-resp">
+                    <ul class="b14-pitcher">
+                        {% for row in seccion.getRepaldos %}
+                        <li class="b14-item">
+                            <img src="{{ row.img.url }}" width="170" height="57" alt="{{ row.nombre }}">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp{{ GOOGLE_APIKEY }}"></script> -->
+<script src="{{STATIC_URL}}js/jquery.waypoints.js"></script>
+
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.bxslider.min.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lightgallery.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lg-fullscreen.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lg-thumbnail.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lg-zoom.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lg-video.js"></script>
+<script src="{{ STATIC_URL }}js/fancy-full/lg-autoplay.js"></script>
+<script src="{{ STATIC_URL }}js/owlcarousel/owl.carousel.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function(){
+
+        $('.b12 .owl-carousel').owlCarousel({
+            loop:false,
+            autoplay:false,
+            margin:0,
+            nav:false,
+            responsive:{
+                0:{
+                    items:2
+                },
+                400:{
+                    items:3
+                },
+
+                1024:{
+                    items:4
+                }
+            }
+        });
+
+        // b10
+        $('.b10-ctn-tab:first-child').addClass('active');
+        $('.b10-menu a').click(function(e) {
+            e.preventDefault();
+            $('.b10-menu a').removeClass('active');
+            $(this).addClass('active');
+            var bdataid = $(this).attr('data-id');
+            $('.b10-tab  .b10-ctn-tab').removeClass('active');
+            $('.b10-ctn-tab[id="'+bdataid+'"]').addClass('active');
+        });
+        // end b10
+        // b11
+
+        $('.b11-videoGallery').lightGallery({
+            selector: 'a'
+        });
+
+
+        // b12
+        $('.b12-tab-link .owl-item:nth-child(1) .b12-tab-pitcher').addClass('active');
+        $('.b12-tab-cnt .b12-tab-item:first-child').addClass('active');
+
+        $('.b12-tab-link .b12-click').click(function(event) {
+            event.preventDefault();
+            $('.b12-click').removeClass('active');
+            $(this).addClass('active');
+            var tab_id=$(this).attr('data-id');
+            $('.b12-tab-cnt .b12-tab-item').removeClass('active');
+            $('.b12-tab-item[id="'+tab_id+'"]').addClass('active');
+
+        });
+        // end b12
+        // b13
+
+        $('.b13-slider').bxSlider({
+            adaptiveHeight: true,
+            auto: true,
+            slideWidth: 267,
+            slideMargin: 36,
+            minSlides: 1,
+            maxSlides: 4,
+            moveSlides: 1,
+            prevSelector: '',
+            nextSelector: '',
+            prevText: '',
+            nextText: '',
+            pager:false
+        });
+        var b13_item_slider = $('.b13-slider li').length;
+        // console.log(b2_item_slider, "cantidad de item slider");
+        if (b13_item_slider > 4) {
+            $('.b13-ctn-slider').removeClass('b13NoSlider').addClass('b13ActiveSlider');
+        }
+
+        // end b13
+        // b14
+        var b14_item_num = $('.b14-slider .b14-item').length;
+        if(b14_item_num > 3){
+            $('.b14').addClass('slider-ok');
+            $('.b14-pitcher').bxSlider({
+            adaptiveHeight: true,
+            auto: true,
+            speed: '1000',
+            slideWidth: 170,
+            slideMargin: 30,
+            minSlides: 1,
+            maxSlides: 3,
+            moveSlides: 1,
+            controls: true,
+            prevSelector: '',
+            nextSelector: '',
+            prevText: '',
+            nextText: '',
+            pager:false
+            });
+        }
+        else
+        {
+            $('.b14').removeClass('slider-ok');
+        }
+        // end b14
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,152 @@
+.b23
+	width 100%
+	padding 55px 0 65px 0
+	.formError .formErrorContent
+		background c-4
+	.formError .formErrorArrow div
+		background c-4
+.b23-cnt
+	max-width 920px
+.b23-table
+	margin 40px auto 0 auto
+	width 100%
+	max-width 865px
+	h2
+		font-weight normal
+		margin-bottom 25px
+		color c-4
+		font-family t-2
+		text-transform uppercase
+		font-size 20px
+	strong
+		font-weight normal
+		color c-3
+.b23-table-header-item
+	font-size 15px
+	color blanco
+	display none
+	text-align center
+	text-transform uppercase
+	width 115px
+	box-sizing border-box
+	padding-bottom 15px
+	&:first-child
+		width 535px
+	&:last-child
+		width 100px
+		padding-right 0
+	div
+		background c-4
+		padding 9px 10px 9px 0
+		width 100%
+		text-align center
+		box-sizing border-box
+.b23-table-ctn
+	width 100%
+	margin-top 11px
+	&:first-child
+		.b23-table-header-item
+			display table-cell
+	&:nth-child(even)
+		.b23-table-item-middle
+			background c-12
+.b23-table-item-ctn
+	font-size 14px
+	display table-cell
+	width 115px
+	vertical-align top
+	box-sizing border-box
+	text-align center
+	&:first-child
+		width 535px
+		text-align left
+		.b23-table-header-item
+			div
+				text-align left
+				padding-left 10px
+		.b23-table-item-middle
+			padding-right 10px
+			padding-left 10px
+	&:last-child
+		width 100px
+		padding 0
+		.b23-table-item, .b23-table-header-item
+			padding-right 0
+.b23-table-item
+	box-sizing border-box
+	height 205px
+	display table
+	width 100%
+	padding-right 10px
+.b23-table-item-middle
+	display table-cell
+	border 1px solid c-8
+	vertical-align middle
+	font-size 13px
+	h3
+		font-weight normal
+		margin-bottom 11px
+		color c-3
+		text-transform uppercase
+		font-size 18px
+	strong
+		color c-4
+		font-family t-2
+		font-weight normal
+		text-transform uppercase
+	ul li
+		box-sizing border-box
+		padding-left 22px
+		margin-bottom 9px
+		background url("../img/b23-square.png") no-repeat left 4px
+		strong
+			font-weight normal
+			color c-0
+			font-family t-0
+		&:last-child
+			margin-bottom 0
+@media screen and (max-width: 1024px)
+	.b23
+		padding 50px 0
+@media screen and (max-width: 768px)
+	.b23-table-item
+		height 240px
+	.b23-table-item-middle
+		h3
+			font-size 16px
+@media screen and (max-width: 640px)
+	.b23
+		padding-top 30px
+		padding-bottom 0
+	.b23-table
+		margin-top 30px
+	.b23-table-ctn
+		margin-top 0
+		margin-bottom 30px
+		&:first-child
+			.b23-table-header-item
+				display block
+	.b23-table-item-ctn
+		display block
+		width 100%
+		margin-bottom 10px
+		.b23-table-header-item, .b23-table-item
+			width 100%
+			height auto
+			display block
+		&:first-child, &:last-child
+			width 100%
+			.b23-table-header-item div
+				text-align center
+				padding-left 0
+	.b23-table-header-item
+		padding-bottom 0
+		div
+			padding-right 0
+	.b23-table-item
+		padding-right 0
+		margin-top 10px
+	.b23-table-item-middle
+		padding-top 15px
+		padding-bottom 15px
+		display block

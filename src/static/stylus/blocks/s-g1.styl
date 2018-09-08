@@ -1,0 +1,21 @@
+.b-miga
+	font-size 14px
+	color c-1
+	ul li
+		display inline-block
+		box-sizing border-box
+		padding 0 8px
+		border-right 1px solid c-8
+		a.active 
+			strong
+				font-family t-1 
+		&:first-child
+			padding-left 0
+		&:last-child
+			padding-right 0
+			border 0
+	strong
+		font-weight normal
+@media screen and (max-width 640px)
+	.b-miga
+		display none

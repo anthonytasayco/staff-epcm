@@ -1,0 +1,128 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{seccion.cabecera}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<link rel="stylesheet" href="{{ STATIC_URL }}js/validationform/validationEngine.jquery.css" type="text/css"/>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{seccion.cabecera}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 33 -->
+<section class="b33">
+	<div class="b33-cnt">
+		<div class="b33-izquierda">
+			<div class="b33-titulo">
+				<p>{{ seccion.titulo }}</p>
+			</div>
+			<div class="b33-texto">
+				{{ seccion.descript|safe }}
+			</div>
+			<div class="b33-formulario">
+				<form action="{% url 'forms:contacto' %}" method="POST" id="form-escribenos">
+					{% csrf_token %}
+					<input type="text" class="input-form-style" name="xseg_form" value="{{ csrf_token|key_constructor }}">
+					<input type="text" class="input-form-style" name="email" value="">
+					<ul>
+						<li>
+							<div class="g-input">
+								<label>{{"Nombres"|t}}:</label>
+								<input type="text" class="validate[required]" name="nombres">
+							</div>
+							<div class="g-input">
+								<label>{{"Apellidos"|t}}:</label>
+								<input type="text" class="validate[required]" name="apellidos">
+							</div>
+						</li>
+						<li>
+							<div class="g-input">
+								<label>{{"Correo Electrónico"|t}}:</label>
+								<input type="email" class="validate[required,custom[email]]" name="email">
+							</div>
+							<div class="g-input">
+								<label>{{"Teléfono/Celular"|t}}:</label>
+								<input type="text" class="validate[required]" name="telefono">
+							</div>
+						</li>
+						<li>
+							<div class="g-input g-textarea">
+								<label>{{"Deja tu mensaje"|t}}:</label>
+								<textarea class="validate[required]" name="mensaje"></textarea>
+							</div>
+						</li>
+					</ul>
+					<button class="btn1">{{"ENVIAR"|t}}</button>
+				</form>
+			</div>
+		</div>
+		<div class="b33-derecha">
+			<div class="b33-info">
+				<div class="b33-item b33-mail">
+					<p>{{"Escríbenos"|t}}: {{ info.email|linkEmails:' ' }}</p>
+				</div>
+				<div class="b33-item b33-tel">
+					<p>{{"Llamanos"|t}}: {{ info.telefono|html_tel:' / ' }}</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp{{ GOOGLE_APIKEY }}"></script> -->
+<script src="{{ STATIC_URL }}js/validationform/jquery.validationEngine.js"></script>
+<script src="{{ STATIC_URL }}js/validationform/jquery.validationEngine-es.js"></script>
+<script type="text/javascript">
+	$(window).load(function() {
+		$('.b33').addClass('active');
+	});
+	$(function(){
+		//formulario
+		$("form").validationEngine('attach', {
+			promptPosition : "topLeft",
+			autoHidePrompt: true,
+			autoHideDelay: 3000,
+			binded: false,
+			scroll: false,
+			validateNonVisibleFields: true
+		});
+
+		//contacto
+		$("#form-escribenos").submit(function(e) {
+			var valid = $(this).validationEngine('validate');
+			if (!valid){
+				return false;
+			}else{
+				return true;
+			};
+		});
+
+	});
+</script>
+{% endblock %}

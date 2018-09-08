@@ -1,0 +1,85 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{ seccion.cabecera }}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{ seccion.cabecera }}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 27 -->
+<section class="b27">
+	<div class="b27-wrapper wancho">
+		<div class="b27-content">
+			<div class="b27-title">
+				<h3>{{seccion.b_titulo|safeSpan}}</h3>
+				<figure class="b27-title-img">
+					<img src="{{ STATIC_URL }}/img/b27img1.png" alt="">
+				</figure>
+			</div>
+			<ul class="b27-accordion">
+			{% for row in terminos %}
+				<li>
+					<a class="b27-tabs {% if forloop.first %}active{% endif %}">{{ row.nombre }} <span class="icon-arrow-down"></span></a>
+					<div class="b27-tab">
+						<div class="b27-tab-content">
+							{{ row.descript|safe }}
+						</div>
+					</div>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	var OpenSubmenu = $('.b27-tabs.active');
+	if (OpenSubmenu.hasClass('active')) {
+		$('.b27-tab').hide();
+		OpenSubmenu.closest('.b27-accordion li').find('.b27-tab').show();
+	};
+
+	$(function(){
+
+		$('.b27-tabs').click(function(e){
+			e.preventDefault();
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active').parent().find('.b27-tab').stop().slideUp();
+			}else{
+				$('.b27-tabs').removeClass('active');
+				$('.b27-tab').stop().slideUp();
+				$(this).addClass('active').parent().find('.b27-tab').stop().slideToggle();
+			};
+		});
+
+	});
+</script>
+{% endblock %}

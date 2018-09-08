@@ -1,0 +1,165 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{seccion.b_titulo}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	.b30-texto p {
+		line-height: 17px;
+		max-height: 85px;
+		overflow: hidden;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{seccion.b_titulo}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 30 -->
+<section class="b30">
+	<div class="b30-cnt">
+		<div class="b29-links">
+			<a href="{% url 'notivent:eventos' %}" class="b29-link">{{other.b_titulo}}</a>
+			<a class="b29-link active">{{seccion.b_titulo}}</a>
+		</div>
+		<div class="b29-contenido">
+			<div class="b29-texto-top">
+				{{ seccion.b_descript|safe }}
+			</div>
+			<div class="b30-cnt-items">
+				{% for row in noticias %}
+				<div class="b30-item">
+					<div class="b30-inner-item">
+						{% if row.imagen != '' %}
+						<div class="b30-img" style='background-image:url({{ row.imagen }});'></div>
+						{% else %}
+						<div class="b30-img" style="background-image:url({{STATIC_URL}}media/b30-img.jpg);"></div>
+						{% endif %}
+						<div class="b30-fecha">{{ row.createdat|date:'d N Y' }}</div>
+						<div class="b30-texto">
+							<h3>{{ row.title }}</h3>
+							<p>{{ row.excerpt|safe|striptags }}</p>
+						</div>
+						<div class="b30-leermas"><a href="{{ row.link }}">{{"LEER MÁS"|t}}</a></div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% if noticias.paginator.num_pages > 1 %}
+			<div class="b29-paginador">
+				<ul>
+					<li class="b29-prev"><a onclick="wSetOneLessPage();" class="pagerArrow pagerBack">{{"< Ant."|t}}</a></li>
+					{% for pag in noticias.paginator.num_pages|get_range %}
+					<li class="b29-num"><a onclick="wSetPage('{{ forloop.counter }}');" class="wPageItem wPageInst{{ forloop.counter }}">{{ forloop.counter }}</a></li>
+					{% endfor %}
+					<li class="b29-next"><a onclick="wSetOneMorePage();" class="pagerArrow pagerNext">{{"Sig. >"|t}}</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+<section style="display: none;" id="wTemplate">
+	<div class="b30-item">
+		<div class="b30-inner-item">
+			<div class="b30-img" style="background-image:url([[img]]);"></div>
+			<div class="b30-fecha">[[fecha]]</div>
+			<div class="b30-texto">
+				<h3>[[name]]</h3>
+				<p>[[descript]]</p>
+			</div>
+			<div class="b30-leermas"><a data-id="[[id]]" href="[[link]]">{{"LEER MÁS"|t}}</a></div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	var glob_page_number = {{ last_page }};
+	var glob_max_page_number = {{ noticias.paginator.num_pages }};
+	$('.wPageInst'+glob_page_number).addClass('active');
+
+	function cargarNoticias(){
+		var url = "{% url 'notivent:noticias' %}?p="+glob_page_number;
+		//var cantidadItemsPagina=6;
+		$.ajax({
+			url:url,
+			type:'POST',
+			data: {'page':glob_page_number,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+			dataType: 'json',
+			success:function(data){
+				var div = $("#wTemplate").html();
+				var total = "";
+				$.each( data['items'] ,function(index, el){
+					total = total + div.replace('[[name]]',el.name).replace('[[descript]]',el.descript).replace('[[img]]',el.img)
+									.replace('[[link]]',el.link).replace('[[id]]',el.id).replace('[[fecha]]',el.fecha)
+				});
+				var contenedor = $(".b30-cnt-items").html('');
+				contenedor.html(total);
+				history.pushState({}, '{{ info.titulo }} | {{seccion.b_titulo}}', url);
+			}
+		});
+	}
+
+	function wNormalizerPage(instance_page){
+		$('.wPageItem').removeClass('active');
+		if(instance_page > glob_max_page_number){
+			instance_page = glob_max_page_number;
+		}else if(instance_page <= 0){
+			instance_page = 1;
+		}
+		return instance_page
+	}
+
+	function wSetOneLessPage(){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(glob_page_number -= 1);
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarNoticias();
+		}
+	}
+
+	function wSetOneMorePage(){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(glob_page_number += 1);
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarNoticias();
+		}
+	}
+
+	function wSetPage(num){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(parseInt(num, 10));
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarNoticias();
+		}
+	}
+</script>
+{% endblock %}

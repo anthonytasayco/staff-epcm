@@ -1,0 +1,125 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{seccion.cabecera}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{seccion.cabecera}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 28 -->
+<section class="b28">
+	<div class="b28-cnt">
+		<div class="b28-texto">
+			{{ seccion.descript|safe }}
+		</div>
+		<div class="b28-form">
+			<form action="{% url 'forms:librec' %}" method="POST" id="form-libro">
+				{% csrf_token %}
+				<input type="text" class="input-form-style" name="xseg_form" value="{{ csrf_token|key_constructor }}">
+				<input type="text" class="input-form-style" name="email" value="">
+				<div class="b28-titulo">
+					<h3><strong>{{"Identificación del </strong>consumidor reclamante"|t}}</h3>
+				</div>
+				<ul class="b28-form1">
+					<li>
+						<div class="g-input">
+							<label>{{"Nombres:"|t}}</label>
+							<input type="text" class="validate[required]" name="nombres">
+						</div>
+						<div class="g-input">
+							<label>{{"Apellidos:"|t}}</label>
+							<input type="text" class="validate[required]" name="apellidos">
+						</div>
+					</li>
+					<li>
+						<div class="g-input">
+							<label>{{"Correo Electónico:"|t}}</label>
+							<input type="email" class="validate[required,custom[email]]" name="email">
+						</div>
+						<div class="g-input">
+							<label>{{"Teléfono/Celular:"|t}}</label>
+							<input type="text" class="validate[required]" name="telefono">
+						</div>
+					</li>
+					<li>
+						<div class="g-input g-select">
+							<label>{{"Tipo de documento:"|t}}</label>
+							<select name="doc_type" type="number" class="validate[required]">
+								<option value="">{{"DOCUMENTO"|t}}</option>
+								<option value="1">{{"DNI"|t}}</option>
+								<option value="2">{{"Pasaporte"|t}}</option>
+								<option value="3">{{"Licencia"|t}}</option>
+								<option value="4">{{"Libreta"|t}}</option>
+							</select>
+						</div>
+						<div class="g-input">
+							<label>{{"Número de documento:"|t}}</label>
+							<input type="text" class="validate[required]" name="doc_num">
+						</div>
+					</li>
+				</ul>
+				<div class="b28-titulo">
+					<h3><strong>{{"Identificación del </strong>bien contratado"|t}}</h3>
+				</div>
+				<ul class="b28-form2">
+					<li>
+						<div class="g-input">
+							<label>{{"Tipo:"|t}}</label>
+							<input type="text" class="validate[required]" name="tipo">
+						</div>
+						<div class="g-input">
+							<label>{{"Monto de reclamo:"|t}}</label>
+							<input type="text" class="validate[required]" name="monto">
+						</div>
+					</li>
+					<li>
+						<div class="g-input g-textarea">
+							<label>{{"Descripción:"|t}}</label>
+							<textarea class="validate[required]" name="descript"></textarea>
+						</div>
+					</li>
+				</ul>
+				<div class="b28-botones">
+					<a href="" class="btn1">{{"Limpiar"|t}}</a>
+					<button class="btn3">{{"Enviar"|t}}</button>
+				</div>
+			</form>
+		</div>
+		<div class="b28-detalle">{{ seccion.pie|safe }}</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$(function(){
+
+	});
+</script>
+{% endblock %}

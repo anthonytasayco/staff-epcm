@@ -1,0 +1,209 @@
+.b14
+	width 100%
+	padding-top 50px
+	padding-bottom 90px
+
+.b14-cnt
+	max-width 1175px
+	width 95%
+	margin auto
+	font-size 0
+
+/* Izquierda*/
+.b14-izquierda
+	display inline-block
+	vertical-align middle
+	width 38%
+
+.b14-titulo
+	color negro
+	position relative
+	padding-bottom 12px
+	text-transform uppercase
+	display inline-block
+	h3
+		font-size 20px
+		font-family t-6
+		margin 0
+	&:before
+		content ""
+		position absolute
+		bottom 0
+		left 0
+		width 65px
+		height 3px
+		background c-4
+
+.b14-texto
+	margin-top 20px
+	font-size 14px
+	p
+		margin 0
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+	ol
+		li
+			counter-increment list
+			list-style-type none
+			margin-bottom 13px
+			margin-top 13px
+			line-height 1.9
+			position relative
+			&:before
+				color: c-4
+				content: counter(list) "."
+				left:-32px
+				position: absolute
+				text-align: right
+				width: 26px
+
+/* Derecha */
+.b14-derecha
+	display inline-block
+	vertical-align middle
+	width 62%
+	padding-left 50px
+	box-sizing border-box
+
+
+.b14-item
+	width 25.5%
+	margin-right 8%
+	display inline-block
+	vertical-align top
+	&:last-child
+		margin-right 0
+	img
+		img-res()
+
+
+.b14-slider
+	.bx-wrapper .bx-controls-direction a
+		background none
+		&:before
+			font-family icomoon
+			position absolute
+			display block
+			text-indent 0
+			font-size 35px
+
+	.bx-wrapper .bx-next
+		right -54px
+		&:before
+			content "\e606"
+
+	.bx-wrapper .bx-prev
+		left -54px
+		&:before
+			content "\e607"
+
+//responsive slider
+@media screen and (max-width 1190px)
+	.b14.slider-ok
+		.b14-izquierda
+			width 35%
+		.b14-derecha
+			width 65%
+
+@media screen and (max-width 1120px)
+	.b14.slider-ok .b14-izquierda
+		width 30%
+
+	.b14.slider-ok .b14-derecha
+		width 70%
+
+@media screen and (max-width 1020px)
+	.b14.slider-ok .b14-derecha
+		width 100%
+		padding-left 0
+		margin-top 25px
+
+	.b14.slider-ok .b14-izquierda
+		width 100%
+		text-align center
+
+	.b14.slider-ok .b14-titulo:before
+		right 0
+		margin auto
+
+
+@media screen and (max-width 700px)
+	.b14.slider-ok .b14-slider
+		max-width 373px
+		margin auto
+		overflow hidden
+
+	.b14.slider-ok .b14-slider-resp
+		width 500px
+
+	.b14-slider .bx-controls-direction
+		display none
+
+@media screen and (max-width 400px)
+	.b14.slider-ok .b14-slider
+		max-width 170px
+
+//responsive all
+@media screen and (max-width 1024px)
+	.b14
+		padding 50px 0
+
+	.b14-item
+		width 29.5%
+		margin-right 5%
+
+	.b14-izquierda
+		width 35%
+
+	.b14-derecha
+		width 65%
+		padding-left 40px
+
+@media screen and (max-width 840px)
+	.b14-derecha
+		width 100%
+		padding-left 0
+		margin-top 25px
+
+	.b14-izquierda
+		width 100%
+		text-align center
+
+	.b14-titulo:before
+		right 0
+		margin auto
+
+@media screen and (max-width 768px)
+	.b14-item
+		width 27.5%
+		margin-right 8%
+
+@media screen and (max-width 640px)
+	.b14
+		padding 30px 0
+
+	.b14-item
+		width 30%
+		margin-right 5%
+
+@media screen and (max-width 480px)
+	.b14-item
+		width 100%
+		max-width 170px
+		margin 0 auto 20px
+		display block
+
+	.b14-item:last-child
+		margin auto

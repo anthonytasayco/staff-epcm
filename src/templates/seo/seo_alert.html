@@ -1,0 +1,26 @@
+{% extends "email/base.html" %}
+
+{% block title %}Alerta de URL{% endblock %}
+
+{% block content %}
+<!-- hero article heading text -->
+<h1 style="color:#666666; font-size:26px; line-height:1.2; font-weight:normal; margin-top:0; margin-bottom:0.5em;">Error en URL</h1>
+<!-- /hero article heading text -->
+<!-- hero article paragraph text -->
+<p style="margin-top:0; margin-bottom:0;">
+	Detalles de error:
+    <table>
+        <tr>
+            <th style="text-align: left;width:7%;">URL : </th>
+            <td>{{ request.build_absolute_uri }}</td>
+        </tr>
+        <tr style="padding-top: 25px;">
+            <th style="text-align: left;width:7%;">Info :</th>
+            <td><span></span>
+            Actualmente hemos realizado un redireccionamiento de esta URL a la pagina principal como solución provisional.
+                <strong>puede cambiar la ubicación destino de esta url en el <a href="{{ admin_url }}">administrador de contenidos.</a></strong></td>
+        </tr>
+    </table>
+</p>
+<!-- /hero article paragraph text -->
+{% endblock %}

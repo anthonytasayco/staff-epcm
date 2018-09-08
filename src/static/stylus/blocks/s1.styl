@@ -1,0 +1,239 @@
+
+.b1
+	width 100%
+	height 560px
+	overflow hidden
+	position relative
+	.bx-controls
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 100%
+	.bx-controls-direction
+		max-width 1024px
+		width 95%
+		height 100%
+		margin auto
+		position relative
+		top 0
+		bottom 0
+		left 0
+		right 0
+	.bx-wrapper .bx-controls-direction a
+		display block
+		width 36px
+		height 36px
+		overflow hidden
+		background none
+		text-indent 0
+		position absolute
+		top 50%
+		z-index 70
+		margin-top -19px
+		transition all .2s linear
+		&:hover
+			&:before, &:after
+				color c-7
+		&:before, &:after
+			display inline-block
+			line-height 36px
+			color blanco
+			font-family icomoon
+			font-size 50px
+			text-align center
+			position absolute
+			top 0
+			left 0
+			right 0
+			bottom 0
+			margin auto
+			transition all .2s linear
+
+	.bx-prev
+		left 0
+		&:before, &:after
+			content "\e607"
+
+	.bx-next
+		right 0
+		&:before, &:after
+			content "\e606"
+
+	.bx-wrapper .bx-pager
+		padding-top 10px
+		z-index 100
+		bottom 65px
+
+	.bx-wrapper .bx-pager.bx-default-pager a
+		border 1px solid blanco
+		background transparent
+		margin 0 4px
+		transition all .3s linear
+
+	.bx-wrapper .bx-pager.bx-default-pager a:hover, .bx-wrapper .bx-pager.bx-default-pager a.active
+		background blanco
+
+.b1-item
+	width 100% !important
+	position relative
+	background-size cover
+	background-position center center
+	background-repeat no-repeat
+	&:before
+		content ""
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 100%
+		background c-3
+		opacity .8
+
+.b1-table
+	display table
+	height 560px
+	width 100%
+	text-align center
+
+.b1-table-cell
+	display table-cell
+	vertical-align middle
+	width 2000px
+	padding-top 80px
+	box-sizing border-box
+
+.b1-cnt
+	position relative
+	z-index 10
+	max-width 1024px
+	width 95%
+	margin auto
+
+.b1-texto
+	color blanco
+	padding 0 5%
+	box-sizing border-box
+	h3
+		font-family t-4
+		font-size 30px
+		margin 0
+		color c-4
+		line-height 1.3
+	strong
+		font-weight normal
+		color blanco
+		display block
+		font-family t-8
+		font-size 40px
+
+.b1-mouse-cnt
+	width 100%
+	position absolute
+	bottom 30px
+	left 0
+	right 0
+	margin auto
+	z-index 60
+	text-align center
+
+.b1-mouse
+	display inline-block
+	margin auto
+	color blanco
+	font-size 30px
+	animation b1mouse 2s infinite
+
+/* animacion */
+
+.b1-texto
+	position relative
+	transform translateY(50px)
+	opacity 0
+	visibility hidden
+	transition all 1s ease
+
+.b1-botone
+	margin-top 30px
+	transform translateY(50px)
+	opacity 0
+	visibility hidden
+
+
+.b1-item
+	&.active
+		.b1-texto
+			transform translateY(0px)
+			opacity 1
+			visibility visible
+		.b1-botone
+			transform translateY(0px)
+			opacity 1
+			visibility visible
+			transition all 1s ease .3s
+
+@media screen and (min-width 1025px)
+	.b1-botone .btn1
+		background transparent
+		border 1px solid blanco
+		color blanco
+
+	.b1-botone .btn1:hover
+		background c-4
+		border 1px solid c-4
+
+@media screen and (max-width 1024px)
+	.b1-table
+		height 550px
+
+	.b1
+		height 550px
+		overflow hidden
+
+	.b1-cnt h3
+		font-size 25px
+
+	.b1-cnt strong
+		font-size 35px
+
+@media screen and (max-width 840px)
+	.b1 .bx-controls-direction
+		display none
+
+@media screen and (max-width 768px)
+	.b1
+		height 500px
+		overflow hidden
+
+	.b1-table
+		height 500px
+
+	.b1-cnt h3
+		font-size 25px
+
+	.b1-cnt strong
+		font-size 30px
+
+	.b1 .bx-controls
+		display none
+
+	.b1-texto
+		padding 0
+
+@media screen and (max-width 640px)
+	.b1
+		height 400px
+		overflow hidden
+
+	.b1-table
+		height 400px
+
+	.b1-table-cell
+		padding-top 30px
+
+	.b1-cnt h3
+		font-size 18px
+
+	.b1-cnt strong
+		font-size 25px
+

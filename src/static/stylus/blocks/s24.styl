@@ -1,0 +1,185 @@
+.b24
+	width 100%
+	padding-top 75px
+	padding-bottom 87px
+	overflow hidden
+
+.b24-cnt
+	position relative
+	min-height 500px
+	padding 0 25px
+	box-sizing border-box
+
+/* Izquierda*/
+.b24-izquierda
+	display inline-block
+	vertical-align middle
+	width 100%
+	padding-right 57%
+	padding-top 120px
+	box-sizing border-box
+	.btn3
+		margin-top 30px
+
+.b24-titulo
+	h3
+		margin 0
+		font-size 25px
+		color c-4
+		margin-bottom 30px
+	strong
+		display block
+		font-size 30px
+		color c-3
+	p
+		margin 0
+		font-size 14px
+
+
+/* Derecha*/
+.b24-derecha
+	display inline-block
+	vertical-align middle
+
+
+.b24-login
+	position absolute
+	top 0
+	right 20px
+	width 460px
+	box-sizing border-box
+	text-align center
+	padding-top 80px
+	box-shadow 0px 0px 24px 1px rgba(0, 0, 0, 0.25)
+	.btn1
+		width 100%
+		display block
+		padding 15px 0
+		font-size 20px
+
+
+.b24-titulo-login
+	position relative
+	h3
+		font-size 30px
+		font-family t-2
+		color c-4
+	&:before
+		content "\e915"
+		font-family icomoon
+		position absolute
+		top 0
+		bottom 0
+		left 0
+		right 0
+		margin auto
+		color c-4
+		font-size 65px
+		height 65px
+		width 75px
+		opacity .2
+		font-weight lighter
+
+.b24-form
+	margin-top 50px
+	padding 0 20.5%
+	box-sizing border-box
+	li
+		margin-bottom 15px
+		&:last-child
+			margin-bottom 0
+	.g-input
+		text-align center
+
+	.g-input label
+		padding-left 0
+	.btn3
+		margin-top 25px
+
+
+
+.b24-contra
+	display block
+	margin-top 15px
+	margin-bottom 25px
+	color c-3
+	font-size 14px
+
+.b24-contra:hover
+	text-decoration underline
+
+@media screen and (min-width 1025px)
+	.b24-izquierda
+		transform translateX(-150px)
+		transition all .7s ease
+		opacity 0
+		visibility hidden
+
+	.b24-login
+		right -150px
+		transition all .7s ease
+		opacity 0
+		visibility hidden
+
+	.b24.active
+		.b24-login
+			right 20px
+			opacity 1
+			visibility visible
+		.b24-izquierda
+			transform translateX(0px)
+			opacity 1
+			visibility visible
+
+@media screen and (max-width 1200px)
+	.b24-cnt
+		padding 0
+
+@media screen and (max-width 1024px)
+	.b24
+		padding 50px 0
+
+	.b24-login
+		right 0
+
+@media screen and (max-width 960px)
+	.b24-cnt
+		min-height inherit
+		font-size 0
+
+	.b24-izquierda
+		padding-right 30px
+		width 47%
+		padding-top 0
+
+	.b24-derecha
+		width 53%
+
+	.b24-login
+		width 100%
+		position relative
+
+	.b24-form
+		padding 0 15%
+
+@media screen and (max-width 640px)
+	.b24
+		padding 30px 0
+
+	.b24-izquierda
+		width 100%
+		margin-bottom 30px
+		padding-right 0
+		text-align center
+		.btn3
+			font-size 12px
+
+	.b24-derecha
+		width 100%
+
+	.b24-login
+		padding-top 60px
+
+@media screen and (max-width 480px)
+	.b24-form
+		padding 0 10%

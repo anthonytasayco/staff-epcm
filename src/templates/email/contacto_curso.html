@@ -1,0 +1,48 @@
+{% extends "email/base.html" %}
+
+{% block title %}Solicitud de Información{% endblock %}
+
+{% block content %}
+<!-- hero article heading text -->
+<h1 style="color:#666666; font-size:26px; line-height:1.2; font-weight:normal; margin-top:0; margin-bottom:0.5em;">Solicitud de Información</h1>
+<!-- /hero article heading text -->
+<!-- hero article paragraph text -->
+<p style="margin-top:0; margin-bottom:0;">
+	Confirmación de Solicitud de información:
+	<table>
+		<tr>
+			<th style="text-align: left;width: 90px;">Nombres : </th>
+			<td> {{ nombres }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">Curso : </th>
+			<td> {{ curso }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">E-mail : </th>
+			<td>{{ email }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">Télefono : </th>
+			<td> {{ telefono }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">Empresa : </th>
+			<td> {{ empresa }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">País : </th>
+			<td> {{ pais }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">Ciudad : </th>
+			<td> {{ ciudad }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">Mensaje : </th>
+			<td>{{ mensaje|linebreaksbr }}</td>
+		</tr>
+
+	</table>
+</p>
+{% endblock %}

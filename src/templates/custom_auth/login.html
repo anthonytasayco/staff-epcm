@@ -1,0 +1,63 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 21 -->
+<section class="b21">
+    <div class="b21-wrapper">
+        <div class="b21-login">
+            <div class="b21-login-title">
+                <span class="icon-SVG-19"></span>
+                <h2>INICIA SESIÓN</h2>
+            </div>
+            <form action="" id="form-login" method="post">
+                <div style="visibility:hidden">
+                    {% csrf_token %}
+                   <input type="text">
+                   <input type="password">
+                </div>
+                <div class="g-input">
+                    <input type="email" class="validate[required,custom[email]]" name="username" placeholder="Email:">
+                </div>
+                <div class="g-input">
+                    <input type="password" class="validate[required]" name="password" placeholder="Contraseña:">
+                </div>
+                <div class="b12-login-buttom">
+                    <button class="bt_gnrl bt_1">INGRESAR</button>
+                    <a href="{% url 'custom_auth:recupera_password' %}">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+            <div class="b12-error">
+                <p>Error</p>
+            </div>
+        </div>
+        <div class="b21-register" style="background-image: url('{{ STATIC_URL }}media/b21img1.png')">
+            <div class="b12-register-content">
+                <div class="b12-register-title">
+                    <h2>¿NO TIENES UNA CUENTA?</h2>
+                </div>
+                <strong>¡Ingresa!</strong>
+                <p>Realiza tus compras rápido y seguro</p>
+                <div class="b12-register-buttom">
+                    <a href="{% url 'custom_auth:registro' %}" class="bt_gnrl bt_1">REGISTRATE</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+
+    });
+</script>
+{% endblock %}

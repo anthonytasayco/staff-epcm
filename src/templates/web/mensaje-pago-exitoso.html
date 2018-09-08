@@ -1,0 +1,61 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"Gracias por su Compra"|t}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"Gracias por su Compra"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 38 -->
+<section class="b38">
+	<div class="b38-wrapper">
+		<div class="b38-content">
+			<figure class="b38-image">
+				<img src="{{STATIC_URL}}/img/b35img1.png" width="57" height="57" alt="">
+			</figure>
+			<div class="b38-title">
+				<h2>{{"Gracias por su Compra"|t}}</h2>
+			</div>
+			<div class="b38-text">
+				{% if paypal_pay %}
+					<p><i>{{"Estamos enviando los datos de confirmación a tu cuenta de correo"|t}}</i></p>
+				{% else %}
+					{{ seccion.deposito|safe }}
+				{% endif %}
+			</div>
+			<div class="b38-link">
+				<a href="{% url 'home' %}" class="btn1">{{"REGRESAR AL INICIO"|t}}</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+{% endblock %}

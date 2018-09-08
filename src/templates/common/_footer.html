@@ -1,0 +1,165 @@
+{% load static %}
+{% load app_tags %}
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-cnt wancho">
+            <nav class="footer-menu">
+                <h4>{{"sobre nosostros"|t}}:</h4>
+                <ul>
+                    <li><a href="{% url 'conocenos' %}">{{"Conócenos"|t}}</a></li>
+                    <li><a href="{% url 'notivent:eventos' %}">{{"Eventos"|t}}</a></li>
+                    <li><a href="{% url 'notivent:noticias' %}">{{"Noticias"|t}}</a></li>
+                </ul>
+            </nav>
+            <div class="footer-items-cnt">
+                <div class="footer-item">
+                    <figure>
+                        <a href="{% url 'home' %}"><img src="{{STATIC_URL}}img/logo-footer.png" width="177" height="89" alt=""></a>
+                    </figure>
+                    <div class="footer-redes">
+                        {{"Siguenos en"|t}}:<br>
+                        {% if info.facebook %}<a href="{{ info.facebook }}" class="icon-facebook"></a>{% endif %}
+                        {% if info.twitter %}<a href="{{ info.twitter }}" class="icon-twiterr"></a>{% endif %}
+                        {% if info.linkedin %}<a href="{{ info.linkedin }}" class="icon-linkedin"></a>{% endif %}
+                        {% if info.youtube %}<a href="{{ info.youtube }}" class="icon-youtube-2"></a>{% endif %}
+                        {% if info.whatsapp %}<a href="{{ info.whatsapp }}" class="icon-telefono"></a>{% endif %}
+                    </div>
+                </div>
+                <div class="footer-item">
+                    <h4>{{"Te Ofrecemos"|t}}<span>:</span></h4>
+                    <ul>
+                        {% for row in cats %}
+                        <li><a href="{% url 'cursos:cursos' row.slug %}">{{ row.nombre }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="footer-item clone-contacto clone-menu">
+                    <h4 class="openToggleResp">{{"Servicio al cliente"|t}}<span class="delet-resp">:</span><span class="iconOpenToggle"></span><span class="iconCloseToggle"></span></h4>
+                    <ul class="desplegableResp">
+                        <li><a href="{% url 'termpreg:terms' %}">{{"Terminos y condiciones"|t}}</a></li>
+                        <li><a href="{% url 'termpreg:quests' %}">{{"Preguntas Frecuentes"|t}}</a></li>
+                        <li><a href="{% url 'librec' %}">{{"Libro de reclamaciones"|t}}</a></li>
+                        <li><a href="{% url 'contacto' %}">{{"Contacto"|t}}</a></li>
+                    </ul>
+                </div>
+                <div class="footer-item clone-menu">
+                    <h4 class="openToggleResp">{{"Mi cuenta"|t}}<span class="delet-resp">:</span><span class="iconOpenToggle"></span><span class="iconCloseToggle"></span></h4>
+                    {% if not request.user.is_superuser %}
+                    <ul class="desplegableResp">
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'custom_auth:micuenta_datos' %}">{{"Mis Datos"|t}}</a></li>
+                            <li><a href="{% url 'custom_auth:micuenta_pedidos' %}">{{"Mis Pedidos"|t}}</a></li>
+                        {% else %}
+                            <li><a href="{% url 'custom_auth:login' %}">{{"Inicia Sesión"|t}}</a></li>
+                            <li><a class="b25-fancy" href="">{{"Registrate"|t}}</a></li>
+                        {% endif %}
+                        <li><a class="b26-fancy" href="">{{"Olvidaste tu contraseña"|t}}</a></li>
+                    </ul>
+                    {% endif %}
+                </div>
+                <div class="footer-item">
+                    <h4>{{"Contactanos al:"|t}}</h4>
+                    <ul>
+                        <li>{{ info.telefono|html_tel:" / " }}</li>
+                        <li>{{ info.email|linkEmails:" / " }}</li>
+                    </ul>
+                    <br>
+                    <h4 class="footer-metodos">{{"Metodos de pago"|t}}:</h4>
+                    <a href=""><img src="{{STATIC_URL}}img/footer-paypal.png" alt="" width="82" height="20"></a>
+                    <br>
+                    <a href=""><img src="{{STATIC_URL}}img/pe3.png" alt=""></a>
+                </div>
+                <div class="footer-item">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- creditos -->
+    <section class="footer-copy">
+        <div class="wancho">
+            <div class="footer-copy-left">
+                <p>EPCM {{"Todos los Derechos Reservados"|t}} &copy; {% now 'Y' %}</p>
+            </div>
+            <p class="footer-copy-parrafo">{{ info.footer_inf|safe }}</p>
+        </div>
+    </section>
+</footer>
+
+
+<!-- BLOQUE 25 -->
+<div class="b25-content">
+    <div class="b25">
+        <div class="b25-close icon-ICONOS-SVG-07"></div>
+        <div class="b25-ctn wancho">
+            <div class="b25-title">
+                <h2><strong>{{"¡Registrate</strong> ahora!"|t}}</h2>
+                <p>{{"¡Si no tienes una cuenta registrate y empieza ya."|t}}</p>
+            </div>
+
+            <div class="b25-form">
+                <form action="{% url 'custom_auth:registro'%}" name="b25-form" id="b25-form" method="post">{% csrf_token %}
+                    <div style="visibility:hidden">
+                        <input type="email">
+                        <input type="password">
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Nombre"|t}}:</label>
+                        <input name="nombres" type="text" class="validate[required]">
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Apellidos"|t}}:</label>
+                        <input name="apellidos" type="text" class="validate[required]">
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Telefono / Celular"|t}}:</label>
+                        <input name="telefono" type="text" class="validate[required]">
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Correo Electónico"|t}}:</label>
+                        <input name="username" type="text" class="validate[required,custom[email],ajax[ajaxUserCall]]">
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Nueva Contraseña"|t}}</label>
+                        <input name="password" type="password" class="validate[required]"  id="contrasena">
+
+                    </div>
+                    <div class="g-input">
+                        <label>{{"Repetir Contraseña"|t}}</label>
+                        <input type="password" class="validate[required,equals[contrasena]]"  >
+
+                    </div>
+
+                    <button href="#" class="btn3">{{"Iniciar Sesión"|t}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="b25-overlay"></div>
+</div>
+
+<!-- BLOQUE 26 -->
+<div class="b26-content">
+    <div class="b26">
+        <div class="b26-close icon-ICONOS-SVG-07"></div>
+        <div class="b26-ctn wancho">
+            <div class="b26-title">
+                <h2><strong>{{"Olvidaste tu</strong> contraseña"|t}}</h2>
+                <p>{{"Escribe tu dirección de correo electrónico.<br>Le enviaremos un enlace para que pueda cambiar su contraseña."|t}}</p>
+            </div>
+
+            <div class="b26-form">
+                <form action="{% url 'custom_auth:recupera_password' %}" name="b26-form" id="b26-form" method="POST">
+                    {% csrf_token %}
+                    <div class="g-input">
+                        <label>{{"Escribe tu correo"|t}}:</label>
+                        <input type="text" class="validate[required,custom[email]]" name="username">
+                    </div>
+
+                    <button href="#" class="btn3">{{"Enviar"|t}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="b26-overlay"></div>
+</div>

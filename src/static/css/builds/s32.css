@@ -1,0 +1,133 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b32 {
+  padding: 70px 0 95px 0;
+  width: 100%;
+  font-size: 14px;
+}
+.b32-cnt {
+  color: #e6e6e6;
+  max-width: 1110px;
+}
+.b32-back {
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+.b32-cnt-prin {
+  max-width: 576px;
+  margin: 10px auto 0 auto;
+}
+.b32-fecha {
+  color: #05ce7b;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 0 0 10px 25px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+}
+.b32-fecha:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "\e91b";
+  display: block;
+  font-family: 'icomoon';
+}
+.b32-title {
+  color: #0032a0;
+  margin: 14px 0 16px 0;
+  text-transform: uppercase;
+}
+.b32-title h2 {
+  font-weight: normal;
+  margin: 0;
+  font-size: 20px;
+}
+.b32-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.b32-text {
+  margin: 25px 0 0 0;
+  color: #4d4d4d;
+}
+.b32-text p {
+  margin: 0 0 2px 0;
+}
+.b32-text ul li {
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.9;
+  margin-bottom: 9px;
+}
+.b32-text ul li:before {
+  content: "\e930";
+  top: 2px;
+  left: 0;
+  color: #05ce7b;
+  font-size: 12px;
+  font-family: 'icomoon';
+  position: absolute;
+}
+.b32-text ol li {
+  counter-increment: list;
+  list-style-type: none;
+  margin-bottom: 13px;
+  margin-top: 13px;
+  line-height: 1.9;
+  position: relative;
+}
+.b32-text ol li:before {
+  color: #05ce7b;
+  content: counter(list) ".";
+  left: -32px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+.b32-compartir {
+  color: #0032a0;
+  margin-top: 25px;
+  font-size: 13px;
+}
+.b32-compartir a {
+  color: #fff;
+  margin-left: 8px;
+  display: inline-block;
+  background: #05ce7b;
+  height: 25px;
+  width: 25px;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 25px;
+}
+@media screen and (max-width: 1024px) {
+  .b32 {
+    padding: 50px 0;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .b32 {
+    padding: 30px 0;
+  }
+  .b32-cnt-prin {
+    margin-top: 25px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .b32-title h2 {
+    font-size: 17px;
+  }
+}

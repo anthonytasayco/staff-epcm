@@ -1,0 +1,94 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"Registrate"|t}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}header-home{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+    <div class="b9Main wancho">
+        <div class="b9Table">
+            <div class="b9Title">
+                <h1>{{"Inicía Sesión"|t}}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BLOQUE 24 -->
+<section class="b24">
+    <div class="b24-cnt wancho">
+        <div class="b24-izquierda">
+            <div class="b24-titulo">
+                <h3><strong>¡Hola!</strong>EPCM te da la bienvenida</h3>
+                <p>Praesent dapibus, orci eget varius eleifend, odio risus sodales tortor, sed gravida felis elit at odio. Mauris auctor ut sapien consectetur efficitur. Suspendisse posuere justo vel finibus auctor.</p>
+            </div>
+            {% comment %}
+            <a href="/{{ request.LANGUAGE_CODE }}/producto-elegido.html" class="btn3">COMPRAR SIN REGISTRARSE</a>
+            {% endcomment %}
+        </div>
+        <div class="b24-derecha">
+            <div class="b24-login">
+                <div class="b24-titulo-login">
+                    <h3>INICIA SESIÓN</h3>
+                </div>
+                <div class="b24-form" >
+                    <form action="." method="post" id="form-login">
+                        <div style="visibility:hidden">
+                            {% csrf_token %}
+                           <input type="text">
+                           <input type="password">
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="g-input">
+                                    <label>Correo Electónico:</label>
+                                    <input type="text" name="username" class="validate[required,custom[email]]">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="g-input">
+                                    <label>Password:</label>
+                                    <input name="password" type="password" class="validate[required]">
+                                </div>
+                            </li>
+                        </ul>
+                        <button class="btn3">INICIAR SESIÓN</button>
+                    </form>
+                </div>
+                <a href="#" class="b26-fancy b24-contra">OLVIDE MI CONTRASEÑA</a>
+                <a href="#" class="b25-fancy btn1">REGISTRARSE</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+    $(window).load(function() {
+        $('.b24').addClass('active');
+    });
+    $(function(){
+		$(".b25-content").addClass('active');
+		$('body').addClass('b25-hidden');
+    });
+</script>
+{% endblock %}

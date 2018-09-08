@@ -1,0 +1,60 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"GRACIAS POR TU COMPRA"|t}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"GRACIAS POR TU COMPRA"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 38 -->
+<section class="b38">
+	<div class="b38-wrapper">
+		<div class="b38-content">
+			<figure class="b38-image">
+				<img src="{{STATIC_URL}}/img/b36img1.png" width="105" height="86" alt="">
+			</figure>
+			<div class="b38-title">
+				<h2>{{"GRACIAS POR TU COMPRA"|t}}</h2>
+			</div>
+			<div class="b38-text">
+				<p>{{"se le ha enviado un correo, en el estan detallados los cursos comprados y/o las instrucciones a seguir."|t}}</p>
+			</div>
+			<div class="b38-link">
+				<a href="{% url 'home' %}" class="btn1">{{"REGRESAR AL INICIO"|t}}</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+{% endblock %}
+
+{% block jsfinal %}
+{% endblock %}

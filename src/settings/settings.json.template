@@ -1,0 +1,41 @@
+{
+	"DB_NAME": "ddbb",
+	"DB_USER": "usr",
+	"DB_PASSWORD": "pwd",
+	"DB_HOST":"localhost",
+	"DB_PORT":"",
+
+	"SETTINGS_PROD": "settings.production",
+	"PROJECT_NAME": "Django SingleLang",
+	"ADMIN_URL": "admin-staff",
+	"DEBUG": true,
+	"DEBUG_PRODUCTION": false,
+	"PREPEND_WWW": false,
+	"SESSION_EXPIRE":true,
+	"SENTRY_DSN":"",
+	"SENTRY_RELEASE":"local_release",
+
+	"GEOPOSITION_GOOGLE_MAPS_API_KEY":"",
+
+	"URL_SITE": "http://127.0.0.1:8000",
+	"SECRET_KEY": "+zve_p0tor$yer*$*r_@tf68uh%_k04jia3nt-&gt6mln7(s-v*@",
+	"EMAIL_HOST": "smtp.mailserver.com",
+	"EMAIL_HOST_USER": "noreply@domain.com",
+	"EMAIL_HOST_PASSWORD": "noreply",
+	"DEFAULT_FROM_EMAIL": "noreply@domain.com",
+	"SERVER_EMAIL": "noreply@domain.com",
+	"EMAIL_PORT": 587,
+	"EMAIL_USE_TLS": true,
+
+	"MEDIA_ROOT": "/home/user/webapps/media_projt/",
+	"MEDIA_URL": "/media/",
+	"STATIC_ROOT": "/home/user/webapps/static_projt/",
+	"STATIC_URL": "/static/",
+	"ALLOWED_HOSTS": [".staff.digital"],
+
+	"WORKON_HOME": "/home/user/.virtualenvs",
+	"DB_API": "django.db.backends.postgresql_psycopg2",
+	"ALTERN_HOME_DIR": "C:\\Users\\{{ UserName }}",
+	"ENV": "django_1_7",
+	"MERCURIAL_USER": "Your Name <usr@domain.com>"
+}

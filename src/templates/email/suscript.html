@@ -1,0 +1,24 @@
+{% extends "email/base.html" %}
+
+{% block title %}Suscripción{% if ideas %} - Ideas{% endif %}{% endblock %}
+
+{% block content %}
+<!-- hero article heading text -->
+<h1 style="color:#666666; font-size:26px; line-height:1.2; font-weight:normal; margin-top:0; margin-bottom:0.5em;">Suscripción{% if ideas %} - Ideas{% endif %}</h1>
+<!-- /hero article heading text -->
+<!-- hero article paragraph text -->
+<p style="margin-top:0; margin-bottom:0;">
+	Confirmación de Suscripción:
+	<table>
+		<tr>
+			<th style="text-align: left;width: 90px;">Nombres : </th>
+			<td> {{ nombres }}</td>
+		</tr>
+		<tr>
+			<th style="text-align: left;width: 90px;">E-mail : </th>
+			<td>{{ email }}</td>
+		</tr>
+	</table>
+</p>
+<!-- /hero article paragraph text -->
+{% endblock %}

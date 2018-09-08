@@ -1,0 +1,45 @@
+btn()
+	display inline-block
+	position relative
+	height 40px
+	line-height 40px
+	padding 0 40px
+	color blanco
+	transition all .3s linear
+	font-size 14px
+	font-family t-2
+	border none
+	.btn-ico
+		position absolute
+		top 0
+		bottom 0
+		line-height 40px
+		font-size 11px
+		transition all .3s ease
+
+.btn1
+	btn()
+	background c-4
+
+.btn2
+	btn()
+	background c-4
+	padding-right 52px
+	.btn-ico
+		right 25px
+
+.btn3
+	btn()
+	background c-6
+
+@media screen and (min-width 1025px)
+	.btn1:hover
+		background c-6
+
+	.btn2:hover
+		background c-6
+		.btn-ico
+			right 20px
+
+	.btn3:hover
+		background c-4

@@ -1,0 +1,501 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+    {{ request.get_full_path|getSEOTags }}
+{% else %}
+    <title>{{ info.titulo }} | {{ curso.nombre }} | {{ curso.categoria.nombre }}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<link rel="stylesheet" href="{{STATIC_URL}}js/fancy-full/lightgallery.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/fancy-full/lg-fb-comment-box.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/fancy-full/lg-transitions.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/validationform/validationEngine.jquery.css">
+{% endblock %}
+
+{% block classbody %}diplomados{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+    <div class="b9Main wancho">
+        <div class="b9Table">
+            <div class="b9Title">
+                <h1>{{ curso.categoria.nombre }}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 17 -->
+<nav class="b-miga wancho">
+    <ul>
+        <li><a href="#"><strong>{{"Modalidad"|t}}:</strong> {{ curso.getModalidad }}</a></li>
+        <li><a href="#"><strong>{{"Idioma"|t}}:</strong> {{ curso.getIdiomas }}</a></li>
+        <li><a href="#"><strong>{{"Rubro"|t}}:</strong> {{ curso.getRubros }}</a></li>
+    </ul>
+</nav>
+<section class="b17">
+    <div class="b17-cnt wancho">
+        <div class="b17-info">
+            <div class="b17-title">
+            {% if curso.nombre_complex %}
+                <h2>{{ curso.nombre_complex|safeStrong }}</h2>
+            {% else %}
+                <h2>{{ curso.nombre }}</h2>
+            {% endif %}
+            </div>
+            <div class="b17-cnt-sec">
+                <div class="b17-content-video">
+                    <div href="" class="b17-img" style="background-image:url({{ curso.getImg }});">
+                        {% if curso.video_id or curso.vimeo_id %}<span class="b17-video icon-ICONOS-SVG-09"></span>{% endif %}
+                    </div>
+                    {% if curso.video_id or curso.vimeo_id %}
+                    <div class="b17-link-video">
+                        {% if curso.video_id %}
+                        <iframe class="video-iframe" data-type="youtube" data-video="{{ curso.video_id }}" width="345" height="219" frameborder="0" allowfullscreen></iframe>
+                        {% else %}
+                        <iframe class="video-iframe" data-type="vimeo" data-video="{{ curso.vimeo_id }}" width="345" height="219" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="b17-text">
+                    <strong>{{ "Descripción"|t }}</strong>
+                    {{ curso.descript|safe }}
+                    {% if curso.archivo %}
+                        <a href="{{ curso.archivo.url }}" class="btn1" download>{{"VER BROCHURE"|t}} <span class="icon-ICONOS-SVG-30"></span></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="b17-descripcion">
+            <h3>{{"Descripción"|t}}</h3>
+            <h4>{{"DETALLES Y MODALIDADES:"|t}}</h4>
+            <ul>
+                <li>
+                    <figure>
+                        <img src="{{STATIC_URL}}img/b17-icon-1.png">
+                    </figure>
+                    <p>
+                        <strong>{{"Fechas:"|t}}</strong> {{ curso.fechas|safe }}
+                    </p>
+                </li>
+                <li>
+                    <figure>
+                        <img src="{{STATIC_URL}}img/b17-icono2.png">
+                    </figure>
+                    <p>
+                        <strong>{{"Horarios:"|t}}</strong> {{ curso.horarios|safe }}
+                    </p>
+                </li>
+                <li>
+                    <figure>
+                        <img src="{{STATIC_URL}}img/b17-icono3.png">
+                    </figure>
+                    <p>
+                        <strong>{{"Lugar:"|t}}</strong> {{ curso.lugar|safe }}
+                    </p>
+                </li>
+                <li>
+                    <figure>
+                        <img src="{{STATIC_URL}}img/b17-icono4.png">
+                    </figure>
+                    <p>
+                        <strong>{{"Inversión:"|t}}</strong> {{ curso.inversion|safe }}
+                    </p>
+                </li>
+            </ul>
+            <div class="b17-buttons">
+                <a href="#" class="btn3 b19-fancy" >{{"contáctanos"|t}} <span class="icon-check"></span></a>
+                <a href="#" onclick="document.getElementById('myFormcomprar').submit();" class="btn3">{{"comprar curso"|t}} <span class="icon-ICONOS-SVG-13"></span></a>
+            </div>
+            <form class="b13info" method='POST' action='.' id="myFormcomprar">{% csrf_token %}
+                <input type="hidden" name="cantidad" value="1">
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- BLOQUE 18 -->
+<section class="b18">
+    <div class="b18-cnt">
+        <div class="b18-tab-links">
+            {% if curso.mt_show %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab1">
+                <div class="b18-link-table">
+                    {{"metodología"|t}}
+                </div>
+            </a>
+            {% endif %}
+            {% if curso.getContenidos %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab2">
+                <div class="b18-link-table">
+                    {{"contenidos"|t}}
+                </div>
+            </a>
+            {% endif %}
+            {% if curso.getProfesores %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab3">
+                <div class="b18-link-table">
+                    {{"docentes"|t}}
+                </div>
+            </a>
+            {% endif %}
+            {% if curso.getBeneficios %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab4">
+                <div class="b18-link-table">
+                    {{"beneficios"|t}}
+                </div>
+            </a>
+            {% endif %}
+            {% if curso.iv_show %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab5">
+                <div class="b18-link-table">
+                    {{"inversión"|t}}
+                </div>
+            </a>
+            {% endif %}
+            {% if curso.dm_show %}
+            <a href="#b18-contenido" class="b18-link b18-click miclase" data-id="tab6">
+                <div class="b18-link-table">
+                    demo
+                </div>
+            </a>
+            {% endif %}
+        </div>
+        <div class="b18-cnt-tab" id="b18-contenido">
+            {% if curso.mt_show %}
+            <div class="b18-tab-item  b18-tab-1" id="tab1">
+                <div class="b18-cnt-item b18-list-romb">
+                    <div class="b18-titulo b18-add-before">
+                        <h3>{{ curso.mt_titulo|safeStrong }}</h3>
+                    </div>
+                    <div class="b18-list-romb" style="font-size: 14px;">
+                        {{ curso.mt_descript|safe }}
+                    </div>
+                    <div class="b18-text-bottom">{{"metología"|t}}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% if curso.getContenidos %}
+            <div class="b18-tab-item b18-tab-2" id="tab2">
+                <div class="b18-cnt-item">
+                    <div class="b18-titulo b18-add-before">
+                        <h3>{{"NUESTRO <strong>CONTENIDO DETALLADO :"|t}}</strong></h3>
+                    </div>
+                    <div class="b18-cnt-acordion">
+                        {% for row in curso.getContenidos %}
+                            <div class="b18-acordion">
+                                <div class="b18-barra">
+                                    <h3>{{ forloop.counter }}. {{ row.nombre }}</h3>
+                                    <div class="b18-icon-span">
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="b18-body b18-list-romb">
+                                    {{ row.descript|safe }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="b18-text-bottom">{{"contenido"|t}}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% if curso.getProfesores %}
+            <div class="b18-tab-item b18-tab-3" id="tab3">
+                <div class="b18-cnt-item">
+                    <div class="b18-titulo b18-add-before">
+                        <h3>{{ curso.dc_titulo|safeStrong }}</h3>
+                        {{ curso.dc_descript|safe }}
+                    </div>
+                    <div class="b18-t3-cnt-items">
+                        {% for row in curso.getProfesores %}
+                        <div class="b18-t3-item">
+                            <div class="b18-t3-cnt-item">
+                                <div class="b18-t3-img">
+                                    <img src="{{ row.img.path|thumbnail_by_name:'165x224' }}" width="165" height="224" alt="{{ row.nombres }}, {{ row.apellidos }} : {{ row.cargo }}">
+                                </div>
+                                <div class="b18-t3-texto">
+                                    <div class="b18-t3-titulo">
+                                        <h3>{{ row.nombres }} <strong>{{ row.apellidos }}, {{ row.detalle }}</strong></h3>
+                                    </div>
+                                    <div class="b18-t3-txt">
+                                        <h3>{{ row.cargo }}</h3>
+                                        {{ row.descript|safe }}
+                                    </div>
+                                    {% if row.linkedin %}
+                                    <div class="b18-t3-link"> {{"Sígueme en:"|t}} <a class="b18-icon-linkedin icon-linkedin" href="{{ row.linkedin }}" target="_blank"></a></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="b18-text-bottom">{{"docentes"|t}}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% if curso.getBeneficios %}
+            <div class="b18-tab-item b18-tab-4" id="tab4">
+                <div class="b18-cnt-item">
+                    <div class="b18-titulo b18-add-before">
+                        <h3>{{"CONÓCE NUESTROS <strong>BENEFICIOS"|t}}</strong></h3>
+                    </div>
+                    <div class="b18-cnt-acordion">
+                    {% for row in curso.getBeneficios %}
+                        <div class="b18-acordion">
+                            <div class="b18-barra">
+                                <h3>{{ row.nombre }}</h3>
+                                <div class="b18-icon-span">
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="b18-body">
+                                {{ row.descript|safe }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <div class="b18-text-bottom">{{"objetivo"|t}}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% if curso.iv_show %}
+            <div class="b18-tab-item b18-tab-5" id="tab5">
+                <div class="b18-cnt-item">
+                    <div class="b18-titulo b18-add-before">
+                        <h3>{{"CONÓCE LA <strong>INVERSIÓN"|t}}</strong></h3>
+                        {{ curso.iv_descript|safe }}
+                    </div>
+                    <div class="b18-t4-tablas">
+                        {{ curso.iv_tabla|safe }}
+                    </div>
+                    <div class="b18-listax">
+                        {{ curso.iv_descript_pie|safe }}
+                    </div>
+                    <div class="b18-text-bottom">{{"Inversión"|t}}</div>
+                </div>
+            </div>
+            {% endif %}
+            {% if curso.dm_show %}
+            <div class="b18-tab-item b18-tab-6" id="tab6">
+                <div class="b18-cnt-item">
+                    <div class="b18-info">
+                        <div class="b18-titulo b18-add-before">
+                            <h3>{{ curso.dm_titulo|safeStrong }}</h3>
+                            {{ curso.dm_descript|safe }}
+                        </div>
+                    </div>
+                    {% if curso.dm_video %}
+                    <div class="b18-t6-video">
+                        <div class="b18-t6-cnt-video">
+                            <figure class="b18-t6-img" style="background-image: url('{{ curso.getDemoImg }}');">
+                                {% if curso.dm_video_id %}
+                                <span class="b18-t6-play icon-play"></span>
+                                {% endif %}
+                            </figure>
+                            {% if curso.dm_video_id %}
+                            <div class="b18-link-video">
+                                <iframe class="video-iframe" data-video="{{ curso.dm_video_id }}" width="591" height="396" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="b18-text-bottom">DEMO</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- BLOQUE 19 -->
+<div class="b19-content">
+    <div class="b19">
+        <div class="b19-close icon-ICONOS-SVG-07"></div>
+        <div class="b19-ctn wancho">
+            <h2>{{"SOLICITA INFORMACIÓN"|t}}</h2>
+            <p>{{"Para más información llena tus datos y nos estaremos comunicando contigo<br> a la brevedad."|t}}</p>
+            <div class="b19-form">
+                <form action="{% url 'forms:curso' curso.slug %}" method="POST" name="b19-form" id="b19-form">
+                    <input type="hidden" name="curso" value="{{curso}}">
+                    <div class="b19-input">
+                        <input type="text" class="validate[required]" name="nombres" placeholder="{{'Nombre'|t}}*">
+                    </div>
+                    <div class="b19-input">
+                        <input type="email" class="validate[required,custom[email]]" name="email" placeholder="{{'Correo'|t}}*">
+                    </div>
+                    <div class="b19-input">
+                        <input type="text" class="validate[required]" name="telefono" placeholder="{{'Teléfono/Celular'|t}}*">
+                    </div>
+                    <div class="b19-input">
+                        <input type="text" name="empresa" placeholder="{{'Empresa'|t}}">
+                    </div>
+
+                    <div class="b19-select">
+                        <select name="pais">
+                            <option value="">{{"Pais"|t}}</option>
+                            {% for row in paises %}
+                            <option value="{{ row.nombre }}">{{ row.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="b19-input">
+                        <input type="text" name="ciudad" placeholder="{{'Ciudad'|t}}">
+                    </div>
+                    <div class="b19-textarea">
+                        <textarea class="validate[required]" name="mensaje" placeholder="{{'Deje su duda aqui:'|t}}"></textarea>
+                    </div>
+                    <div class="b19-check">
+                        <input type="checkbox" id="acepto" class="validate[required] checkbox" name="doit" style="display: block; opacity: 0;margin-bottom: -10px;">
+                        <label for="acepto">{{"Acepto Las condiciones de tratamiento para mis datos personales"|t}}</label>
+                    </div>
+                    {% csrf_token %}
+                    <input type="text" class="input-form-style" name="xseg_form" value="{{ csrf_token|key_constructor }}">
+                    
+                    <button href="#" class="btn1">{{"ENVIAR"|t}}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="b19-overlay"></div>
+</div>
+{% endblock %}
+
+{% block jsfinal %}
+<!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp{{ GOOGLE_APIKEY }}"></script> -->
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lightgallery.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lg-fullscreen.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lg-thumbnail.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lg-zoom.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lg-video.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/fancy-full/lg-autoplay.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/validationform/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/validationform/jquery.validationEngine-es.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.b17-descripcion').addClass('active');
+        //b18-acordeon
+        $('.b18-acordion:first-child .b18-barra').addClass('active');
+        $('.b18-acordion:first-child .b18-body').css('display', 'block');
+        $('.b18-barra').on('click', function(e){
+            e.preventDefault();
+            if($(this).hasClass('active')){
+                var a = true;
+            }
+            $('.b18-barra').removeClass('active');
+            if(!a){
+                $(this).addClass('active');
+            }
+
+            $('.b18-acordion .b18-body').stop(false).slideUp().css('height', 'auto');
+            $(this).parent().find('.b18-body').stop(false).slideToggle();
+        });
+
+        //b17-video
+        var url ="https://www.youtube.com/embed/";
+        var config ="?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+        $('.b17-img').click(function(event) {
+            play = $(this)
+            videocurrent = $(this).closest('.b17-content-video').find('.video-iframe');
+            videoid = videocurrent.attr('data-video');
+            type=videocurrent.attr('data-type');
+            if (type=='vimeo') {
+                videocurrent.attr('src', 'https://player.vimeo.com/video/'+videoid);
+            }else{
+                videocurrent.attr('src', url+videoid+config);
+            }
+            videocurrent.load(function() {
+                play.closest('.b17-content-video').find('.b17-img').addClass('active');
+                play.addClass('active');
+                videocurrent[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+            });
+        });
+
+        //b18-video
+        var url ="https://www.youtube.com/embed/";
+        var config ="?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+        $('.b18-t6-play').click(function(event) {
+            play = $(this)
+            play.addClass('b18-video-animacion');
+            videocurrent = $(this).closest('.b18-t6-cnt-video').find('.video-iframe');
+            videoid = videocurrent.attr('data-video');
+            videocurrent.attr('src', url+videoid+config);
+
+            videocurrent.load(function() {
+                play.closest('.b18-t6-cnt-video').find('.b18-t6-img').addClass('active');
+                play.addClass('active');
+                videocurrent[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+            });
+
+        });
+
+        //b18-tab
+        $('.b18-tab-links .b18-link:first-child').addClass('active');
+        $('.b18-cnt-tab .b18-tab-item:first-child').addClass('active');
+
+        $('.b18-tab-links .b18-click').click(function(event) {
+            event.preventDefault();
+            $('.b18-click').removeClass('active');
+            $(this).addClass('active');
+            var tab_id=$(this).attr('data-id');
+            $('.b18-cnt-tab .b18-tab-item').removeClass('active');
+            $('.b18-tab-item[id="'+tab_id+'"]').addClass('active');
+            console.log(tab_id);
+
+        });
+        $('.b19-input input, .b19-textarea textarea, .b19-select select, .b19-check label').focusin(function() {
+                $(this).parent().addClass('active');
+            });
+
+        $('.b19-input input, .b19-textarea textarea, .b19-select select, .b19-check label').focusout(function() {
+            if ($(this).val() === "") {
+                $(this).parent().removeClass('active');
+            };
+        });
+
+        $('.b19-input input, .b19-textarea textarea, .b19-select select, .b19-check label').each(function() {
+            if ($(this).val() != "") {
+                $(this).parent().addClass('active');
+            };
+        });
+        $("form").validationEngine('attach', {
+            promptPosition : "topLeft",
+            autoHidePrompt: true,
+            autoHideDelay: 3000,
+            binded: false,
+            scroll: false,
+            validateNonVisibleFields: true
+        });
+
+        $("#b19-form").submit(function(e) {
+            var valid = $(this).validationEngine('validate');
+            if (!valid){
+                return false;
+            }else{
+                return true;
+            };
+        });
+        $(".b19-fancy").click(function() {
+            $(".b19-content").addClass('active')
+        });
+        $(".b19-close, .b19-overlay").click(function() {
+            $(".b19-content").removeClass('active')
+        });
+        $(document).keyup(function(event){ if(event.which==27){ $('.b19-content').removeClass('active');
+         } });
+    });
+</script>
+{% endblock %}

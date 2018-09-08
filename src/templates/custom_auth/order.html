@@ -1,0 +1,108 @@
+{% extends "common/_base.html" %}
+{% load static %}
+{% load app_tags %}
+{% load thumbnail %}
+
+{% block cssadicional %}
+
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+
+
+<!-- BLOQUE 20 -->
+
+<section class="b20">
+  <div class="b20-ctn wancho">
+    <div class="g-title">
+      <h3 >detalle de pedido</h3>
+    </div>
+    <div class="b20-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre de producto</th>
+              <th>Talla</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in result %}
+            <tr class="gruposell" data-id="{{ p.id }}">
+              <td>
+                <div class="b27-info clearfix">
+                  <div class="b27-figure">
+                    <img src="{{ p.colorproducto.imagen1.path|thumbnail_by_name:'54x72' }}" width="50" height="75" alt="">
+                  </div>
+                  <div class="b27-text">
+                    <h4>{{p.colorproducto.producto.nombre}}</h4>
+                    <!-- <p>texto texto</p> -->
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="b27-select1">
+                <!--
+                  <select name="" id="">
+                    <option value="">XL</option>
+                    <option value="">L</option>
+                    <option value="">M</option>
+                    <option value="">s</option>
+                  </select>
+                -->
+                  {{p.talla}}
+
+                </div>
+              </td>
+              <td>S/.{{p.precio}}</td>
+              <td>
+                <!-- cantidad -->
+                <div class="b27-number">
+                <span>{{p.cantidad}}</span>
+                  <!--
+                  <div class="b27-number-text">
+                    1
+                  </div>
+                  <span class="b27-number-up icon-arrow-up"></span>
+                  <span class="b27-number-down icon-arrow-down"></span>
+                  -->
+                </div>
+              </td>
+              <td>S/{{p.sub_total}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+    </div>
+
+    <div class="b20-btn">
+      <div class="b20-1">
+        <a href="{% url 'custom_auth:orders' %}" class="g-btn-negro">atras</a>
+      </div>
+      <div class="b20-2">
+        <a href="" class="g-btn-negro"></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+{% endblock %}
+{% block jsfinal %}
+
+<script type="text/javascript">
+  $(function(){
+
+
+  });
+</script>
+{% endblock %}

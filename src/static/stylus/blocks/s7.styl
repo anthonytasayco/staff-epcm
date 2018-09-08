@@ -1,0 +1,88 @@
+.b7
+	width 100%
+	background c-2
+	padding 30px 0
+	.formError .formErrorContent
+		background c-4
+	.formError .formErrorArrow div
+		background c-4
+.b7-cnt
+	font-size 0
+	max-width 860px
+.b7-suscri
+	color c-3
+	font-size 15px
+	display inline-block
+	vertical-align top
+	width 32.6%
+	padding-left 50px
+	position relative
+	box-sizing border-box
+	text-transform uppercase
+	strong
+		display block
+		color c-4
+		font-size 18px
+		font-family t-2
+		font-weight normal
+	&:before
+		position absolute 
+		top 0
+		left 0
+		content "\e924"
+		display block
+		color c-4
+		font-size 30px
+		font-family icomoon
+.b7-form
+	font-size 0
+	display inline-block
+	vertical-align top
+	width 67.4%
+	cf()
+	button
+		border 0
+		height 40px
+		float right
+.b7-input
+	width 31.2%
+	float left
+	margin-left 4.8%
+	&:first-child
+		margin-left 0
+	placeholder(c-3,t-0)
+	input
+		font-size 15px
+		color c-3
+		height 37px
+		width 100%
+		border 0
+		background transparent
+		border-bottom 1px solid c-3
+@media screen and (max-width: 768px)
+	.b7-suscri
+		display block
+		width 100%
+		padding-left 0
+		text-align center
+		margin-bottom 20px
+		&:before
+			display none
+		strong
+			margin-left 5px
+			display inline-block
+	.b7-form
+		width 100%
+		display block
+	.b7-input
+		width 35%
+@media screen and (max-width: 640px)
+	.b7-input
+		width 48%
+		margin-left 4%
+		margin-bottom 20px
+@media screen and (max-width: 480px)
+	.b7-input
+		float none
+		width 100%
+		margin-left 0

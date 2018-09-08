@@ -1,0 +1,79 @@
+// Colors idendity
+c-0 = #4d4d4d
+c-1 = #394049
+c-2 = #F2F2F2
+c-3 = #0032a0
+c-4 = #05ce7b
+c-5 = #1577F8
+c-6 = #01307A
+c-7 = #60B268
+c-8 = #cccccc
+c-9 = #e6e6e6
+c-10 = #999999
+c-11 = #3f3f3f
+c-12 = #f6faff
+c-13 = #d9d9d9
+c-14 = #b3b3b3
+c-15 = #4d4d4d
+blanco = #ffffff
+negro = #000000
+
+// Fonts
+t-0 = 'Montserrat-Light', sans-serif
+t-1 = 'Montserrat-Regular', sans-serif
+t-2 = 'Montserrat-SemiBold', sans-serif
+t-3 = 'Montserrat-Bold', sans-serif
+t-4 = 'Gotham-Light', sans-serif
+t-5 = 'Gotham-ExtraLight', sans-serif
+t-6 = 'Gotham-Medium', sans-serif
+t-7 = 'Gotham-Book', sans-serif
+t-8 = 'Gotham-Bold', sans-serif
+t-9 = 'arial', sans-serif
+
+icomoon = 'icomoon'
+
+// Mixins
+placeholder(color,famyli)
+	::-webkit-input-placeholder { color: color; font-family: famyli; } /* WebKit */
+	:-moz-placeholder { color: color; font-family: famyli; } /* Firefox 18- */
+	::-moz-placeholder { color: color; font-family: famyli; } /* Firefox 19+ */
+	:-ms-input-placeholder { color: color; font-family: famyli; } /* IE 10+ */
+
+transition-all()
+	transition all 0.25s
+	
+cf()
+	zoom 1
+	&:after
+	&:before
+		content ""
+		display table
+	&:after
+		clear both
+.cf
+	cf()
+
+backgroundsize()
+	background-repeat no-repeat
+	background-size cover
+	background-position center center 		
+
+img-res()
+	width 100%
+	height auto
+	display block
+	
+background-t(color, alpha = 1)
+	ms-color = argb(color, alpha)
+	background rgba(color, alpha)
+	zoom 1
+	filter s('progid:DXImageTransform.Microsoft.gradient(startColorstr=%s,endColorstr=%s)', ms-color, ms-color) !important
+hex(decimal)
+	hex-value = ('0') ('1') ('2') ('3') ('4') ('5') ('6') ('7') ('8') ('9') ('A') ('B') ('C') ('D') ('E') ('F')
+	unquote(hex-value[floor(decimal / 16)] + hex-value[floor(decimal % 16)])
+	
+argb(color, alpha = 1)
+	unquote('#') + hex(alpha * 255) + hex(red(color)) + hex(green(color)) + hex(blue(color))
+
+
+	

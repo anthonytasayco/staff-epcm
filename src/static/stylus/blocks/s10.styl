@@ -1,0 +1,133 @@
+.b10
+	width 100%
+	padding 78px 0 85px 0
+.b10-ctn
+	max-width 1120px
+	font-size 0
+.b10-img, .b10-tab
+	font-size 14px
+	display inline-block
+	vertical-align top
+	width 37.6%
+	img
+		width 100%
+		display block
+		height auto
+.b10-tab
+	width 56.4%
+	margin-left 5.8%
+	p
+		margin 0 0 14px 0
+		&:last-child
+			margin-bottom 0
+.b10-menu
+	font-size 0
+	li
+		text-transform uppercase
+		font-size 16px
+		width 22%
+		vertical-align top
+		display inline-block
+		&:nth-child(2)
+			width 40%
+		&:nth-child(3)
+			width 12%
+		&:last-child
+			width 26%
+		&:nth-child(even)
+			text-align center
+		a
+			width 100%
+			padding-bottom 7px
+			display block
+			border-bottom 1px solid c-8
+			transition all .5s ease-in
+			@media screen and (min-width: 1025px)
+				&:hover
+					color c-3
+					border-bottom 1px solid c-3
+			&.active
+				color c-3
+				border-bottom 1px solid c-3
+.b10-content-tab
+	position relative
+	margin-top 35px
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+	ol
+		li
+			counter-increment list
+			list-style-type none
+			margin-bottom 13px
+			margin-top 13px
+			line-height 1.9
+			position relative
+			&:before
+				color: c-4
+				content: counter(list) "."
+				left:-32px
+				position: absolute
+				text-align: right
+				width: 26px
+.b10-ctn-tab
+	z-index -1
+	opacity 0
+	visibility hidden
+	transition all .5s linear
+	position absolute
+	top 0
+	left 0
+	width 100%	
+	&.active
+		position relative
+		z-index 1
+		opacity 1
+		visibility visible
+	
+@media screen and (max-width: 1200px)
+	.b10-menu li
+		font-size 15px
+		width 28%
+		&:nth-child(2)
+			width 35%
+		&:nth-child(3)
+			width 14%
+		&:last-child
+			width 23%
+@media screen and (max-width: 1024px)
+	.b10
+		padding 50px 0
+	.b10-menu li
+		font-size 14px
+@media screen and (max-width: 960px)
+	.b10-img
+		display none
+	.b10-tab
+		display block
+		width 100%
+		margin-left 0
+	.b10-menu li
+		text-align center
+@media screen and (max-width: 640px)
+	.b10
+		padding 30px 0
+@media screen and (max-width: 480px)
+	.b10-menu li
+		display block
+		width 100%
+		margin-bottom 20px
+		&:nth-child(2), &:nth-child(3), &:last-child
+			width 100%
+

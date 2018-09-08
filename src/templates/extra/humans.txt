@@ -1,0 +1,13 @@
+/* TEAM */
+Web Developer: Yelson Chevarrias Huaman
+Email: yelson@staffdigital.pe
+Email: chevarrias@gmail.com
+Site: ccapudev.com
+Location: Lima - Perú
+Design by: StaffDigital - http://www.staffdigital.pe/
+Client: {{ project_name }}
+
+/* SITE */
+Standards: HTML5
+Components: Django
+Software: Sublime Text 3

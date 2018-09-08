@@ -1,0 +1,159 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"Actualiza tu datos"|t}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"Actualiza tu datos"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 22 -->
+<section class="b22">
+	<div class="b22-cnt wancho">
+		<div class="b-title-bien">
+			<h2>{{"Bienvenido(a)"|t}} <strong>{{ request.user.nombres }}</strong></h2>
+		</div>
+		<div class="b-menu-links-bien">
+			<ul>
+				<li>
+					<a style="cursor: pointer;" class="active"> <span class="icon-ICONOS-SVG-16"></span>{{"Actualizar Datos"|t}}</a>
+				</li>
+				<li>
+					<a href="{% url 'custom_auth:micuenta_pedidos' %}" ><span class="icon-ICONOS-SVG-16"></span>{{"Mis Pedidos"|t}}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="b22-menu-ctn">
+			<div class="b22-menu-item">
+				<h3><strong>{{"Información</strong> Personal"|t}}</h3>
+				<form action="{% url 'custom_auth:micuenta_datos' %}" name="b22-informacion" method="POST" id="b22-informacion">
+					{% csrf_token %}
+					<div class="g-input">
+						<label>{{"Nombres"|t}}</label>
+						<input type="text" class="validate[required]" placeholder="xxxxxxxxx" name="nombres" value="{{ request.user.nombres }}">
+					</div>
+					<div class="g-input">
+						<label>{{"Apellidos"|t}}</label>
+						<input type="text" class="validate[required]" placeholder="xxxxxxxxx" name="apellidos" value="{{ request.user.apellidos }}">
+					</div>
+					<div class="g-input">
+						<label>{{"Documento de Identidad"|t}}</label>
+						<input type="text" class="validate[required]" placeholder="xxxxxxxxx" name="nrodocumento" value="{{ request.user.nrodocumento }}">
+					</div>
+					<div class="g-input">
+						<label>{{"Teléfono"|t}}</label>
+						<input type="text" class="validate[required]" placeholder="xxxxxxxxx" name="telefono" value="{{ request.user.telefono }}">
+					</div>
+					<div class="g-input">
+						<label>{{"Pais"|t}}</label>
+						<select name="pais" required>
+							<option value="" selected disabled>{{"Selecione su país de procedencia"|t}}</option>
+							{% for row in paises %}
+								<option value="{{row.nombre}}" {% if row.nombre == request.user.pais %}selected{% endif %}>{{row.nombre}}</option>
+							{% endfor %}
+						</select>
+						{% comment %}
+						<input type="text" class="validate[required]" placeholder="xxxxxxxxx" name="pais" value="{{ request.user.pais }}">
+						{% endcomment %}
+					</div>
+					<div class="g-input">
+						<label>{{"Correo"|t}}</label>
+						<input type="email" class="validate[required,custom[email]]" placeholder="xxxxx@xxxx.xx" value="{{ request.user.email }}" name="email">
+					</div>
+					<button href="#" class="btn1">{{"Guardar"|t}}</button>
+
+				</form>
+			</div>
+			<div class="b22-menu-item">
+				<h3><strong>{{"Cambiar</strong>  Contraseña"|t}}</h3>
+				<form action="." method="POST" name="b22-contrasena" id="b22-contrasena">
+					{% csrf_token %}
+					<div class="g-input">
+						<label>{{"Contraseña Actual"|t}}</label>
+						<input type="password" name="pwd" class="validate[required]" placeholder="xxxxxxxxx">
+					</div>
+					<div class="g-input">
+						<label>{{"Nueva Contraseña"|t}}</label>
+						<input type="password" name="new_pwd" class="validate[required]" placeholder="xxxxxxxxx" name="contrasena" id="contrasena">
+					</div>
+					<div class="g-input">
+						<label>{{"Repetir Contraseña"|t}}</label>
+						<input type="password" name="new_pwd_rpt" class="validate[required,equals[contrasena]]" placeholder="xxxxxxxxx" >
+					</div>
+					<div class="g-input">
+						<label id="wFormErrors" style="color: #ff2626;text-transform: none;"></label>
+					</div>
+					<button href="#" class="btn3">{{"Actualizar datos"|t}}</button>
+				</form>
+				<div id="wMsgFromServer" class="g-input" style="display: none;width: 100%;color: #00369c;text-transform: none;">
+					<label style="text-transform: none;"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$(function(){
+		$('#b22-contrasena').submit(function(){
+			$('#wFormErrors').html('');
+			$.ajax({
+				url: '{% url "custom_auth:cambiarpassword" %}',
+				type: 'POST',
+				dataType: 'json',
+				data: $(this).serialize(),
+				success: function(data){
+					console.log(data);
+					if(data['status'] == 200){
+						$('#wMsgFromServer label').html(data['msg']);
+						$('#b22-contrasena').slideToggle();
+						$('#wMsgFromServer').fadeIn();
+					}else{
+						$('#wFormErrors').html(data['msg']);
+
+					}
+				},
+			})
+			.done(function() {
+
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+			return false;
+		});
+	});
+</script>
+{% endblock %}

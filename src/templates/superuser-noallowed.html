@@ -1,0 +1,61 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }}</title>
+	<meta name="robots" content="noindex">
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>404</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 38 -->
+<section class="b38">
+	<div class="b38-wrapper">
+		<div class="b38-content">
+			<figure class="b38-image">
+				<img src="{{STATIC_URL}}/img/b38img1.png" width="122" height="108" alt="">
+			</figure>
+			<div class="b38-title">
+				<h2>Super Usuario Detectado</h2>
+			</div>
+			<div class="b38-text">
+				<p><strong>su usuario actual no cuenta con permisos de compra ni de interación</strong></p>
+			</div>
+			<div class="b38-text">
+				<p>sirvase a cerrar sesión <a href="{% url 'admin:logout' %}" style="color:#00369c;text-decoration: underline;">aquí</a> para poder interactuar con una cuenta de comprador</p>
+			</div>
+			<div class="b38-link">
+				<a href="{% url 'home' %}" class="btn1">REGRESAR AL INICIO</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+{% endblock %}

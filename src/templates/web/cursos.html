@@ -1,0 +1,274 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{ cat.nombre }}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	.b16-item .wContextNew-false{
+		display: none !important;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{ cat.nombre }}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 15 -->
+<section class="b15" id="b15-anima">
+	<div class="b15-ctn wancho">
+		<div class="b15-info">
+			<h2>{{"programas <strong>dirigidos a:"|t}}</strong></h2>
+			{{ cat.descript|safe }}
+		</div>
+		<div class="b15-img">
+			{% if cat.img_s %}
+			<img src="{{ cat.img_s.url }}" alt="{{ cat.nombre }}">
+			{% endif %}
+			{% if cat.img_i %}
+			<img src="{{ cat.img_i.url }}" alt="{{ cat.nombre }}">
+			{% endif %}
+		</div>
+	</div>
+</section>
+
+
+<!-- BLOQUE 16 -->
+<section class="b16">
+	<span class="b16-sidebar-btn">{{"Filtrar"|t}}</span>
+	<span class="b16-overlay"></span>
+	<div class="b16-cnt wancho">
+		<div class="b16-izquierda">
+			<div class="b16-titulo-top">
+				<h3>{{"Filtrar por:"|t}}</h3>
+			</div>
+			<form class="b16-barra" method="GET" action="." id="wFilterForm">
+				{% csrf_token %}
+				<div class="b16-barra-item">
+					<div class="b16-barra-top">
+						<span class="icon-ICONOS-SVG-02 b16-barra-icon"></span>
+						<p>{{"Modalidad"|t}}</p>
+					</div>
+					<div class="b16-barra-content">
+						<div class="b16-check">
+							<input id="modalidad" value="o" name="mod" type="checkbox">
+							<label for="modalidad">Online</label>
+						</div>
+						<div class="b16-check">
+							<input id="Classroom" value="c" name="mod" type="checkbox">
+							<label for="Classroom">Classroom</label>
+						</div>
+						<div class="b16-check">
+							<input id="Webcast" value="l" name="mod" type="checkbox">
+							<label for="Webcast">Live Webcast</label>
+						</div>
+					</div>
+				</div>
+				<div class="b16-barra-item">
+					<div class="b16-barra-top">
+						<span class="icon-ICONOS-SVG-10 b16-barra-icon"></span>
+						<p>{{"Idiomas"|t}}</p>
+					</div>
+					<div class="b16-barra-content">
+					{% for row in cat.getIdiomas %}
+						<div class="b16-check">
+							<input id="wIdiCod{{ forloop.counter }}" name="idi" value="{{row.pk}}" type="checkbox">
+							<label for="wIdiCod{{ forloop.counter }}">{{row.nombre}}</label>
+						</div>
+					{% endfor %}
+					</div>
+				</div>
+				<div class="b16-barra-item">
+					<div class="b16-barra-top">
+						<span class="icon-ICONOS-SVG-34 b16-barra-icon"></span>
+						<p>{{"Rubro"|t}}</p>
+					</div>
+					<div class="b16-barra-content">
+					{% for row in cat.getRubros %}
+						<div class="b16-check">
+							<input id="wRubro{{ row.pk }}" value="{{ row.pk }}" name="rubro" type="checkbox">
+							<label for="wRubro{{ row.pk }}">{{ row.nombre }}</label>
+						</div>
+					{% endfor %}
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="b16-derecha">
+			<div class="b16-derecha-title">
+				<h3>{{"conóce todos <strong>nuestros programas"|t}}</strong></h3>
+			</div>
+			<div class="b16-cnt-items">
+				{% for row in cursos %}
+				<div class="b16-item">
+					<div class="b16-img" style="background-image: url('{{ row.getImg }}');"></div>
+					<div class="b16-absolute1">
+						<div class="b16-absolute-info">
+							<div class="b16-fecha">{{"Inicio"|t}}: {{ row.inicio|date:'d/m/Y' }}</div>
+							<h3>{{ row.nombre }}</h3>
+						</div>
+					</div>
+					<div class="b16-absolute2">
+						<h3>{{ row.nombre }}</h3>
+					</div>
+					<div class="b16-absolute3">
+						<a href="{% url 'cursos:curso' row.slug %}" class="btn2"><span class="btn-ico icon-ICONOS-SVG-28"></span>{{"VER MÁS"|t}}</a>
+					</div>
+					{% if row.nuevo %}
+					<div class="b16-absolute4">
+						<div class="b16-etiqueta">
+							<span>{{"Nuevo"|t}}</span>
+						</div>
+					</div>
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</section>
+<section id="wTemplateContext" style="display: none;">
+	<div class="b16-item">
+		<div class="b16-img" style="background-image: url('[[img]]');"></div>
+		<div class="b16-absolute1">
+			<div class="b16-absolute-info">
+				<div class="b16-fecha">{{"Inicio"|t}}: [[inicio]]</div>
+				<h3>[[nombre]]</h3>
+			</div>
+		</div>
+		<div class="b16-absolute2">
+			<h3>[[nombre_h]]</h3>
+		</div>
+		<div class="b16-absolute3">
+			<a href="[[link]]" class="btn2"><span class="btn-ico icon-ICONOS-SVG-28"></span>{{"VER MÁS"|t}}</a>
+		</div>
+		<div class="b16-absolute4" class="wContextNew-[[nuevo]]">
+			<div class="b16-etiqueta">
+				<span>{{"Nuevo"|t}}</span>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	function restore_form(argument) {
+		$("input[name='mod']").prop('checked',false);
+		$("input[name='idi']").prop('checked',false);
+		$("input[name='rubro']").prop('checked',false);
+		var params = {};
+		window.location.search.substring(1).split('&').forEach(function(pair) {
+			pair = pair.split('=');
+			if (pair[1] !== undefined) {
+				var key = decodeURIComponent(pair[0]),
+						val = decodeURIComponent(pair[1]),
+						val = val ? val.replace(/\++/g,' ').trim() : '';
+
+				if (key.length === 0) {
+					return;
+				}
+				if (params[key] === undefined) {
+					params[key] = val;
+					$("input[name='"+key+"'][value='"+val+"']").prop('checked',true);
+				}
+				else {
+					if ("function" !== typeof params[key].push) {
+						params[key] = [params[key]];
+					}
+					params[key].push(val);
+					$("input[name='"+key+"'][value='"+val+"']").prop('checked',true);
+				}
+			}
+		});
+	}
+
+	function renderForm(data){
+		//var filter_data_get = data['get_params'];
+		var template = $('#wTemplateContext').html();
+		var response_html = '';
+		$.each(data['items'], function(index, el) {
+			response_html += template.replace('[[nombre]]',el.nombre).replace('[[link]]',el.link).replace('[[nuevo]]',el.nuevo)
+							.replace('[[inicio]]',el.fecha).replace('[[img]]',el.img).replace('[[nombre_h]]',el.nombre)
+		});
+		$('.b16-cnt-items').html('');
+		$('.b16-cnt-items').html(response_html);
+		//window.location.hash("{{ request.path }}?"+filter_data_get);
+		var search = location.search.substring(1);
+		search?JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+						 function(key, value) { return key===""?value:decodeURIComponent(value) }):{}
+	}
+	$(function(){
+		var ajaxCacheState = true;
+		var ajaxCache = {};
+		function click_sidebar(){
+			$('.b16-sidebar-btn').click(function(event) {
+				event.preventDefault();
+				var seleccion= $('.b16-sidebar-btn').parent();
+				console.log(seleccion);
+				if (seleccion.hasClass('active')) {
+					$('.b16-sidebar-btn').parent().removeClass('active');
+				}
+				else{
+					$('.b16-sidebar-btn').parent().addClass('active');
+				}
+			});
+		}
+		click_sidebar();
+		$('#wFilterForm').change(function(event) {
+			console.log("Form change");
+			var filter_data_get = $('input[name!=csrfmiddlewaretoken]',this).serialize();
+			var filter_data = $(this).serializeArray();
+			tmpData = ajaxCache[filter_data_get];
+			if(tmpData == undefined || ajaxCacheState == false){
+				$.ajax({
+					url: '{{ request.path }}',
+					type: 'POST',
+					dataType: 'json',
+					data: filter_data,
+				})
+				.done(function(data) {
+					data['get_params'] = filter_data_get;
+					renderForm(data);
+					window.history.pushState(data, "{{ info.titulo }} | {{ cat.nombre }}", "{{ request.path }}?"+filter_data_get);
+					ajaxCache[filter_data_get] = data;
+				});
+			}else{
+				console.log("Using Cached");
+				renderForm(tmpData);
+				window.history.pushState(tmpData, "{{ info.titulo }} | {{ cat.nombre }}", "{{ request.path }}?"+filter_data_get);
+			}
+		});
+		restore_form();
+	});
+	window.onpopstate = function(e){
+		if(e.state !== null) { 
+			renderForm(e.state);
+			restore_form();
+
+		}
+	}
+</script>
+{% endblock %}

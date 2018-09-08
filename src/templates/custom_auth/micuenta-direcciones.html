@@ -1,0 +1,68 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 25 -->
+<section class="b2">
+    <div class="b25-nt wancho">
+        <div class="bcotent-form-prin">
+            <div class="bmicuea">
+                <h1>Mi cuenta</h1>
+                <a class="bt_gnrl bt_1 btn-cuenta-mobile" href="#"><span>Abrir Menú</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'custom_auth:micuenta_datos' %}">Datos</a></li>
+                        <li><a href="{% url 'custom_auth:micuenta_direcciones' %}" class="active">Direcciones</a></li>
+                        <li><a href="{% url 'custom_auth:micuenta_pedidos' %}">Pedidos</a></li>
+                        <li><a href="{% url 'custom_auth:micuenta_listadeseos'%}">Lista de Deseos</a></li>
+
+                    </ul>
+                </nav>
+            </div>
+            <div class="bcuent">
+                <h2>Mis Direcciones</h2>
+                <div class="b25-c">
+
+                    {% for i in direcciones  %}
+                    <div class="b25-item">
+                        <h3>{{i.nombres}}</h3>
+                        <p>{{i.nombre}}</p>
+                        <ul>
+                            <li><strong>Departamento:</strong> <span>{{i.region_nombre}}</span></li>
+                            <li><strong>Provincia:</strong> <span>{{i.provincia_nombre}}</span></li>
+                            <li><strong>Distrito:</strong> <span>{{i.distrito_nombre}}</span></li>
+                            <li><strong>Referencia:</strong> <span>{{i.referencia}}</span></li>
+                        </ul>
+                        <a href="{% url 'custom_auth:micuenta_direcciones_edit' i.slug %}" class="b25-btn">Editar <span class=""></span></a>
+                        <a class="b25-close" href="{% url 'custom_auth:micuenta_direcciones_del' i.slug %}"></a>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+                <div class="btn-bu">
+                    <a class="bt_gnrl bt_1" href="{% url 'custom_auth:micuenta_direcciones_add' %}"><span>Agregar Nueva Direccion</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+        $(".b25-close").click(function() {
+            $(this).parent().fadeOut();
+        });
+        $(".btn-cuenta-mobile").click(function() {
+            $(".bmicuenta nav").slideToggle("slow");
+        });
+    });
+</script>
+{% endblock %}

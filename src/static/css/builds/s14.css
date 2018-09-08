@@ -1,0 +1,239 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b14 {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 90px;
+}
+.b14-cnt {
+  max-width: 1175px;
+  width: 95%;
+  margin: auto;
+  font-size: 0;
+}
+/* Izquierda*/
+.b14-izquierda {
+  display: inline-block;
+  vertical-align: middle;
+  width: 38%;
+}
+.b14-titulo {
+  color: #000;
+  position: relative;
+  padding-bottom: 12px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.b14-titulo h3 {
+  font-size: 20px;
+  font-family: 'Gotham-Medium', sans-serif;
+  margin: 0;
+}
+.b14-titulo:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 65px;
+  height: 3px;
+  background: #05ce7b;
+}
+.b14-texto {
+  margin-top: 20px;
+  font-size: 14px;
+}
+.b14-texto p {
+  margin: 0;
+}
+.b14-texto ul li {
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.9;
+  margin-bottom: 9px;
+}
+.b14-texto ul li:before {
+  content: "\e930";
+  top: 2px;
+  left: 0;
+  color: #05ce7b;
+  font-size: 12px;
+  font-family: 'icomoon';
+  position: absolute;
+}
+.b14-texto ol li {
+  counter-increment: list;
+  list-style-type: none;
+  margin-bottom: 13px;
+  margin-top: 13px;
+  line-height: 1.9;
+  position: relative;
+}
+.b14-texto ol li:before {
+  color: #05ce7b;
+  content: counter(list) ".";
+  left: -32px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+/* Derecha */
+.b14-derecha {
+  display: inline-block;
+  vertical-align: middle;
+  width: 62%;
+  padding-left: 50px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.b14-item {
+  width: 25.5%;
+  margin-right: 8%;
+  display: inline-block;
+  vertical-align: top;
+}
+.b14-item:last-child {
+  margin-right: 0;
+}
+.b14-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.b14-slider .bx-wrapper .bx-controls-direction a {
+  background: none;
+}
+.b14-slider .bx-wrapper .bx-controls-direction a:before {
+  font-family: 'icomoon';
+  position: absolute;
+  display: block;
+  text-indent: 0;
+  font-size: 35px;
+}
+.b14-slider .bx-wrapper .bx-next {
+  right: -54px;
+}
+.b14-slider .bx-wrapper .bx-next:before {
+  content: "\e606";
+}
+.b14-slider .bx-wrapper .bx-prev {
+  left: -54px;
+}
+.b14-slider .bx-wrapper .bx-prev:before {
+  content: "\e607";
+}
+@media screen and (max-width: 1190px) {
+  .b14.slider-ok .b14-izquierda {
+    width: 35%;
+  }
+  .b14.slider-ok .b14-derecha {
+    width: 65%;
+  }
+}
+@media screen and (max-width: 1120px) {
+  .b14.slider-ok .b14-izquierda {
+    width: 30%;
+  }
+  .b14.slider-ok .b14-derecha {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .b14.slider-ok .b14-derecha {
+    width: 100%;
+    padding-left: 0;
+    margin-top: 25px;
+  }
+  .b14.slider-ok .b14-izquierda {
+    width: 100%;
+    text-align: center;
+  }
+  .b14.slider-ok .b14-titulo:before {
+    right: 0;
+    margin: auto;
+  }
+}
+@media screen and (max-width: 700px) {
+  .b14.slider-ok .b14-slider {
+    max-width: 373px;
+    margin: auto;
+    overflow: hidden;
+  }
+  .b14.slider-ok .b14-slider-resp {
+    width: 500px;
+  }
+  .b14-slider .bx-controls-direction {
+    display: none;
+  }
+}
+@media screen and (max-width: 400px) {
+  .b14.slider-ok .b14-slider {
+    max-width: 170px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .b14 {
+    padding: 50px 0;
+  }
+  .b14-item {
+    width: 29.5%;
+    margin-right: 5%;
+  }
+  .b14-izquierda {
+    width: 35%;
+  }
+  .b14-derecha {
+    width: 65%;
+    padding-left: 40px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .b14-derecha {
+    width: 100%;
+    padding-left: 0;
+    margin-top: 25px;
+  }
+  .b14-izquierda {
+    width: 100%;
+    text-align: center;
+  }
+  .b14-titulo:before {
+    right: 0;
+    margin: auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .b14-item {
+    width: 27.5%;
+    margin-right: 8%;
+  }
+}
+@media screen and (max-width: 640px) {
+  .b14 {
+    padding: 30px 0;
+  }
+  .b14-item {
+    width: 30%;
+    margin-right: 5%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .b14-item {
+    width: 100%;
+    max-width: 170px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  .b14-item:last-child {
+    margin: auto;
+  }
+}

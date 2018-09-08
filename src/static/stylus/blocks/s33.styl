@@ -1,0 +1,204 @@
+.b33
+	width 100%
+	padding-top 98px
+	padding-bottom 58px
+	overflow hidden
+
+.b33-cnt
+	max-width 1154px
+	width 95%
+	margin auto
+	font-size 0
+
+.b33-izquierda
+	display inline-block
+	vertical-align top
+	width 53.2%
+	overflow hidden
+
+.b33-titulo
+	font-size 18px
+	color c-4
+	font-family t-2
+	position relative
+	background blanco
+	display inline-block
+	padding-right 10px
+	&:before
+		content ""
+		position absolute
+		top 0
+		right -100%
+		width 100%
+		bottom 0
+		height 1px
+		background #d9d9d9
+		margin auto
+	p
+		margin 0
+
+.b33-texto
+	margin-top 30px
+	font-size 14px
+	p
+		margin 0
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+
+.b33-formulario
+	margin-top 25px
+	li
+		font-size 0
+	.g-input
+		display inline-block
+		width 48.2%
+		margin-right 3.6%
+		margin-bottom 20px
+	.g-input:last-child
+		margin-right 0
+	.g-textarea
+		width 100%
+		margin-bottom 0
+	.btn1
+		margin-top 25px
+
+/* derecha*/
+
+.b33-derecha
+	display inline-block
+	vertical-align top
+	width 46.8%
+	padding-left 9.6%
+	box-sizing border-box
+	margin-top 35px
+
+.b33-info
+	display table-cell
+	vertical-align middle
+	width 2000px
+	height 196px
+	background c-3
+	position relative
+	color blanco
+	padding 30px 0
+	box-sizing border-box
+	&:after
+		content ""
+		position absolute
+		top 0
+		width 100%
+		height 100%
+		right -100%
+		background c-3
+
+.b33-item
+	position relative
+	padding 10px 0 15px 29px
+	&:before
+		content ""
+		position absolute
+		bottom 0
+		left 0
+		width 100%
+		height 2px
+		background rgba(255, 255, 255, .45)
+	&:last-child
+		&:before
+			display none
+	p
+		position relative
+		padding-left 33px
+		padding-top 10px
+		font-size 14px
+		margin 0
+		line-height 1.3
+		&:before
+			content ""
+			font-family icomoon
+			position absolute
+			top 0
+			left 0
+			font-size 22px
+			color c-4
+	a
+		display inline-block
+		font-size 13px
+
+
+.b33-mail
+	p:before
+		content "\e921"
+
+.b33-tel
+	p:before
+		content "\e914"
+
+@media screen and (min-width 1025px)
+	.b33-derecha
+		transform translateX(100px)
+		opacity 0
+		visibility hidden
+		transition all .7s ease
+
+	.b33-izquierda
+		left -100px
+		position relative
+		opacity 0
+		visibility hidden
+		transition all .7s ease
+
+	.b33.active
+		.b33-derecha
+			transform translateX(0px)
+			opacity 1
+			visibility visible
+
+		.b33-izquierda
+			left 0
+			opacity 1
+			visibility visible
+
+
+@media screen and (max-width 1024px)
+	.b33
+		padding 50px 0
+
+	.b33-derecha
+		padding-left 40px
+
+@media screen and (max-width 840px)
+	.b33-izquierda
+		width 100%
+
+	.b33-derecha
+		width 100%
+		padding-left 0
+
+	.b33-info:after
+		display none
+
+@media screen and (max-width 640px)
+	.b33
+		padding 30px 0
+
+	.b33-formulario .g-input
+		width 100%
+		margin-right 0
+
+	.b33-titulo
+		text-align center
+		display block
+		&:before
+			display none

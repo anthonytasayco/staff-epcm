@@ -1,0 +1,173 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"Mis Pedidos"|t}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	tbody tr td{
+		border: 1px solid #ccc;
+		padding: 10px;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"Mis Pedidos"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 23 -->
+<section class="b23">
+	<div class="b23-cnt wancho">
+		<div class="b-title-bien">
+			<h2>{{"Bienvenido (a)"|t}} <strong>{{ request.user.nombres }}</strong></h2>
+		</div>
+		<div class="b-menu-links-bien">
+			<ul>
+				<li>
+					<a href="{% url 'custom_auth:micuenta_datos' %}" > <span class="icon-ICONOS-SVG-16"></span>{{"Actualizar Datos"|t}}</a>
+				</li>
+				<li>
+					<a style="cursor: pointer;" class="active" ><span class="icon-ICONOS-SVG-16"></span>{{"Mis Pedidos"|t}}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="b23-table">
+			<h2><strong>{{"Información</strong> de pedido"|t}}</h2>
+			<div class="b23-table-ctn-prin">
+				<div class="b23-table-ctn">
+					<table style="width: 100%">
+						<thead>
+							<th class="b23-table-header-item">
+								<div>
+									{{"Descripción del Compra"|t}}
+								</div>
+							</th>
+							<th class="b23-table-header-item">
+								<div>
+									{{"Fecha"|t}}
+								</div>
+							</th>
+							<th class="b23-table-header-item" style="min-width: 120px;">
+								<div>
+									{{"Precio"|t}}
+								</div>
+							</th>
+							<th class="b23-table-header-item">
+								<div>
+									{{"Total"|t}}
+								</div>
+							</th>
+							<th class="b23-table-header-item">
+								<div>
+									{{"Estado"|t}}
+								</div>
+							</th>
+						</thead>
+						<tbody>
+						{% for pedido in pedidos %}
+							<tr>
+								<td style="padding: 15px;">
+									<ul>
+										{% for row in pedido.detalle_pedido %}
+										<li><strong>Curso {{ forloop.counter }}:</strong> {{ row.producto_nombre }}</li>
+										{% endfor %}
+									</ul>
+								</td>
+								<td style="text-align: center;">{{ pedido.created|date:'d/m/Y' }}<br>{{ pedido.created|date:'h:i A' }}</td>
+								<td style="text-align: center;">{{ pedido.monto_totalcompra }}{% if pedido.desc_num %} - {{pedido.desc_num}}%{% endif %}</td>
+								<td style="text-align: center;">{{ pedido.monto_total }}</td>
+								{% if pedido.status == '1' %}
+								<td style="text-align: center;color: #00369c;">{{ 'Pendiente'|t }}</td>
+								{% elif pedido.status == '2' %}
+								<td style="text-align: center;color:#74cd80;">{{ 'Pagado'|t }}</td>
+								{% elif pedido.status == '3' %}
+								<td style="text-align: center;color:#d02d2d;">{{ 'Cancelado'|t }}</td>
+								{% endif %}
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					{% comment %}
+					<div class="b23-table-item-ctn">
+						<div class="b23-table-header-item">
+							<div>
+								Descripción del Compra
+							</div>
+						</div>
+						<div class="b23-table-item" style="height: auto;">
+							<div class="b23-table-item-middle" style="padding: 20px;">
+								<h3>Cursos Adquiridos</strong></h3>
+								<ul>
+								{% for row in pedido.detalle_pedido %}
+									<li><strong>Curso {{ forloop.counter }}:</strong> {{ row.producto_nombre }}</li>
+								{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="b23-table-item-ctn">
+						<div class="b23-table-header-item">
+							<div>Fecha</div>
+						</div>
+						<div class="b23-table-item">
+							<div class="b23-table-item-middle">
+								01/01/2016
+							</div>
+						</div>
+					</div>
+					<div class="b23-table-item-ctn">
+						<div class="b23-table-header-item">     <div>Precio</div>
+						</div>
+						<div class="b23-table-item">
+							<div class="b23-table-item-middle">
+								S/. 3100.00
+							</div>
+						</div>
+					</div>
+					<div class="b23-table-item-ctn">
+						<div class="b23-table-header-item">     <div>Total</div>
+						</div>
+						<div class="b23-table-item">
+							<div class="b23-table-item-middle">
+								S/. 200.00
+							</div>
+						</div>
+					</div>
+					{% endcomment %}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$(function(){
+
+	});
+</script>
+{% endblock %}

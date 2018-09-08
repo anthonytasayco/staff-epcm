@@ -1,0 +1,205 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+    {{ request.get_full_path|getSEOTags }}
+{% else %}
+    <title>{{ info.titulo }} | {{"Mi Carrito"|t|title}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+    .wInfoServerContent{
+        font-size: 14px;
+        margin-top: 24px;
+    }
+    .wInfoServerContent.error{
+        color: #de2020;
+    }
+    .wInfoServerContent.success{
+        color: #74cd80;
+    }
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+    <div class="b9Main wancho">
+        <div class="b9Table">
+            <div class="b9Title">
+                <h1>{{"Mi Carrito"|t}}</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BLOQUE 20 -->
+<section class="b20">
+    <div class="b20-cnt">
+        <div class="b20-titulo">
+            <h3>{{"DATOS <strong>DE PAGO"|t}}</strong></h3>
+        </div>
+        <div class="b20-links">
+            <a href="" class="b20-link active">
+                <div class="b20-link-inside">
+                    {{"PRODUCTOS ELEGIDOS"|t}}
+                </div>
+            </a>
+            <a href="{% url 'pedidos:datos_facturacion' %}" class="b20-link">
+                <div class="b20-link-inside">
+                    {{"DATOS DE PAGO"|t}}
+                </div>
+            </a>
+        </div>
+        <div class="b20-item"  id="bolsa-update">
+
+            {% if result %}
+            {% for i in result %}
+
+            <div class="b20-top"  data-ida="{{i.id}}">
+
+                    <span class="b20-close icon-ICONOS-SVG-07 del-item-car"></span>
+
+                <div class="b20-cnt-img">
+                    <div class="b20-img" style="background-image: url('{{ i.imagen }}');"></div>
+                </div>
+                <div class="b20-info">
+                    <div class="b20-info-table">
+                        <div class="b20-titulo-inside">
+                            <a href="{% url 'cursos:curso' i.slug %}">
+                                <h3>{{i.nombre}}</h3>
+                            </a>
+                        </div>
+                        <ul class="b20-diplomado">
+                            <li>{{ i.fechas }}</li>
+                            <li>{{ i.horarios }}</li>
+                            <li>{{ i.lugar }}</li>
+                            <li>{{ i.inversion }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            {% endfor %}
+            {% else %}
+
+            <div class="b18-item" >
+                {{"NO HAY PRODUCTOS EN TU BOLSA DE COMPRAS"|t}}
+            </div>
+
+            {% endif %}
+            {% if request.user.is_authenticated and descuento == 0 and not was_limited %}
+            <div class="b20-bottom wFormToDsct" style="padding-bottom: 10px;padding-top: 10px;">
+                <span class="b20-total">{{"APLICAR CÓDIGO DE DESCUENTO:"|t}}</span>
+                <div class="g-input" style="width: auto;display: inline-block;float: right;">
+                    <input style="float: left;height: 22px;padding:5px;width: auto;" type="text" id="wDsctCod">
+                    <button class="btn1 set_dsct" style="float: right;padding: 0px 10px 0px 10px;height: 22px;line-height: 22px;">{{"APLICAR"|t}}</button>
+                    <p class="wInfoServerContent"></p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="b20-bottom">
+                <span class="b20-total">{{"TOTAL A PAGAR:"|t}}</span>
+                <span class="b20-precio">S/  {{ suma|floatformat:2 }}</span>
+            </div>
+            <div class="b20-boton">
+                <a href="{% url 'pedidos:datos_facturacion' %}" class="btn2"><span class="btn-ico icon-ICONOS-SVG-13"></span>{{"COMPRAR CURSO"|t}}</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+        //{% if request.user.is_authenticated and descuento == 0 %}
+        $('#bolsa-update').on('click','.wFormToDsct .g-input .set_dsct',function(){
+            console.log('{% url "pedidos:setDescuento" %}');
+            $.ajax({
+                url: '{% url "pedidos:setDescuento" %}',
+                type: 'POST',
+                dataType: 'json',
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}',cod_dsct:$('#wDsctCod').val()},
+            })
+            .done(function(data) {
+                $('.wInfoServerContent').html('');
+                if(data['status'] == 406){
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').addClass('error');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').html('{{"El código ingresado no es válido"|t}}');
+                    //setTimeout(function(){$('.wFormToDsct').fadeOut()},1500)
+                }
+                if(data['status'] == 423){
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').addClass('error');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').html('{{"El código ingresado está caducado"|t}}');
+                    //setTimeout(function(){$('.wFormToDsct').fadeOut()},1500)
+                }
+                if(data['status'] == 202){
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').removeClass('error');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').addClass('success');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').html('{{"Se ha aplicado el descuento satisfactoriamente"|t}}');
+                    setTimeout(function(){$('.wFormToDsct').fadeOut()},2000);
+                    setTimeout(function(){location.reload();},2200);
+                }
+                if(data['status'] == 401){
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').removeClass('success');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').addClass('error');
+                    $('#bolsa-update .wFormToDsct .g-input .wInfoServerContent').html('{{"ha excedido el límite de intentos"|t}}');
+                    setTimeout(function(){$('.wFormToDsct').fadeOut()},2000);
+                }
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+
+        });
+        //{% endif %}
+
+        function update_carrito(opc, ida, can){
+            url_filtro = "{% url 'pedidos:carrito' %}";
+            cad = '?partial=1&opc='+ opc + '&ida='+ida+'&can='+can;
+            //console.log(url_filtro+cad)
+            $.get(url_filtro + cad, function(data){
+                //$('#carga-web-pago').fadeOut();
+                if (data != "") {
+                    //$('.box-items-catalogo').html('');
+                    $("#bolsa-update").html('').append(data);
+                }
+            });
+        }
+
+        $('#bolsa-update').on('click', '.del-item-car', function(e){
+            e.preventDefault();
+            ida = $(this).closest('.b20-top').attr('data-ida');
+            update_carrito('3', ida, '');
+        });
+
+        $('#bolsa-update').on('change', '.del-item-select', function(e){
+            e.preventDefault();
+            ida = $(this).closest('.b20-top').attr('data-ida');
+            can = $(this).val();
+            update_carrito('2', ida, can);
+        });
+
+
+    });
+</script>
+{% endblock %}

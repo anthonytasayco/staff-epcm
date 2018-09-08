@@ -1,0 +1,161 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{seccion.b_titulo}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	a{
+		cursor: pointer !important;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{seccion.b_titulo}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 29 -->
+<section class="b29">
+	<div class="b29-cnt">
+		<div class="b29-links">
+			<a class="b29-link active">{{seccion.b_titulo}}</a>
+			<a href="{% url 'notivent:noticias' %}" class="b29-link">{{other.b_titulo}}</a>
+		</div>
+		<div class="b29-contenido">
+			<div class="b29-texto-top">
+				{{ seccion.b_descript|safe }}
+			</div>
+			<div class="b29-cnt-items">
+				{% for row in eventos %}
+				<div class="b29-item">
+					<div class="b29-item-img" style="background-image:url({{ row.img.url }});"></div>
+					<div class="b29-texto">
+						<p>{{ row.nombre }}</p>
+					</div>
+					<div class="b29-texto-hidden">
+						<p>{{ row.nombre }}</p>
+					</div>
+					<div class="b29-vermas">
+						<a href="{% url 'notivent:evento' row.slug %}" class="b29-ver">{{"VER MÁS"|t}}</a>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			{% if eventos.paginator.num_pages > 1 %}
+			<div class="b29-paginador">
+				<ul>
+					<li class="b29-prev"><a onclick="wSetOneLessPage();" class="pagerArrow pagerBack">{{"< Ant."|t}}</a></li>
+					{% for pag in eventos.paginator.num_pages|get_range %}
+					<li class="b29-num"><a onclick="wSetPage('{{ forloop.counter }}');" class="wPageItem wPageInst{{ forloop.counter }}">{{ forloop.counter }}</a></li>
+					{% endfor %}
+					<li class="b29-next"><a onclick="wSetOneMorePage();" class="pagerArrow pagerNext">{{"Sig. >"|t}}</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+<section style="display: none;" id="wTemplate">
+	<div class="b29-item">
+		<div class="b29-item-img" style="background-image:url([[img]]);"></div>
+		<div class="b29-texto">
+			<p>[[name]]</p>
+		</div>
+		<div class="b29-texto-hidden">
+			<p>[[name_h]]</p>
+		</div>
+		<div class="b29-vermas">
+			<a href="[[link]]" class="b29-ver">{{"VER MÁS"|t}}</a>
+		</div>
+	</div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	var glob_page_number = {{ last_page }};
+	var glob_max_page_number = {{ eventos.paginator.num_pages }};
+	$('.wPageInst'+glob_page_number).addClass('active');
+
+	function cargarEventos(){
+		var url = "{% url 'notivent:eventos' %}?p="+glob_page_number;
+		//var cantidadItemsPagina=6;
+		$.ajax({
+			url:url,
+			type:'POST',
+			data: {'page':glob_page_number,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+			dataType: 'json',
+			success:function(data){
+				var div = $("#wTemplate").html();
+				var total = "";
+				$.each( data['items'] ,function(index, el){
+					total = total + div.replace('[[name]]',el.name).replace('[[name_h]]',el.name).replace('[[img]]',el.img)
+									.replace('[[link]]',el.link)
+				});
+				var contenedor = $(".b29-cnt-items").html('');
+				contenedor.html(total);
+				history.pushState({}, '{{ info.titulo }} | {{seccion.b_titulo}}', url);
+			}
+		});
+	}
+
+	function wNormalizerPage(instance_page){
+		$('.wPageItem').removeClass('active');
+		if(instance_page > glob_max_page_number){
+			instance_page = glob_max_page_number;
+		}else if(instance_page <= 0){
+			instance_page = 1;
+		}
+		return instance_page
+	}
+
+	function wSetOneLessPage(){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(glob_page_number -= 1);
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarEventos();
+		}
+	}
+
+	function wSetOneMorePage(){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(glob_page_number += 1);
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarEventos();
+		}
+	}
+
+	function wSetPage(num){
+		var actual_page = glob_page_number;
+		glob_page_number = wNormalizerPage(parseInt(num, 10));
+		$('.wPageInst'+glob_page_number).addClass('active');
+		if(actual_page != glob_page_number){
+			cargarEventos();
+		}
+	}
+</script>
+{% endblock %}

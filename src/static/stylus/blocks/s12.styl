@@ -1,0 +1,352 @@
+.b12
+	width 100%
+	padding-top 50px
+	padding-bottom 83px
+	overflow hidden
+
+.b12-cnt
+	max-width 1200px
+	width 95%
+	margin auto
+	font-size 0
+
+/* Izquierda */
+.b12-izquierda
+	display inline-block
+	vertical-align top
+	width 54%
+	padding-left 5.5%
+	padding-right 8.3%
+	box-sizing border-box
+
+.b12-titulo
+	display inline-block
+	text-transform uppercase
+	position relative
+	padding 0 60px 0 12px
+	margin-bottom 40px
+	h3
+		font-family t-7
+		margin 0
+		font-size 25px
+	strong
+		font-family t-6
+		color c-4
+	&:before
+		content ""
+		position absolute
+		top 0
+		bottom 0
+		margin auto
+		right 0
+		height 2px
+		width 40px
+		background c-4
+
+.b12-img
+	width 56px
+	height 56px
+	img
+		display block
+		width 100%
+		height auto
+
+.b12-item
+	display block
+	position relative
+	margin-bottom 35px
+	&:last-child
+		margin-bottom 0
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+	ol
+		li
+			counter-increment list
+			list-style-type none
+			margin-bottom 13px
+			margin-top 13px
+			line-height 1.9
+			position relative
+			&:before
+				color: c-4
+				content: counter(list) "."
+				left:-32px
+				position: absolute
+				text-align: right
+				width: 26px
+
+.b12-img
+	position absolute
+	top 0
+	bottom 0
+	left 0
+	margin auto
+
+.b12-inner-item
+	width 100%
+	padding 0px 0px 0 73px
+	box-sizing border-box
+	display table-cell
+	height 64px
+	text-align left
+	position relative
+
+	h3
+		margin 0
+		color c-4
+		font-family t-2
+		margin-bottom 4px
+	p
+		margin 0
+		font-size 14px
+
+
+/* Derecha */
+.b12-derecha
+	display inline-block
+	vertical-align top
+	width 46%
+	background c-4
+	margin-top 65px
+	box-sizing border-box
+	background-size cover
+	background-repeat no-repeat
+	background-position left center
+	position relative
+	&:before
+		content ""
+		position absolute
+		top 0
+		right -100%
+		width 100%
+		height 100%
+		background c-4
+	&:after
+		content ""
+		position absolute
+		top 0
+		left -100%
+		width 100%
+		height 100%
+		background c-4
+		opacity 0
+		visibility hidden
+
+.b12-inner-derecha
+	position relative
+	overflow hidden
+
+.b12-adorno1
+	display block
+	position absolute
+	top 50px
+	left 20px
+	background url('../img/b12-comillas.png') 0px 0px no-repeat
+	width 92px
+	height 66px
+	opacity .8
+
+.b12-texto-adorno
+	font-size 80px
+	font-family t-3
+	opacity .10
+	position absolute
+	bottom -27px
+	left 0
+
+.b12-table
+	display table-cell
+	height 304px
+	width 2000px
+	vertical-align middle
+	padding-left 73px
+
+.b12-tab-link
+	position absolute
+	left 73px
+	height 92px
+	width 100%
+	top -65px
+	li 
+		display inline-block
+		width 100%
+		text-align center
+		// width 25%
+			
+.b12-tab-pitcher
+	display block
+	border-radius 100%
+	cursor pointer
+	margin-right 20px
+	max-width 64px
+	height 92px
+	width 100%
+	position relative
+	transition all .6s ease
+	&:last-child
+		margin-right 0
+	img
+		border-radius 100%
+		border 2px solid blanco
+		box-sizing border-box
+		position absolute
+		bottom 0
+		height auto
+		width 100%
+
+//active
+.b12-tab-pitcher.active
+	max-width 92px
+
+//hover
+@media screen and (min-width 1025px)
+	.b12-tab-pitcher:hover
+		max-width 92px
+
+.b12-tab-cnt
+	position relative
+
+.b12-tab-item
+	position absolute
+	top 0
+	left 0
+	opacity 0
+	visibility hidden
+	transition all .5s ease-in-out
+	&.active
+		position relative
+		opacity 1
+		visibility visible
+
+.b12-texto
+	font-size 14px
+	color blanco
+	p
+		margin 0
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+
+.b12-cliente
+	color negro
+	margin-top 30px
+	h3
+		font-size 18px
+		font-family t-6
+		margin 0
+		margin-bottom 5px
+	p
+		position relative
+		font-size 14px
+		padding-right 55px
+		display inline-block
+		margin 0
+		&:before
+			content ""
+			position absolute
+			top 0
+			bottom 0
+			right 0
+			margin auto
+			height 2px
+			width 42px
+			background blanco
+
+
+@media screen and (max-width 1400px)
+	.b12-izquierda
+		width 50%
+		padding-left 0
+		padding-right 5%
+
+	.b12-derecha
+		width 50%
+
+@media screen and (max-width 1024px)
+	.b12
+		padding 50px 0
+
+@media screen and (max-width 960px)
+	.b12-adorno1
+		display none
+
+	.b12-texto-adorno
+		display none
+		
+	.b12-izquierda
+		width 100%
+		padding 0
+		text-align center
+		padding-bottom 50px
+
+	.b12-derecha
+		width 100%
+		&:after
+			opacity 1
+			visibility visible
+
+	.b12-table
+		height auto
+		padding 80px 0 50px 0
+
+@media screen and (max-width 640px)
+	.b12
+		padding 30px 0
+
+	.b12-derecha
+		padding-left 0
+		background c-4
+
+	.b12-item
+		margin-bottom 30px
+
+	.b12-table
+		padding 50px 0 30px 0
+
+	.b12-tab-pitcher
+		margin 0 5px !important
+
+	.b12-titulo
+		padding 0
+		margin-bottom 30px
+		&:before
+			display none
+			
+	.b12-tab-link
+		left 20px
+
+
+@media screen and (max-width 480px)
+	.b12-img
+		position relative
+		margin-bottom 15px
+
+	.b12-inner-item
+		padding 0
+		text-align center
+
+	.b12-izquierda
+		padding-bottom 30px

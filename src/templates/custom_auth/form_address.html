@@ -1,0 +1,270 @@
+{% extends "common/_base.html" %}
+
+{% load thumbnail %}
+{% block cssadicional %}
+<link href="{{ STATIC_URL }}css/jquery.bxslider.css" rel="stylesheet" />
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- GENERAL 1 -->
+<!-- BLOQUE 19 -->
+<section class="b19">
+  <div class="g-title">
+    <h3>{% if slug %}
+        editar dirección
+      {% else %} Agregar dirección{%endif%}</h3>
+  </div>
+      {% if messages %}
+      {% for message in messages %}
+        <div data-alert class="alert-box radius {{ message.tags }}">
+              {{ message }}
+                  <a href="#" class="close">&times;</a>
+              </div>
+          {% endfor %}
+      {% endif %}
+  <div class="b19-cnt">
+    <form action="." method="Post">{% csrf_token %}
+      <div class="b19-item">
+        <div class="b19-subtitle">
+          <h4>NOMBRE DE LA DIRECCIÓN (ejm: 'mi casa', 'oficina', 'casa de juan', etc)</h4>
+        </div>
+        <div class="b19-contendor">
+          <ul class="b19-list">
+            <li>
+            {{form.nombre}}
+            {{form.nombre.errors}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="b19-item">
+        <div class="b19-subtitle">
+          <h4>DATOS DE CONTACTO (que recibe el envio ó usado para la facturación)</h4>
+        </div>
+        <div class="b19-contendor">
+          <ul class="b19-list b19-mod3">
+            <li>
+            {{form.nombres}}
+            {{form.nombres.errors}}
+            </li>
+            <li>
+            {{form.apellidos}}
+            {{form.apellidos.errors}}
+            </li>
+          </ul>
+
+          <ul class="b19-list b19-mod3">
+            <li>
+            {{form.telefono}}
+            {{form.telefono.errors}}
+            </li>
+            <li>
+            {{form.celular}}
+            {{form.celular.errors}}
+            </li>
+          </ul>
+<!--
+          <ul class="b19-list b19-mod1">
+            <li><input class="input-car" type="text" name="referencia" placeholder="Referencia"></li>
+            <li><input class="input-car" type="text" name="codigo" placeholder="Código Postal"></li>
+          </ul>
+-->
+        </div>
+      </div>
+
+      <div class="b19-item">
+        <div class="b19-subtitle">
+          <h4>DATOS DE LA EMPRESA (solo si desea factura)</h4>
+        </div>
+        <div class="b19-contendor">
+          <ul class="b19-list b19-mod3">
+            <li>
+            {{form.empresa}}
+            {{form.empresa.errors}}
+            </li>
+            <li>
+            {{form.ruc}}
+            {{form.ruc.errors}}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="b19-item">
+        <div class="b19-subtitle">
+          <h4>DISTRITO</h4>
+        </div>
+        <div class="b19-contendor">
+
+          <ul class="b19-list">
+            <li class="liradio-dev">
+      <input type="radio" {% if row.tipodireccion == '1' or newdire == 1 %}checked="checked" class="rad-click-dev" {%endif%} id="dire1" name="tipodireccion" value="1">
+            </li>
+            <li class="liradio-dev"> <label for="dire1">Distritos de Lima</label>
+            </li>
+            <li class="liradio-dev">
+      <input type="radio"  {% if row.tipodireccion == '2' %}checked="checked" class="rad-click-dev" {%endif%} id="dire2" name="tipodireccion" value="2">
+            </li>
+            <li class="liradio-dev"><label for="dire2">Otros</label>
+            </li>
+                {{ form.tipodireccion.errors}}
+          </ul>
+
+
+          <ul class="b19-list b19-mod2 d1-show-dev">
+            <li class="b19-select">
+            {{form.distrito}}
+            {{form.distrito.errors}}
+            </li>
+          </ul>
+
+          <ul class="b19-list b19-mod2 d2-show-dev">
+            <li class="b19-select sel-region-dev">
+                <select name="region" id="combo_region" class="w-opcion">
+                </select>
+            </li>
+            <li class="b19-select sel-region-dev">
+                <select name="provincia" id="combo_provincia" class="w-opcion">
+                </select>
+            </li>
+            <li class="b19-select sel-region-dev">
+                <select name="district" id="combo_distrito" class="w-opcion">
+                </select>
+            </li>
+          </ul>
+
+
+          <ul class="b19-list">
+            <li>
+            {{form.direccion}}
+            {{form.direccion.errors}}
+            </li>
+          </ul>
+
+          <ul class="b19-list">
+            <li>
+            {{form.comentario}}
+            {{form.comentario.errors}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="b9-cnt-btns">
+        <a href="{% url 'custom_auth:addresses' %}" class="b19-btn g-btn-negro">atras</a>
+        <button class="b19-btn g-btn-negro">guardar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+
+<script type="text/javascript">
+
+function act_provincia(idp, idd)
+    {
+        var reg = document.getElementById('combo_region').value;
+        $.getJSON('{% url 'custom_auth:provincias_de_la_region' %}?ir='+reg,
+        function(data){
+            $('#combo_provincia').empty();
+
+            $('<option value="">-- Provincia --</option>').appendTo('#combo_provincia');
+
+            $.each(data, function(index, provincia){
+                $('<option value="' + provincia['id'] + '">' +
+                                provincia['nombre'] + '</option>')
+                .appendTo('#combo_provincia')
+            });
+            if(idp != 'undefined')
+            {
+                $("#combo_provincia").val(idp);
+            }
+            act_distrito(idd);
+        });
+    }
+    function act_distrito(idd)
+    {
+        var prov = document.getElementById('combo_provincia').value;
+        $.getJSON('{% url 'custom_auth:distritos_de_la_provincia' %}?ip='+prov,
+        function(data){
+            $('#combo_distrito').empty();
+            $('<option value="">-- Distrito --</option>').appendTo('#combo_distrito');
+
+            $.each(data, function(index, distrito){
+                $('<option value="' + distrito['id'] + '">' +
+                                    distrito['nombre'] + '</option>')
+                .appendTo('#combo_distrito')
+            });
+            if(idd != 'undefined')
+            {
+                $("#combo_distrito").val(idd);
+            }
+
+        });
+    }
+
+    //funcion que se ejecuta al cargar la pagina
+    $(function(){
+
+
+           $("#combo_region").change(function(){
+                  act_provincia();
+            });
+            $("#combo_provincia").change(function(){
+                  act_distrito();
+            });
+
+        //actualizar_provincia();
+        $.getJSON('{% url 'custom_auth:regiones' %}',
+        function(data){
+            $('#combo_region').empty();
+            $('<option value="">-- Region --</option>').appendTo('#combo_region');
+            $.each(data, function(index, region){
+                $('<option value="' + region['id'] + '">' +
+                                    region['nombre'] + '</option>')
+                .appendTo('#combo_region')
+            });
+            //console.log({{region_ida}});
+            //console.log({{provincia_ida}});
+
+            $("#combo_region").val({{region_ida}});
+            {% if provincia_ida and distrito_ida%}
+              act_provincia({{provincia_ida}}, {{distrito_ida}});
+            {% else %}
+              act_provincia();
+            {% endif %}
+            //act_provincia({{provincia_ida}}, {{distrito_ida}});
+        });
+
+
+            $(".liradio-dev input").click(function(e){
+
+                if ( $(this).val()=='1' ){
+                  $('.d1-show-dev').show();
+
+                  $('#id_distrito').addClass('validate[required]');
+                  $('#combo_distrito').removeClass('validate[required]');
+
+
+                  $('.d2-show-dev').hide();
+
+                }else{
+                  $('.d2-show-dev').show();
+                  $('.d1-show-dev').hide();
+
+                  $('#id_distrito').removeClass('validate[required]');
+                  $('#combo_distrito').addClass('validate[required]');
+                }
+
+            });
+            $(".rad-click-dev").click();
+
+
+    });
+</script>
+{% endblock %}

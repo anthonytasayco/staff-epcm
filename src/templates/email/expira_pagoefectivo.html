@@ -1,0 +1,12 @@
+{% extends "email/base.html" %}
+{% load app_tags %}
+
+{% block title %}{{ "EPCM te da la bienvenida"|t }}{% endblock %}
+
+{% block content %}
+<h1 style="color:#666666; font-size:26px; line-height:1.2; font-weight:normal; margin-top:0; margin-bottom:0.5em;">{{ "EPCM: Tu código de PagoEfectivo ha expirado"|t }}</h1>
+<p style="margin-top:0; margin-bottom:0;">
+    Lo sentimos. Tu orden de compra ha expirado, pero puedes seguir revisando nuestra consultoría para obtener más servicios.
+    Una vez que haces tu pedido y emitimos tu orden, recuerda que tienes 24 horas para pagar.
+</p>
+{% endblock %}

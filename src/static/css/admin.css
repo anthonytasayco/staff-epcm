@@ -1,0 +1,53 @@
+.help {
+  color: #99acbb !important;
+}
+.input,
+.background-form .input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="number"],
+textarea {
+  border: 1px solid #d9e4ea;
+}
+.wChangeLang {
+  cursor: pointer;
+  display: inline-block !important;
+}
+.wLangRowItem {
+  display: none !important;
+}
+.geoposition-widget tr {
+  height: 30px;
+}
+.wLangList {
+  display: none;
+}
+.wLangList .wLangActive {
+  cursor: pointer;
+  display: inline-block !important;
+  opacity: 1 !important;
+  border: 1px solid #2987a6 !important;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgi…pZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==");
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #36b0d9), color-stop(100%, #309bbf));
+  background: -moz-linear-gradient(#36b0d9, #309bbf);
+  background: -webkit-linear-gradient(#36b0d9, #309bbf);
+  background: linear-gradient(#36b0d9, #309bbf);
+}
+header .grp-object-tools {
+  margin: 0 0 -25px 0;
+}
+header .grp-object-tools:last-child {
+  margin: 0 10px -25px 0;
+}
+body.grp-change-form .wLangList {
+  display: block;
+  margin-right: 14px;
+}
+#tablabateria_set-group input.vTextField {
+  width: 145px;
+}
+.grp-module h4 {
+  display: none;
+}

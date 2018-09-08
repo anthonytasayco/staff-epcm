@@ -1,0 +1,96 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | Error</title>
+	<meta name="robots" content="noindex">
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+{% if error_pyp %}
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"Paypal Error"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 38 -->
+<section class="b38">
+	<div class="b38-wrapper">
+		<div class="b38-content">
+			<figure class="b38-image">
+				<img src="{{STATIC_URL}}/img/b38img1.png" width="122" height="108" alt="">
+			</figure>
+			<div class="b38-title">
+				<h2>{{"Error de Pago en Paypal"|t}}</h2>
+			</div>
+			<div class="b38-text">
+				<p><strong>{{"Paypal no la logrado procesar tu pago"|t}}</strong></p>
+			</div>
+			<div class="b38-text">
+				<p>{{ "Puedes comunicarte directamente con nosotros a email@epmcp.com.pe"|t }}</p>
+			</div>
+			<div class="b38-link">
+				<a href="{% url 'home' %}" class="btn1">{{"REGRESAR AL INICIO"|t}}</a>
+			</div>
+		</div>
+	</div>
+</section>
+{% else %}
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>404</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 38 -->
+<section class="b38">
+	<div class="b38-wrapper">
+		<div class="b38-content">
+			<figure class="b38-image">
+				<img src="{{STATIC_URL}}/img/b38img1.png" width="122" height="108" alt="">
+			</figure>
+			<div class="b38-title">
+				<h2>ERROR 404</h2>
+			</div>
+			<div class="b38-text">
+				<p><strong>{{"PÁGINA NO ENCONTRADA"|t}}</strong></p>
+			</div>
+			<div class="b38-text">
+				<p>{{"Esta página puede estar no disponible o haber cambiado de dirección o no existir. Compruebe si la dirección es correcta o regrese."|t}}</p>
+			</div>
+			<div class="b38-link">
+				<a href="{% url 'home' %}" class="btn1">{{"REGRESAR AL INICIO"|t}}</a>
+			</div>
+		</div>
+	</div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block jsfinal %}
+{% endblock %}

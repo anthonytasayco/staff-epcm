@@ -1,0 +1,48 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+        <form action="." method="post">{% csrf_token %}
+            <div style="visibility:hidden">
+                <input type="email">
+                <input type="password">
+            </div>
+            <div class="g-input-tarjeta">
+                <input type="text" name="nombres" placeholder="nombres*" value="{{nombres}}" class="validate[required,minSize[4]]]">
+            </div>
+            <div class="g-input-tarjeta">
+                <input type="email" name="username"  value="{{email}}" placeholder="Correo Electrónico*" class="validate[required,custom[email],ajax[ajaxUserCall]]">
+            </div>
+            <div class="g-input-tarjeta">
+                <input type="text" name="telefono" placeholder="telefono*" value="{{telefono}}" class="validate[required,minSize[4]]]">
+            </div>
+            <div class="g-input-tarjeta">
+                <input type="password" name="password" id="idr_password" placeholder="Contraseña*" class="validate[required]">
+            </div>
+            <div class="g-input-tarjeta">
+                <input type="password" placeholder="Confirme contraseña*" class="validate[required,equals[idr_password]]">
+            </div>
+
+            <button>Enviar</button>
+        </form>
+
+        <div class="extra">
+            <a href="{% url 'custom_auth:login' %}">¿Ya tiene una cuenta?</a>
+        </div>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+
+
+
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,214 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b22 {
+  width: 100%;
+  padding: 55px 0 65px 0;
+}
+.b22 .formError .formErrorContent {
+  background: #05ce7b;
+}
+.b22 .formError .formErrorArrow div {
+  background: #05ce7b;
+}
+.b22-cnt {
+  max-width: 920px;
+}
+.b-title-bien {
+  text-align: center;
+}
+.b-title-bien h2 {
+  margin: 0;
+  padding: 20px 0;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: normal;
+  color: #05ce7b;
+  position: relative;
+}
+.b-title-bien h2:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: #05ce7b;
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+  font-size: 65px;
+  font-family: 'icomoon';
+  content: "\e917";
+}
+.b-title-bien strong {
+  font-family: 'Montserrat-SemiBold', sans-serif;
+  color: #0032a0;
+  font-weight: normal;
+}
+.b22-menu-ctn {
+  font-size: 0;
+}
+.b22-menu-item {
+  font-size: 18px;
+  vertical-align: top;
+  display: inline-block;
+  width: 50%;
+  margin-top: 80px;
+/* WebKit */
+/* Firefox 18- */
+/* Firefox 19+ */
+/* IE 10+ */
+}
+.b22-menu-item h3 {
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.b22-menu-item h3 strong {
+  font-weight: normal;
+  color: #05ce7b;
+  font-family: 'Montserrat-SemiBold', sans-serif;
+}
+.b22-menu-item form {
+  margin: 20px 0 0 0;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 0 0 30px;
+}
+.b22-menu-item .g-input {
+  margin: 0 0 18px 0;
+}
+.b22-menu-item ::-webkit-input-placeholder {
+  color: #999;
+  font-family: 'Montserrat-Light', sans-serif;
+}
+.b22-menu-item :-moz-placeholder {
+  color: #999;
+  font-family: 'Montserrat-Light', sans-serif;
+}
+.b22-menu-item ::-moz-placeholder {
+  color: #999;
+  font-family: 'Montserrat-Light', sans-serif;
+}
+.b22-menu-item :-ms-input-placeholder {
+  color: #999;
+  font-family: 'Montserrat-Light', sans-serif;
+}
+.b22-menu-item .btn1 {
+  border: 0;
+  font-family: 'Montserrat-Light', sans-serif;
+  font-size: 15px;
+  margin-top: 19px;
+}
+.b22-menu-item:last-child {
+  font-size: 0;
+}
+.b22-menu-item:last-child .btn1 {
+  background: #0032a0;
+}
+.b22-menu-item:last-child .g-input:nth-child(2),
+.b22-menu-item:last-child .g-input:nth-child(3) {
+  width: 48%;
+  margin-right: 4%;
+  display: inline-block;
+}
+.b22-menu-item:last-child .g-input:nth-child(3) {
+  margin-right: 0;
+}
+.b-menu-links-bien {
+  margin-top: 30px;
+  width: 100%;
+  font-size: 0;
+}
+.b-menu-links-bien li {
+  width: 50%;
+  vertical-align: top;
+  display: inline-block;
+}
+.b-menu-links-bien span {
+  padding-right: 13px;
+}
+.b-menu-links-bien a {
+  width: 100%;
+  display: block;
+  text-align: center;
+  background: #f2f2f2;
+  padding: 10px 0;
+  color: #4d4d4d;
+  font-family: 'Montserrat-SemiBold', sans-serif;
+  font-size: 18px;
+  -webkit-transition: all 0.5s ease-in;
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -ms-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+}
+.b-menu-links-bien a.active {
+  background: #0032a0;
+  color: #fff;
+}
+@media screen and (min-width: 1025px) {
+  .b-menu-links-bien a:hover {
+    background: #0032a0;
+    color: #fff;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .b22 {
+    padding: 50px 0;
+  }
+  .b22-menu-item {
+    margin-top: 50px;
+  }
+  .b22-menu-item form {
+    padding-left: 5%;
+  }
+  .b22-menu-item .g-input label {
+    font-size: 13px;
+    padding-left: 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .b22-menu-item {
+    display: block;
+    width: 100%;
+  }
+  .b22-menu-item form {
+    padding-left: 0;
+  }
+  .b22-menu-item:last-child {
+    margin-top: 30px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .b22 {
+    padding: 30px 0;
+  }
+  .b22-menu-item {
+    margin-top: 30px;
+  }
+  .b22-menu-item .btn1 {
+    margin-top: 12px;
+  }
+  .b22-menu-item:last-child:nth-child(2) .g-input,
+  .b22-menu-item:last-child:nth-child(3) .g-input {
+    display: block;
+    width: 100%;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 480px) {
+  .b-menu-links-bien li {
+    width: 100%;
+    display: block;
+  }
+}

@@ -1,0 +1,279 @@
+.b2
+	padding-top 45px
+	padding-bottom 60px
+
+.b2Main
+	text-align center
+
+.b2Title
+	margin-bottom 30px
+	h2
+		color c-1
+		font-family t-6
+		font-weight normal
+		font-size 20px
+		position relative
+		padding-bottom 15px
+		margin-bottom 0
+	h2:after
+		content ""
+		width 79px
+		height 3px
+		background c-4
+		position absolute
+		left 0
+		right 0
+		bottom 0
+		margin auto
+
+.b2Envolve
+	position relative
+
+.b2CntItems
+	font-size 0
+
+.b2Item
+	display inline-block
+	vertical-align top
+	width 256px
+	height 210px
+	overflow hidden
+	box-sizing border-box
+	position relative
+	margin 0 10px
+	margin-bottom 20px
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background c-5
+		position absolute
+		top 0
+		left 0
+
+.b2Wrap
+	min-height 130px
+	position relative
+	z-index 2
+	box-sizing border-box
+	padding-top 15px
+	padding-left 10px
+	padding-right 10px
+	&:before
+		content ""
+		width 100%
+		height 0%
+		background rgba(210,222,238, .3)
+		position absolute
+		left 0
+		bottom 0
+
+.b2Img
+	width 82px
+	position relative
+	margin-bottom 15px
+	img
+		top 0
+		left 0
+		img-res()
+
+.b2ImgDesk
+	position absolute
+	z-index -1
+	opacity 0
+	visibility hidden
+
+.b2ImgHover
+	position relative
+	z-index 1
+	opacity 1
+	visibility visible
+
+.b2Subtitle
+	h3
+		color blanco
+		font-family t-0
+		font-size 20px
+		position relative
+		padding-bottom 10px
+		margin-bottom 0
+	h3:after
+		content ""
+		width 40px
+		height 1px
+		background blanco
+		position absolute
+		left 0
+		right 0
+		bottom 0
+		margin auto
+
+.b2Text
+	line-height 1.2
+	color blanco
+	font-family t-4
+	font-size 15px
+	position relative
+	z-index 2
+	padding 0 10px
+	transform translate3d(0,0,0)
+	p
+		margin-bottom 0
+
+.b2ImgRight
+	width 421px
+	position absolute
+	top 0
+	right -300px
+	img
+		img-res()
+
+
+@media screen and (min-width 1025px)
+	.b2Item
+		transform translateY(-30px)
+		opacity 0
+		visibility hidden
+		transition all 1.5s cubic-bezier(0.68, -0.45, 0.165, 1.8)
+
+	.b2ImgRight
+		opacity 0
+		visibility hidden
+		right -400px
+		transition all .8s ease 1.5s
+
+	.b2Item:nth-child(1)
+		transition-delay .2s
+	.b2Item:nth-child(2)
+		transition-delay .5s
+	.b2Item:nth-child(3)
+		transition-delay .8s
+
+	.b2.active
+		.b2ImgRight
+			opacity 1
+			visibility visible
+			right -300px
+		.b2Item
+			transform translateY(0px)
+			opacity 1
+			visibility visible
+
+// hover
+@media screen and (min-width 1025px)
+	.b2Item:before
+		height 0
+		opacity 0
+		visibility hidden
+
+	.b2Wrap:before
+		height 100%
+		opacity 1
+		visibility visible
+		transition all .5s ease
+
+	.b2ImgDesk
+		position relative
+		z-index 1
+		transform scale(1)
+		opacity 1
+		visibility visible
+		transition all 1s ease
+
+	.b2ImgHover
+		position absolute
+		z-index -1
+		transform scale(0)
+		opacity 0
+		visibility hidden
+		transition all 1s ease
+
+	.b2Subtitle
+		h3
+			color c-3
+			transition all 1s ease
+
+		h3:after
+			width 0px
+			transition all 1s ease
+
+	.b2Text
+		transform translate3d(0,200%,0)
+		opacity 0
+		visibility hidden
+		transition all 1s ease
+
+
+
+	.b2Item:hover
+		&:before
+			height 100%
+			opacity 1
+			visibility visible
+			transition all 1s ease
+
+		.b2Wrap:before
+			opacity 0
+			visibility hidden
+
+		.b2ImgDesk
+			transform scale(0)
+			position absolute
+			z-index -1
+			opacity 0
+			visibility hidden
+
+		.b2ImgHover
+			position relative
+			z-index 1
+			transform scale(1)
+			opacity 1
+			visibility visible
+
+		.b2Subtitle
+			h3
+				color blanco
+
+			h3:after
+				width 40px
+
+		.b2Text
+			transform translate3d(0,0,0)
+			opacity 1
+			visibility visible
+
+
+// responsive
+@media screen and (max-width 1366px)
+	.b2ImgRight
+		right -240px
+
+@media screen and (max-width 1360px)
+	.b2ImgRight
+		display none
+
+	.b2
+		padding-top 50px
+		padding-bottom 30px
+
+@media screen and (max-width 640px)
+	.b2
+		padding-top 30px
+		padding-bottom 10px
+
+	.b2CntItems
+		max-width 560px
+		width 100%
+		margin auto
+
+	.b2Item
+		width 45%
+		height 220px
+
+@media screen and (max-width 480px)
+	.b2Item
+		display block
+		width 256px
+		height 210px
+		margin-left auto
+		margin-right auto

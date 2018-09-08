@@ -1,0 +1,179 @@
+.b19-fancy
+	position relative
+	z-index 3
+.b19-content.active
+	height 100%
+	.b19
+		top 100px
+		z-index 100
+	.b19-overlay
+		opacity .7
+		z-index 99
+	.b19-fancy
+		z-index 0
+.b19
+	width 100%
+	z-index 2
+	top -9999px
+	transition all .7s
+	position fixed
+	background blanco
+	height 650px
+	z-index -1
+	.formError .formErrorContent
+		background c-4
+	.formError .formErrorArrow div
+		background c-4
+
+.b19-overlay
+	transition .4s ease-in
+	height 100%
+	width 100%
+	position fixed
+	top 0
+	left 0
+	background negro
+	opacity 0
+	z-index -1
+.b19-close
+	position absolute
+	top 24px
+	right 20px
+	color c-3
+	font-size 40px
+	cursor pointer
+.b19-ctn
+	padding 105px 0 0 0
+	box-sizing border-box
+	max-width 672px
+	text-align center
+	h2
+		color c-3
+		display inline-block
+		font-size 20px
+		font-weight normal
+		font-family t-2
+		margin 0
+		padding 0 0 11px 0
+		position relative
+		&:before
+			position absolute
+			content ""
+			bottom 0
+			display block
+			left 0
+			right 0
+			margin auto
+			background c-4
+			height 3px
+			width 55px
+	p
+		margin 17px 0 0 0
+.b19-form
+	margin 37px 0 0 0
+	text-align left
+	.btn1
+		border  0
+	placeholder(c-0,t-0)
+.b19-input, .b19-select
+	width 48%
+	float left
+	margin 0 4% 20px 0
+	input, select
+		width 100%
+		font-size 14px
+		color c-0
+		font-family t-0
+		height 36px
+		box-sizing border-box
+		padding-left 30px
+		border 1px solid c-4
+	&:nth-child(even)
+		margin-right 0
+	select
+		background blanco
+		background-image url('../img/b19-select.png')
+		background-repeat no-repeat
+		background-position center right
+		appearance none
+.b19-input.active, .b19-select.active, .b19-textarea.active
+	input,textarea, select
+		border 1px solid c-3	
+.b19-textarea
+	width 100%
+	textarea
+		width 100%
+		font-size 14px
+		color c-0
+		font-family t-0
+		height 110px
+		box-sizing border-box
+		padding 12px 0 0 30px
+		border 1px solid c-4
+.b19-check
+	font-size 14px
+	margin 21px 0 25px 0
+	input[type="checkbox"]
+		display none
+	label
+		display inline-block
+		position relative
+		padding-left 26px
+		font-size 15px
+		&:before
+			content ""
+			position absolute
+			left 0
+			top 0
+			bottom 0
+			margin auto
+			width 10px
+			height 10px
+			border 2px solid c-11
+		&:after
+			content "\e925"
+			font-family	icomoon
+			position absolute
+			top 3px
+			left 2px
+			width 10px
+			height 10px
+			font-size 12px
+			font-weight bold
+			color c-11
+			opacity 0
+	input[type="checkbox"]:checked + label:after
+			opacity 1
+
+		height 37px
+@media screen and (max-width: 1024px)			
+	.b19-ctn
+		padding-top 50px		
+	.b19-close
+		font-size 30px
+@media screen and (max-width: 640px)
+	.b19-ctn
+		padding-top 30px		
+	.b19-close
+		font-size 25px
+	.b19-ctn br
+		display none
+@media screen and (max-width: 480px)
+	.b19-close
+		font-size 18px
+		top 8px
+		right 8px
+	.b19-select, .b19-input
+		float none
+		width 100%
+		margin-left 0
+	.b19-content.active
+		.b19
+			bottom 0
+			margin auto
+	.b19
+		height 450px
+		padding-bottom 30px
+		overflow auto
+	.b19-check
+		height auto

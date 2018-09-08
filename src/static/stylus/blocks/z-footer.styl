@@ -1,0 +1,260 @@
+.footer
+	width 100%
+	background 
+	height auto
+	color blanco
+	position relative
+	background c-3
+.footer-top
+	width 100%
+	position relative
+	background c-3
+	z-index 2
+	background url("../img/footer-bg.jpg") no-repeat center c-3
+	height 251px
+.footer-cnt
+	max-width 1200px
+.footer-menu
+	width 100%
+	padding 20px 0 0 0
+	text-align center
+	h4
+		display inline-block
+		vertical-align top
+		font-size 13px
+		font-family t-1
+		text-transform uppercase				
+		margin-right 55px
+	ul
+		display inline-block
+		vertical-align top
+	ul li
+		display inline-block
+		vertical-align top
+		font-size 13px
+		font-family t-1
+		margin-right 55px
+		text-transform uppercase
+		&:last-child
+			margin-right 0
+		a
+			color blanco
+			transition all .5s ease-in
+			@media screen and (min-width: 1025px)
+				&:hover
+					color c-4
+.footer-items-cnt
+	font-size 0
+	padding-top 30px
+.footer-item
+	position relative
+	font-size 13px
+	width 22%
+	padding 0 2.9%
+	display inline-block
+	vertical-align top
+	box-sizing border-box
+	&:nth-child(2), &:nth-child(3)
+		color blanco	
+	&:before
+		position absolute
+		top 0
+		right 0
+		content ""
+		display block
+		height 120px
+		width 1px
+		background c-8
+		opacity 0.1
+	&:first-child
+		width 19.6%
+		padding-left 1.7%
+		figure
+			max-width 177px
+			img
+				display block
+				width 100%
+				height auto
+	&:nth-child(2), &:nth-child(4)
+		width 16.67%
+	&:last-child
+		width 25%
+		padding-left 3.3%
+		&:before
+			display none
+		ul li
+			text-transform inherit
+			margin-bottom 11px
+			padding-left 25px
+			&:before
+				content "\e914"
+				display block
+				position absolute 
+				top 0
+				left 0
+				font-family icomoon
+				color c-4
+				font-size 14px
+			&:last-child
+				margin-bottom 20px
+				&:before
+					content "\e921"
+		a
+			margin-right 12px
+			&:last-child
+				margin-right 0
+		h4
+			&.footer-metodos
+				margin-bottom 10px
+	h4, ul li
+		text-transform uppercase
+	h4
+		color blanco
+		margin 0 0 17px 0
+		font-size 14px
+	ul li
+		position relative
+		margin-bottom 12px
+		box-sizing border-box
+		&:last-child
+			margin-bottom 0
+		a
+			transition all .5s ease-in
+			@media screen and (min-width: 1025px)
+				&:hover
+					color c-4
+.footer-redes
+	a
+		font-size 12px
+		height 26px
+		width 26px
+		border 1px solid blanco
+		border-radius 26px
+		margin 8px 4px 0 0
+		display inline-block
+		text-align center
+		line-height 26px
+		transition all .5s ease-in
+		@media screen and (min-width: 1025px)
+			&:hover
+				background c-4
+				border 1px solid c-4
+// creditos
+.footer-copy
+	overflow hidden
+	font-size 13px
+	height auto
+	padding 10px 0 20px 0
+	.wancho
+		overflow hidden
+		max-width 1200px
+		text-align center
+.footer-copy-left
+	display inline-block
+	padding-right 18px
+	position relative
+	padding-bottom 6px
+	p
+		margin 0
+.footer-copy-right
+	display inline-block
+	padding-left 18px
+.staffcreativa
+	position relative
+	padding-right 0.45em
+	transition-all()
+	font-family 'arial'
+	&:after
+		content '\e60e'
+		font-family icomoon
+		font-size 0.7em
+		font-style normal
+		font-variant normal
+		font-weight normal
+		line-height 1
+		position absolute
+		right 0
+		speak none
+		text-transform none
+		top 0.1em
+.link-staff
+	&:hover .staffcreativa
+		color #000
+.staffteam
+	position relative
+	padding-right 9px
+	&:after
+		content "\e60e"
+		color blanco
+		font-family icomoon
+		position absolute
+		right 0
+		top -2px
+		font-size 8px
+.footer-copy-parrafo
+	text-align center
+	margin 10px 0 0 0
+	font-size 11px
+	font-family Arial
+	color c-8
+	line-height 1.5
+@media screen and (max-width: 1260px)
+	.footer-item
+		padding 0 1.8%
+		h4
+			font-size 15px
+		ul li
+			font-size 12px
+		&:last-child
+			a
+				margin-right 7px
+@media screen and (max-width: 1024px)
+	.footer-menu
+		display none
+	.footer-item
+		&:nth-child(2), &:nth-child(3), &:nth-child(4)
+			display none
+		&:first-child, &:last-child
+			width 35%
+		&:first-child
+			margin-left 15%
+			figure
+				margin 0
+	.footer-top
+		height 210px
+@media screen and (max-width: 680px)
+	.footer-top
+		background c-3
+	.footer-item
+		&:first-child, &:last-child
+			width 100%
+			display block
+			margin 0 auto
+			max-width 240px
+			margin-bottom 20px
+		&:before
+			display none
+	.footer-top
+		height auto
+	// creditos
+	.footer-copy
+		height auto
+		text-align center
+		font-size 12px
+		margin auto
+		padding 8px 0 12px
+	.footer-copy-left
+		float none
+	.footer-copy-right
+		float none
+	.footer-redes
+		text-align center
+@media screen and (max-width: 480px)
+	.footer-copy-left
+		padding 0
+		display block
+		&:before
+			display none
+	.footer-copy-right
+		padding 0
+		display block

@@ -1,0 +1,78 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+
+
+<!-- BLOQUE 20 -->
+
+<section class="b20">
+  <div class="b20-ctn wancho">
+    <div class="g-title">
+      <h3 >lista de pedidos</h3>
+    </div>
+    <div class="b20-table">
+      <table>
+        <thead>
+          <tr>
+            <th>pedido</th>
+            <th>dirección de envio</th>
+            <th>fecha</th>
+            <th>estado</th>
+            <th>total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in rows %}
+          <tr>
+            <td><a style="color:darkblue" href="{% url 'custom_auth:order' p.codigo %}">{{p.codigo}}</a></td>
+            <td>{{p.envio.nombre}} </td>
+            <td>{{p.created|date:"Y-m-d"}}</td>
+            <td>{{p.estado|safe}}</td>
+            <td>S/{{p.total|stringformat:'.2f'}}</td>
+
+
+                <td><a class="link-dev-delete" href="{% url 'custom_auth:order_del' p.codigo %}">X</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="b20-btn">
+      <div class="b20-1">
+        <a href="{% url 'custom_auth:myaccount' %}" class="g-btn-negro">atras</a>
+      </div>
+      <div class="b20-2">
+        <a href="" class="g-btn-negro"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block jsfinal %}
+
+<script type="text/javascript">
+  $(function(){
+
+
+  });
+</script>
+{% endblock %}

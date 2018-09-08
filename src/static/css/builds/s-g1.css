@@ -1,0 +1,41 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b-miga {
+  font-size: 14px;
+  color: #394049;
+}
+.b-miga ul li {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0 8px;
+  border-right: 1px solid #ccc;
+}
+.b-miga ul li a.active strong {
+  font-family: 'Montserrat-Regular', sans-serif;
+}
+.b-miga ul li:first-child {
+  padding-left: 0;
+}
+.b-miga ul li:last-child {
+  padding-right: 0;
+  border: 0;
+}
+.b-miga strong {
+  font-weight: normal;
+}
+@media screen and (max-width: 640px) {
+  .b-miga {
+    display: none;
+  }
+}

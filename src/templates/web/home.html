@@ -1,0 +1,447 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+    {{ request.get_full_path|getSEOTags }}
+{% else %}
+    <title>{{ info.titulo }}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/jquery.bxslider.css">
+<link rel="stylesheet" href="{{STATIC_URL}}js/validationform/validationEngine.jquery.css">
+{% endblock %}
+
+{% block classbody %}header-home{% endblock %}
+
+{% block content %}
+<style type="text/css">
+{% for row in sliders %}
+    .b1-slider .b1-item.wSlider{{forloop.counter}}:before{
+        background: {{ row.color_filter }};
+    }
+{% endfor %}
+</style>
+<!-- bloque b1 -->
+<section class="b1">
+    <ul class="b1-slider">
+        {% for row in sliders %}
+        <li class="b1-item wSlider{{forloop.counter}}" style="background-image: url('{{ row.fondo.url }}');">
+            <div class="b1-table">
+                <div class="b1-table-cell">
+                    <div class="b1-cnt">
+                        <div class="b1-texto">
+                            <h3>{{ row.titulo|safeStrong }}</h3>
+                        </div>
+                        {% if row.enlace %}
+                        <div class="b1-botone">
+                            <a {{ row.enlace|linker }} class="btn1">{{ row.enlace_text }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+<!-- BLOQUE 2 -->
+<section class="b2" id="b2-animacion">
+    <div class="b2Main wancho">
+        <div class="b2Title">
+            <h2>{{"PORQUÉ ELEGIRNOS"|t}}</h2>
+        </div>
+        <div class="b2Envolve">
+            <div class="b2CntItems">
+                {% for row in p_e %}
+                <a {{ row.enlace|linker }} class="b2Item">
+                    <div class="b2Wrap">
+                        <figure class="b2Img">
+                            <img class="b2ImgDesk" src="{{ row.icon.url }}" width="82" height="56" alt="">
+                            <img class="b2ImgHover" src="{{ row.icon_h.url }}" width="82" height="56" alt="">
+                        </figure>
+                        <div class="b2Subtitle">
+                            <h3>{{ row.nombre }}</h3>
+                        </div>
+                    </div>
+                    <div class="b2Text">
+                        <p>{{ row.descript|safe }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% if inf_seccion.l_img %}
+            <figure class="b2ImgRight">
+                <img src="{{ inf_seccion.l_img.url }}" width="421" height="376" alt="">
+            </figure>
+            {% else %}
+            <figure class="b2ImgRight">
+                <img src="{{ STATIC_URL }}media/b2-img-detail.png" width="421" height="376" alt="">
+            </figure>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 3 -->
+<section class="b3">
+    <div class="b3-ctn wancho">
+        <h2>
+            <strong>{{cursos.titulo}}</strong> {{ cursos.detalle }}
+        </h2>
+        <div class="b3-ctn-items">
+            <div class="b3-slider-cnt">
+                <ul class="b3-slider">
+                    {% for row in cursos.getCursos %}
+                    <li class="b3-item" >
+                        <div class="b16-img" style="background-image: url('{{ row.img.path|thumbnail_by_name:'300x340' }}');"></div>
+                        <div class="b16-absolute1">
+                            <div class="b16-absolute-info">
+                                <div class="b16-fecha">{{"Inicio:"|t}} {{ row.inicio|date:"d/m/Y" }}</div>
+                                <h3>{{ row.nombre }}</h3>
+                            </div>
+                        </div>
+                        <div class="b16-absolute2">
+                            <h3>{{ row.nombre }}</h3>
+                        </div>
+                        <div class="b16-absolute3">
+                            <a href="{% url 'cursos:curso' row.slug %}" class="btn2"><span class="btn-ico icon-ICONOS-SVG-28"></span>{{"VER MÁS"|t}}</a>
+                        </div>
+                        {% if row.nuevo %}
+                        <div class="b16-absolute4">
+                            <div class="b16-etiqueta">
+                                <span>{{"Nuevo"|t}}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 4 -->
+<section class="b4">
+    <div class="b4Main">
+        <div class="b4Right">
+            <div class="b4Table">
+                <div class="b4Title">
+                    <h2>{{"COMO FUNCIONA"|t}}</h2>
+                </div>
+                <div class="b4Text content-text b18-list-romb">{{ seccion.cf_descript|safe }}</div>
+                <div class="b4Left">
+                    {% if seccion.cf_vid_id %}
+                        <div class="b4CntVideo">
+                            <div class="b4Video">
+                                <figure class="b4Portada" style="background-image: url('{{ seccion.cf_img.url }}');">
+                                    <span class="b4Play icon-ICONOS-SVG-09"></span>
+                                </figure>
+                                <div class="b4LinkVIdeo">
+                                    <iframe class="video-iframe" data-video="{{ seccion.cf_vid_id }}" width="510" height="340" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="b4CntImg">
+                            <figure class="b4Img">
+                                <img src="{{ seccion.cf_img.url }}" width="510" height="340" alt="">
+                            </figure>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="b4Btn">
+                    <a href="{% url 'conocenos' %}" class="btn3">{{"VER MÁS"|t}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- bolque b5 -->
+<section class="b5" style="background-image:url('{{STATIC_URL}}media/b5-banner.jpg');">
+    <div class="b5-cnt wancho">
+        <div class="b5-ctn-slider">
+            <ul class="b5-slider">
+                {% for row in seccion.getTestimonios %}
+                <li class="b5-item">
+                    <figure class="b5-img">
+                        <img src="{{ row.img.path|thumbnail_by_name:'256x256' }}" alt="" height="130" width="130">
+                    </figure>
+                    <div class="b5-info">
+                        <h3>{{"ellos opinan"|t}}</h3>
+                        {{ row.descript|safe }}
+                        <div class="b5-autor">
+                            <h4>{{ row.nombre }}</h4>
+                            <h5>{{ row.cargo }}</h5>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 6 -->
+<section class="b6" id="b6-anima">
+    <div class="b6Main wancho">
+        <div class="b6Left">
+            <div class="b6Title">
+                <figure>
+                    <img src="{{ STATIC_URL }}img/b6-icon-title-1.png" width="44" height="38" alt="">
+                </figure>
+                <h2><strong>{{"MANTENTE</strong> INFORMADO"|t}}</h2>
+            </div>
+            <div class="b6Wrap">
+                {% for row in noticias %}
+                <div class="b6BoxItem">
+                    <article class="b6GroupBox">
+                        <div class="b6Subtitle">
+                            <h3>{{ row.title }}</h3>
+                        </div>
+                        <div class="b6Text">
+                            <p>{{ row.excerpt|safe|slice:'120' }}</p><a href="{{ row.link }}">{{"Ver más."|t}}</a>
+                        </div>
+                    </article>
+                    <figure class="b6Img">
+                        {% if row.imagen != '' %}
+                        <img src="{{ row.imagen }}" width="145" height="120" alt="{{ row.title }}">
+                        {% endif %}
+                    </figure>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="b6Right">
+            <div class="b6Title">
+                <figure>
+                    <img src="{{ STATIC_URL }}img/b6-icon-title-2.png" width="44" height="38" alt="">
+                </figure>
+                <h2><strong>{{"NUESTROS</strong> EVENTOS"|t}}</h2>
+            </div>
+            <div class="b6Envolve">
+                {% for row in eventos %}
+                <a href="{% url 'notivent:evento' row.slug %}" class="b6BlockItem">
+                    <div class="b24Table">
+                        <span class="b6Date">{{ row.fecha|date:'d-m-Y' }}</span>
+                        <div class="b6TextBlock">
+                            <p>{{ row.nombre }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 7 -->
+<section class="b7">
+    <div class="b7-cnt wancho">
+        <div class="b7-suscri">
+            {{"¡suscribete ahora!<strong>e informate más"|t}}</strong>
+        </div>
+        <div class="b7-form">
+            <form action="{% url 'forms:suscript' %}" method="POST" id="b7-form">
+                {% csrf_token %}
+                <input type="text" class="input-form-style" name="xseg_form" value="{{ csrf_token|key_constructor }}">
+                <div class="b7-input">
+                    <input type="text" class="validate[required]" name="nombres" placeholder="NOMBRES:">
+                </div>
+                <div class="b7-input">
+                    <input type="email" class="validate[required,custom[email]]" name="email" placeholder="CORREO:">
+                </div>
+                <button href="#" class="btn1">{{"ENVIAR"|t}}</button>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- BLOQUE 8 -->
+<section class="b8">
+    <div class="b8Main wancho">
+        <div class="b8Left">
+            <div class="b8Title">
+                <h2>{{"Nuestros <strong>CLIENTES:"|t}}</strong></h2>
+            </div>
+            <div class="b8SliderLeft b8NoSliderLeft">
+                <div class="b8RespLef">
+                    <div class="b8EnvolveLeft">
+                        <ul class="js-b8LanzadorLeft">
+                            {% for row in seccion.getClientes %}
+                            <li><img src="{{ row.img.url }}" width="170" height="54" alt="{{ row.nombre }}"></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="b8ArrowLeft">
+                    <span class="b8PrevLeft"></span>
+                    <span class="b8NextLeft"></span>
+                </div>
+            </div>
+        </div>
+        <div class="b8Right">
+            <div class="b8Title">
+                <h2>{{"Nuestros alumnos<strong>PROVIENEN DE:"|t}}</strong></h2>
+            </div>
+            <div class="b8SliderRight b8NoSLiderRight">
+                <div class="b8RespRight">
+                    <div class="b8EnvolveRight">
+                        <ul class="js-b8LanzadorRight">
+                            {% for row in seccion.getPaises %}
+                            <li><img src="{{ row.img.url }}" width="84" height="54" alt="{{ row.nombre }}"></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="b8ArrowRight">
+                    <span class="b8PrevRight"></span>
+                    <span class="b8NextRight"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block jsfinal %}
+<script src="{{ STATIC_URL }}js/jquery.waypoints.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/validationform/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/validationform/jquery.validationEngine-es.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //b1 slider
+        $('.b1-slider').bxSlider({
+            mode: 'fade',
+            controls:true,
+            nextText: '',
+            prevText: '',
+            pager:true,
+            adaptiveHeight:true,
+            auto:true,
+            pause:5000,
+            onSliderLoad: function(currentIndex) {
+                $('.b1-slider').children().eq(currentIndex).addClass('active')
+            },
+            onSlideBefore: function($slideElement){
+                $('.b1-slider').children().removeClass('active');
+                setTimeout( function(){
+                    $slideElement.addClass('active');
+                },500);
+            }
+        });
+        // end b1
+        // b2
+        $('.b3-slider').bxSlider({
+            adaptiveHeight: true,
+            auto: true,
+            slideWidth: 300,
+            slideMargin: 0,
+            minSlides: 1,
+            maxSlides: 4,
+            moveSlides: 1,
+            prevSelector: '',
+            nextSelector: '',
+            prevText: '',
+            nextText: '',
+            pager:false
+        });
+        var b3_item_slider = $('.b3-slider li').length;
+        // console.log(b2_item_slider, "cantidad de item slider");
+        if (b3_item_slider > 4) {
+            $('.b3-ctn-items').removeClass('b3NoSlider').addClass('b3ActiveSlider');
+        }
+        // end b2
+        // b4
+        var url ="https://www.youtube.com/embed/";
+        var config ="?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer"
+        $('.b4Play').click(function(event) {
+            play = $(this)
+            play.addClass('anima');
+            videocurrent = $(this).closest('.b4Video').find('.video-iframe');
+            videoid = videocurrent.attr('data-video');
+            videocurrent.attr('src', url+videoid+config);
+
+            videocurrent.load(function() {
+                play.closest('.b4Video').find('.b4Portada').addClass('active');
+                play.addClass('active');
+                videocurrent[0].contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+            });
+        });
+        // end b4
+        // b5
+        $('.b5-slider').bxSlider({
+            adaptiveHeight: true,
+            auto: true,
+            controls: false,
+            mode: "fade",
+            pause: '8000'
+        });
+
+        // end b5
+
+        // b7
+        $("form").validationEngine('attach', {
+            promptPosition : "topLeft",
+            autoHidePrompt: true,
+            autoHideDelay: 3000,
+            binded: false,
+            scroll: false,
+            validateNonVisibleFields: true
+        });
+
+        $("#b7-form").submit(function(e) {
+            var valid = $(this).validationEngine('validate');
+            if (!valid){
+                return false;
+            }else{
+                return true;
+            };
+        });
+        // end b7
+        // b8
+        var b8_item_left = $('.b8SliderLeft li').length;
+        console.log("cuenta item slider",b8_item_left);
+        if (b8_item_left > 2) {
+            $('.b8SliderLeft').removeClass('b8NoSliderLeft').addClass('b8ActiveLeft')
+            $('.js-b8LanzadorLeft').bxSlider({
+                auto:true,
+                pause:'5000',
+                slideWidth: 120,
+                minSlides: 2,
+                maxSlides: 2,
+                moveSlides: 1,
+                slideMargin: 25,
+                prevSelector: '.b8PrevLeft',
+                nextSelector: '.b8NextLeft',
+                nextText: '',
+                prevText: '',
+                pager: false
+            });
+        }
+
+        var b8_item_right = $('.b8SliderRight li').length;
+        console.log("cuenta item slider",b8_item_right);
+        if (b8_item_right > 3) {
+            $('.b8SliderRight').removeClass('b8NoSLiderRight').addClass('b8ActiveRight')
+            $('.js-b8LanzadorRight').bxSlider({
+                auto:true,
+                pause:'5000',
+                slideWidth: 55,
+                minSlides: 3,
+                maxSlides: 3,
+                moveSlides: 1,
+                slideMargin: 30,
+                prevSelector: '.b8PrevRight',
+                nextSelector: '.b8NextRight',
+                nextText: '',
+                prevText: '',
+                pager: false
+            });
+        }
+        // end b8
+    });
+</script>
+{% endblock %}

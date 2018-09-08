@@ -1,0 +1,104 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 26 -->
+<section class="b26">
+    <div class="b26-lcnt wlancho">
+        <div class="bmiculenta">
+            <h1>Mi cuenta</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'custom_auth:micuenta_datos' %}">Datos</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_direcciones' %}" class="active">Direcciones</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_pedidos' %}">Pedidos</a></li>
+                    <li><a href="">Lista de Deseos</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="bcuelntactn">
+            <h2>Editar Dirección</h2>
+            <div class="b26-cuelnta-ctn">
+                <form action="." id="b26-form" name="b26-form" method="post">
+                    <div class="g-input">
+                        {% csrf_token %}
+                        <input type="hidden" name="ida" value="{{ida}}">
+
+                        <input type="text" class="validate[required]" name="nombre"  value="{{row.nombre}}" placeholder="Nombre de la Dirección">
+                    </div>
+                    <div class="g-input">
+                        <input type="text" class="validate[required]" name="direccion"  value="{{row.direccion}}" placeholder="Dirección">
+                    </div>
+
+                    <div class="g-ilnput">
+                        <select class="validate[required]" id="idr_region_{{nro}}"  value="{{row.region}}" name="region">
+                            <option value="">Departamento</option>
+                        </select>
+                    </div>
+
+                    <div class="g-input">
+                        <select class="validate[required]" id="idr_provincia_{{nro}}"  value="{{row.provincia}}" name="provincia">
+                            <option value="">Provincia</option>
+                        </select>
+                    </div>
+
+                    <div class="g-input">
+                        <select class="validate[required]" id="idr_distrito_{{nro}}" value="{{row.distrito}}"  name="distrito">
+                            <option value="">Distrito</option>
+                        </select>
+                    </div>
+
+                    <div class="g-input">
+                        <textarea class="validate[required]" name="referencia" value="{{row.referencia}}" placeholder="Referencia"></textarea>
+                    </div>
+
+                    <div class="btn-button">
+                        <button class="bt_gnrl bt_1" href=""><span>Guardar</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+        $('#idr_region_{{nro}}').change(function(e){
+                e.preventDefault();
+                listar_provincias($('#idr_provincia_{{nro}}'),$(this).val());
+                limpiar_distritos($('#idr_distrito_{{nro}}'));
+        });
+        $('#idr_provincia_{{nro}}').change(function(e) {
+                e.preventDefault();
+                listar_distritos($('#idr_distrito_{{nro}}'),$(this).val());
+        });
+
+        {% if region  %}
+        listar_regiones($('#idr_region_{{nro}}'),"{{region}}");
+        {% else %}
+        listar_regiones($('#idr_region_{{nro}}'));
+        {% endif %}
+        //initialize
+
+        {% if provincia  %}
+        listar_provincias($('#idr_provincia_{{nro}}'),"{{region}}","{{provincia}}");
+            {% if distrito  %}
+            listar_distritos($('#idr_distrito_{{nro}}'),"{{provincia}}","{{distrito}}");
+            {% else %}
+            listar_distritos($('#idr_distrito_{{nro}}'),"{{provincia}}");
+            {% endif %}
+        {% else %}
+        listar_provincias($('#idr_provincia_{{nro}}'),"{{region}}");
+        {% endif %}
+
+    });
+</script>
+{% endblock %}

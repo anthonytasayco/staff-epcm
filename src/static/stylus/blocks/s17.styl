@@ -1,0 +1,302 @@
+.diplomados
+	.b9
+		display none
+	.b-miga
+		padding 120px 0 0 0
+	.h1-block
+		height 100px
+.b17
+	padding 23px 0 40px 0
+	width 100%
+.b17-cnt
+	font-size 0
+.b17-info, .b17-descripcion
+	display inline-block
+	vertical-align top
+	width 62%
+.b17-title
+	color c-3
+	font-size 38px
+	font-family t-6
+	margin-top 7px
+	h2
+		line-height 45px
+		font-weight normal
+		display inline-block
+		position relative
+		padding-right 120px
+		margin 0
+		&:before
+			position absolute
+			top 30px
+			right 0
+			content ""
+			width 95px
+			height 1px
+			display block
+			background c-4
+	strong
+		display block
+		font-weight normal
+		font-family t-8
+		color c-4
+.b17-cnt-sec
+	margin 20px 0 0 0
+	font-size 0
+.b17-content-video, .b17-text
+	display inline-block
+	vertical-align top
+	font-size 14px
+	width 46.5%
+	position relative
+.b17-content-video
+	height 219px
+.b17-img
+	width 100%
+	display block
+	height 219px
+	position absolute
+	top 0
+	left 0
+	cursor pointer
+	background-repeat no-repeat
+	background-position center
+	background-size cover
+	&:before
+		position absolute
+		top 0
+		left 0
+		content ""
+		background url("../img/b17-bg.png") center no-repeat
+		background-size cover
+		width 100%
+		height 100%
+		z-index 1
+	@media screen and (min-width 1025px)
+		&:hover
+			.b17-video
+				color c-4
+
+	&.active
+		z-index -1
+		opacity 0
+		visibility hidden
+.b17-link-video
+	position relative
+	padding-bottom 61.35%
+	padding-top 25px
+	height 0
+	.video-iframe
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 100%
+		
+.b17-video
+	position absolute
+	top 0
+	left 0
+	right 0
+	bottom 0
+	margin auto
+	z-index 2
+	font-size 33px
+	height 33px
+	width 33px
+	color blanco
+	transition all .5s ease-in
+	
+.b17-text
+	width 50.5%
+	margin-left 3%
+	text-align justify
+	position relative
+	strong
+		font-weight normal
+		color c-1
+		font-family t-2
+	p
+		margin 8px 0 12px 0
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-family icomoon
+				position absolute
+				
+.b17-descripcion
+	padding 60px 2.2% 28px 2.2%
+	background c-4
+	width 34%
+	margin-left 4%
+	box-sizing border-box
+	h3
+		margin 0
+		font-size 44px
+		font-family t-2
+		color blanco
+		opacity .15
+	h4 
+		margin -15px 0 0 0
+		color c-3
+		padding 0 0 8px 0
+		text-transform uppercase
+		font-size 18px
+		font-family t-7
+		position relative
+		&:before
+			position absolute
+			bottom 0
+			left 0
+			content ""
+			background c-3
+			height 1px
+			width 65px
+	ul 
+		margin 30px 0 0 0
+		li
+			font-size 0
+			color blanco
+			text-transform uppercase
+			margin-bottom 15px
+			position relative
+			&:last-child
+				margin-bottom 0
+		li:nth-child(3)
+			figure 
+				max-width 18px
+		strong
+			text-transform uppercase
+			font-weight normal
+			font-family t-2
+			font-size 18px
+		figure
+			position absolute
+			top 0
+			left 0
+			max-width 20px
+			img
+				width 100%
+				margin 0
+				display block
+		p
+			padding-left 38px
+			box-sizing border-box
+			width 100%
+			font-size 14px
+			vertical-align top
+			display inline-block
+			margin 0
+			
+.b17-buttons
+	margin 30px 0 0 0
+	text-transform uppercase
+	cf()
+	a
+		float left
+		width 48%
+		text-align center
+		display block
+		padding 0
+		&:first-child
+			background c-5
+		&:last-child 
+			float right
+		span
+			margin-left 2px
+		@media screen and (min-width 1025px)
+			&:first-child
+				&:hover
+					background c-3
+			&:last-child
+				&:hover
+					background c-5
+@media screen and (min-width 1025px)
+	.b17-descripcion
+		opacity 0
+		transition all .5s ease-in
+		transform translateX(60px)
+		&.active
+			opacity 1
+			transform translateX(0)
+@media screen and (max-width 1200px)
+	.b17-title
+		h2
+			font-size 35px
+	.b17-descripcion
+		padding-left 1%
+		padding-right 1%
+	.b17-buttons .btn3
+		font-size 12px
+@media screen and (max-width 1024px)
+	.b17-descripcion, .b17-info
+		display block
+		width 100%
+		margin 0
+	.b17-descripcion 
+		margin-top 30px
+		padding 50px 2% 28px 2%
+		ul li 
+			figure
+				width 7%
+			p
+				width 93%
+	.b17-buttons
+		text-align center
+		a
+			margin 0
+			display inline-block
+			float none
+			width 200px
+			&:last-child
+				float none
+				margin-left 20px
+	.b17-title
+		margin-top 0
+	.b17-content-video
+		margin 0 auto
+@media screen and (max-width 640px)
+	.b17
+		padding 120px 0 30px 0
+	.b17-title 
+		text-align center
+		h2
+			padding-right 0
+			font-size 25px
+			line-height 30px
+			&:before
+				display none
+		strong
+			display inline-block
+	.b17-content-video, .b17-text
+		display block
+		width 100%
+		margin 0 auto
+	.b17-content-video
+		max-width 345px
+	.b17-text
+		margin 20px 0 0 0
+@media screen and (max-width 480px)	
+	.b17-title h2
+		font-size 20px
+		line-height 23px
+	.b17-descripcion
+		padding-top 30px
+		ul li 
+			figure
+				width 10%
+			p
+				width 90%
+	.b17-buttons
+		a
+			width 48%
+			&:last-child
+				margin-left 4%

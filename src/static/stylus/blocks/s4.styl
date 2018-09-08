@@ -1,0 +1,256 @@
+.b4
+	padding-bottom 75px
+	
+.b4Main
+	max-width 1060px
+	width 95%
+	min-height 355px
+	position relative
+	margin auto
+	&:before
+		content ""
+		display block
+		position absolute
+		bottom -32px
+		right -442px
+		background url('../img/como-funciona.png') 0px 0px no-repeat
+		width 880px
+		height 112px	
+
+.b4Left
+	width 525px
+	position absolute
+	top 0
+	left 0	
+
+.b4CntImg
+	width 100%
+	box-sizing border-box
+	position relative
+	padding-left 15px
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background c-4
+		position absolute
+		top 15px
+		left 0
+		
+.b4Img
+	width 100%
+	position relative
+	img
+		img-res()
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background negro
+		opacity 0.3
+		position absolute
+		top 0
+		left 0
+
+.b4CntVideo
+	width 100%
+	box-sizing border-box
+	position relative
+	padding-left 15px
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background c-4
+		position absolute
+		top 15px
+		left 0	
+				
+.b4Video
+	position relative
+
+.b4Portada
+	width 100%
+	height 100%
+	backgroundsize()
+	position absolute
+	top 0
+	left 0
+	z-index 2
+	opacity 1
+	visibility visible
+	transition all .5s linear .2s
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background #000
+		opacity .3
+		position absolute
+		top 0
+		left 0
+	&.active
+		z-index -1
+		opacity 0
+		visibility hidden
+
+.b4Play
+	width 100px
+	height 100px
+	line-height 100px
+	color blanco
+	font-size 94px
+	text-align center
+	position absolute
+	top 0
+	left 0
+	right 0
+	bottom 0
+	z-index 2
+	margin auto
+	cursor pointer
+	transition all .5s linear
+	&.active
+		display none
+	&.anima
+		animation b4_opaciti 1s linear infinite alternate
+	@media screen and (min-width 1025px)		
+		&:hover
+			color c-4
+
+.b4LinkVIdeo
+	position relative
+	padding-bottom 61.85%
+	padding-top 25px
+	height 0
+	.video-iframe
+		position absolute
+		top 0
+		left 0
+		width 100%
+		height 100%
+
+
+.b4Right
+	padding-left 610px
+
+.b4Table
+	display table-cell
+	vertical-align middle
+	width 2000px
+	height 355px	
+
+.b4Title
+	h2
+		color c-4
+		font-family t-6
+		font-weight normal
+		font-size 20px
+		position relative
+		padding-bottom 10px
+		margin-bottom 0
+	h2:before
+		content ""
+		width 188px
+		height 2px
+		background c-4
+		position absolute
+		left -135px
+		bottom 0
+		z-index 4
+
+.b4Text
+	line-height 1.4
+	color c-0
+	font-family t-0
+	font-size 14px
+	margin-top 20px
+	margin-bottom 30px
+	p
+		margin-bottom 0
+
+
+// animation
+@keyframes b4_opaciti
+	0%
+		opacity 0
+	50%
+		opacity 0.5
+	100%
+		opacity 1
+
+
+// responsive
+@media screen and (max-width 1120px)
+	.b4Main:before
+		display none
+
+@media screen and (max-width 1024px)
+	.b4
+		padding-bottom 50px
+
+@media screen and (max-width 960px)		
+	.b4Main
+		min-height 265px
+		
+	.b4Left
+		width 390px
+		
+	.b4LinkVIdeo
+		padding-bottom 59.85%
+
+	.b4Play
+		width 50px
+		height 50px
+		line-height 50px
+		font-size 46px		
+
+	.b4Right
+		padding-left 425px
+
+	.b4Table
+		height 265px
+
+	.b4Title 
+		h2:before
+			left -70px
+	
+	
+
+@media screen and (max-width 767px)
+	.b4
+		padding-bottom 30px
+	
+	.b4Main
+		min-height inherit
+		
+	.b4Left
+		width 100%
+		position static
+		margin-left auto
+		margin-right auto
+		margin-bottom 30px		
+
+	.b4CntImg, .b4CntVideo
+		max-width 390px
+		padding-left 0
+		margin auto
+		&:before
+			display none
+
+	.b4LinkVIdeo
+		padding-bottom 60.35%
+					
+	.b4Right
+		text-align center
+		padding-left 0
+
+	.b4Title
+		h2
+			padding-bottom 0
+		h2:before
+			display none
+	
+	.b4Text
+		margin 30px 0
+	

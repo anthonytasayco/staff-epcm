@@ -1,0 +1,378 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"INFORMACIÓN DE COMPRA"|t|title}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	#b21-check-text{
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		display: block!important;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"INFORMACIÓN DE COMPRA"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 21 -->
+<section class="b20">
+	<div class="b20-cnt">
+		<div class="b20-titulo">
+			<h3>{{"DATO <strong>DE PAGO"|t}}</strong></h3>
+		</div>
+		<div class="b20-links">
+			<a href="{% url 'pedidos:carrito'%}" class="b20-link">
+				<div class="b20-link-inside">
+					{{"CUSOS ELEGIDOS"|t}}
+				</div>
+			</a>
+			<a href="{% url 'pedidos:datos_facturacion' %}" class="b20-link active">
+				<div class="b20-link-inside">
+					{{"DATOS PAGO"|t}}
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="b21Main wancho">
+		<form action="." method="post" id="wDataToSend">
+			{% csrf_token %}
+			<input type="hidden" name="usuario_id" value="0">
+			<div class="b21Title-1">
+				<h2>{{"MEDIO DE PAGO:"|t}}</h2>
+			</div>
+			<div class="b21Text">
+				<p></p>
+			</div>
+			<div class="b21Campos-1">
+				<ul>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Nombres:"|t}}</label>
+							<input name="usuario_nombres" type="text" class="validate[required]" value="{{initial.usuario_nombres}}">
+						</div>
+						<div class="g-input">
+							<label>{{"Apellidos:"|t}}</label>
+							<input name="usuario_apellidos" type="text" class="validate[required]" value="{{initial.usuario_apellidos}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Correo Electónico:"|t}}</label>
+							<input name="usuario_email" type="text" class="validate[required,custom[email]]" value="{{initial.usuario_email}}">
+						</div>
+						<div class="g-input">
+							<label>{{"Teléfono / Celular:"|t}}</label>
+							<input name="usuario_telefono" type="text" class="validate[required]" value="{{initial.usuario_telefono}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input g-select">
+							<label>{{"Tipo de documento:"|t}}</label>
+							<select name="usuario_tipodocumento">
+								<option value="dni" {% if initial.usuario_tipodocumento == 'dni' %}selected{% endif %}>{{"DNI"|t}}</option>
+								<option value="pasaporte" {% if initial.usuario_tipodocumento == 'pasaporte' %}selected{% endif %}>{{"Pasaporte"|t}}</option>
+								<option value="licencia"  {% if initial.usuario_tipodocumento == 'licencia' %}selected{% endif %}>{{"Licencia"|t}}</option>
+								<option value="libreta" {% if initial.usuario_tipodocumento == 'libreta' %}selected{% endif %}>{{"Libreta"|t}}</option>
+							</select>
+						</div>
+						<div class="g-input">
+							<label>{{"Número de Documento:"|t}}</label>
+							<input name="usuario_nrodocumento" type="text" class="validate[required]" value="{{initial.usuario_nrodocumento}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input g-select">
+							<label>{{"País:"|t}}</label>
+							<select name="usuario_pais">
+							<option value="" selected disabled>{{"Selecione su país de procedencia"|t}}</option>
+							{% for row in paises %}
+								<option value="{{ row.nombre }}" {% if initial.usuario_pais == row.nombre %}selected{% endif %}>{{ row.nombre }}</option>
+							{% endfor %}
+							</select>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="b21Title-2">
+				<input id="b21-factura" name="factura_tipo" value="factura" type="checkbox" {% if initial.factura_tipo == 'factura' %}checked{% endif %}>
+				<label for="b21-factura" class="js-b21OpenToggle"><span class="b21Circle"></span>{{"DESEO FACTURA"|t}}</label>
+			</div>
+			<div class="b21CntToggle">
+				<div class="b21Campos-2">
+					<ul>
+						<li class="b21two">
+							<div class="g-input dv-factura">
+								<label>{{"RAZÓN SOCIAL:"|t}}</label>
+								<input name="factura_razonsocial" type="text" class="validate[required]" value="{{initial.factura_razonsocial}}">
+							</div>
+							<div class="g-input dv-factura">
+								<label>{{"RUC:"|t}}</label>
+								<input name="factura_ruc" type="text" class="validate[required]" value="{{initia.factura_ruc}}">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="b21Title-1">
+				<h2>{{"SELECCIONE SU MÉTODO DE PAGO:"|t}}</h2>
+			</div>
+			<div class="b21Wrap">
+				<div class="b21CntRadio">
+					<ul>
+						{% comment %}
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-1" name="metodopago" type="radio" value="pagoefectivo" checked="">
+								<label for="b21-pago-1">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/b21-img-pago-1.png" width="179" height="37" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-2" name="metodopago" type="radio"  value="pagoefectivo">
+								<label for="b21-pago-2">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/b21-img-pago-2.png" width="179" height="37" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-3" name="metodopago" type="radio" value="visa">
+								<label for="b21-pago-3">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/b21-img-pago-3.png" width="179" height="37" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+						{% endcomment %}
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-6" name="metodopago" type="radio" value="pagoefectivo">
+								<label for="b21-pago-6">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/pe.png" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-4" name="metodopago" type="radio" value="paypal">
+								<label for="b21-pago-4">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/b21-img-pago-4.png" width="179" height="37" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+						<li>
+							<div class="b21InputRadio">
+								<input id="b21-pago-5" name="metodopago" type="radio" value="deposito">
+								<label for="b21-pago-5">
+									<span class="b21IconoRadio"></span>
+									<figure class="b21Img">
+										<img src="{{ STATIC_URL }}img/b21-img-pago-5.png" width="179" height="37" alt="">
+									</figure>
+								</label>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			 <div class="b21Foot">
+				<input type="checkbox" id="b21-check-text" name="validCheck" class="validate[required]" >
+				<label for="b21-check-text">
+					<span class="b21iconoFoot"></span>
+					<div class="b21TextFoot">
+						<p>{{"Acepto los <a>Terminos y condiciones</a>, declarados por EPCM Project Academy"|t}}</p>
+					</div>
+				</label>
+			 </div>
+			 <div class="b21Btn">
+				<button class="btn2"><span class="btn-ico icon-ICONOS-SVG-13"></span>{{"COMPRAR"|t}}</button>
+			 </div>
+		</form>
+	</div>
+</section>
+<!-- Here PyP Lanza Todo. -->
+{% if send_paypal %}
+<div class="overlayfancy50 active">
+    <img src="{% static 'img/loading.gif' %}">
+</div>
+{% comment %}
+{% endcomment %}
+    <script language="Javascript">
+        document.oncontextmenu = function() {
+            return false
+        }
+        function right(e) {
+            var msg = "Prohibido usar Click Derecho !!! ";
+            if (navigator.appName == 'Netscape' && e.which == 3) {
+                return false;
+            }
+            else if (navigator.appName == 'Microsoft Internet Explorer' && event.button==2) {
+                return false;
+            }
+            else if (navigator.appName == 'Microsoft Internet Edge' && event.button==2) {
+                return false;
+            }
+            return true;
+        }
+        document.onkeypress = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+                return false;
+            }
+        }
+        document.onmousedown = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+                return false;
+            }
+        }
+        document.onkeydown = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+            //alert('No F-keys');
+                return false;
+            }
+        }
+        document.onmousedown = right;
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) {
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+                return false;
+            }
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+                return false;
+            }
+        }
+    </script>
+    <style type="text/css">
+        body {
+                user-select: none;
+                user-drag: none;
+                -moz-user-select: none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                -webkit-user-drag: none;
+                -o-user-select: none;
+        }
+        img{
+            pointer-events: none;
+            user-select: none;
+            user-drag: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+            -o-user-select: none;
+        }
+    </style>
+    <style type="text/css">
+    .overlayfancy50 {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        background: #292421;
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        z-index: 1900;
+        visibility: hidden;
+        -webkit-transition: all 0.15s linear;
+        -moz-transition: all 0.15s linear;
+        -o-transition: all 0.15s linear;
+        -ms-transition: all 0.15s linear;
+        transition: all 0.15s linear;
+    }
+    .overlayfancy50 img{
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+    .overlayfancy50.active {
+        opacity: 0.5;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+        filter: alpha(opacity=50);
+        visibility: visible;
+    }
+    body {
+        overflow: hidden;
+    }
+    </style>
+
+<section id="wPayPalForm" style="display: none;">
+    {{ form.render }}
+</section>
+{% endif %}
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$(function(){
+		$('.b21TextFoot p a').attr('href',"{% url 'termpreg:terms' %}");
+		$('.b21TextFoot p a').attr('target',"_blank");
+		$('.js-b21OpenToggle').click(function(event) {
+			$('.b21CntToggle').slideToggle();
+		});
+
+
+		$('#b21-factura').change(function() {
+			//   if (this.value == 'boleta') {
+			if($(this).is(":checked")){
+				  $('.dv-factura').find('input, textarea, select').addClass('validate[required]');
+			  }
+			  else{
+				  $('.dv-factura').find('input, textarea, select').removeClass('validate[required]');
+			  }
+		  });
+		  $('#b21-factura').change();
+		  setTimeout(function(){$('#wPayPalForm form').submit();},2000);
+	});
+</script>
+{% endblock %}

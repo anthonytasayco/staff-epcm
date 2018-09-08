@@ -1,0 +1,82 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.g-input {
+  text-align: left;
+}
+.g-input input,
+.g-input select,
+.g-input textarea {
+  font-size: 14px;
+  font-family: 'Montserrat-Light', sans-serif;
+  color: #4d4d4d;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border: none;
+  background: #fff;
+  border: 1px solid #4d4d4d;
+  padding: 0 14px;
+}
+.g-input select {
+  padding: 0;
+  padding-left: 14px;
+}
+.g-input textarea {
+  height: 104px;
+  line-height: 1.2;
+  padding-top: 10px;
+}
+.g-input label {
+  display: block;
+  cursor: auto;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding-left: 13px;
+}
+.g-select select {
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  background-image: url("../img/input-ico.png");
+  background-repeat: no-repeat;
+  background-position: center right;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* focus  */
+.g-input.active input,
+.g-input.active textarea,
+.g-input.active select {
+  border: 1px solid #05ce7b;
+}
+@media screen and (max-width: 768px) {
+  .g-input label {
+    padding-left: 0;
+  }
+}
+.formError .formErrorContent,
+.formError .formErrorArrow div {
+  background-color: #0032a0 !important;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-family: 'Montserrat-Regular', sans-serif;
+}
+.formError .formErrorArrow .line1,
+.formError .formErrorArrow .line2 {
+  display: none;
+}

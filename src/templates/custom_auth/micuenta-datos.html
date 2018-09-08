@@ -1,0 +1,105 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/le-frog/jquery-ui.css">
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 24 -->
+<section class="b24">
+    <div class="b24-cnt wancho">
+        <div class="bmicuenta">
+            <h1>Mi cuenta</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'custom_auth:micuenta_datos' %}" class="active">Datos</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_direcciones' %}">Direcciones</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_pedidos' %}">Pedidos</a></li>
+                    <li><a href="">Lista de Deseos</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="bcuentactn">
+            <h2>Mis datos Personales</h2>
+            <form action="." id="b24-form" name="b24-form" method="post">
+
+                <div class="g-input">
+                    <input type="text" name="nombres" class="validate[required]" placeholder="Nombre y Apellidos" value="{{row.nombres}}">
+                </div>
+                <div class="g-input">
+                    <label for="b24-datepicker">Fecha de Nacimiento:</label>
+                    <div>
+                        <input class="datepicker" name="nacimiento" value="{{row.nacimiento|date:'Y-m-d'}}" id="b24-datepicker" type="text">
+                    </div>
+
+                </div>
+                <div class="g-input">
+                    <label >Sexo:</label>
+                    <div>
+                        <div class="b24-sex-item">
+                            <input name="sexo" id="b24-femenino" type="radio" value="1" {% if row.sexo == '1'%}checked {% endif%} >
+                            <label for="b24-femenino">Femenino</label>
+                        </div>
+                        <div class="b24-sex-item">
+                            <input name="sexo" id="b24-masculino" type="radio" value="2"  {% if row.sexo == '2'%}checked {% endif%}>
+                            <label for="b24-masculino">Masculino</label>
+                        </div>
+                    </div>
+                </div>
+                {% csrf_token %}
+                <div class="g-input">
+                    <input type="text" name="dni" value="{{row.dni}}" class="validate[required]" placeholder="Dni">
+                </div>
+                <div class="g-input">
+                    <input type="text" name="telefono" value="{{row.telefono}}" class="validate[required]" placeholder="Teléfono">
+                </div>
+                <div class="g-input">
+                    <input type="text" name="email" value="{{row.email}}" class="validate[required,custom[email],ajax[ajaxNameCall]]" placeholder="Email">
+                </div>
+                <div class="btn-button">
+                    <button class="bt_gnrl bt_1" href=""><span>Guardar Cambios</span></button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function(){
+         $.datepicker.regional['es'] = {
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+            dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+        $( ".datepicker" ).datepicker({
+            numberOfMonths: 1,
+            showButtonPanel: false,
+            showOn: "both",
+            buttonImage: "{{STATIC_URL}}img/b24-datepicker.png",
+            buttonImageOnly: true,
+            changeYear: true 
+        });
+
+    });
+</script>
+{% endblock %}

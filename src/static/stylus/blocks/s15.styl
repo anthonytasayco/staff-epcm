@@ -1,0 +1,116 @@
+.b15
+	width 100%
+	padding 40px 0 0px 0
+.b15-ctn
+	max-width 1080px
+	font-size 0
+.b15-info, .b15-img
+	display inline-block
+	vertical-align top
+.b15-info
+	width 46.3%
+	margin 52px 0 0 0
+	position relative
+	h2
+		font-weight normal
+		margin 0
+		color c-3
+		font-family t-2
+		font-size 20px
+		text-transform uppercase
+	p
+		margin 23px 0 0 0
+		font-size 14px
+		text-align justify
+	strong
+		font-weight normal
+		color c-4
+
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			font-size 14px
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+	ol
+		li
+			counter-increment list
+			list-style-type none
+			margin-bottom 13px
+			font-size 14px
+			margin-top 13px
+			line-height 1.9
+			position relative
+			&:before
+				color: c-4
+				content: counter(list) "."
+				left:-32px
+				position: absolute
+				text-align: right
+				width: 26px
+.b15-img
+	margin-left 9.7%
+	width 44%
+	position relative
+	height 290px
+	img
+		display block
+		position absolute
+		top 75px
+		left 0
+		transition all .5s ease-in
+		&:last-child
+			top 0
+			left 130px
+	&:before
+		content ""
+		display block
+		background c-4
+		width 272px
+		height 1px
+		position absolute
+		bottom 23px
+		right 0
+		transition all .5s linear .4s
+@media screen and (min-width: 1025px)
+	.b15-img
+		&:before
+			width 0
+		img
+			opacity 0
+			transform translateX(-50px)
+			&:last-child
+				transform translateX(50px)
+	.b15.active
+		.b15-img
+			img
+				opacity 1
+				transform translateX(0)
+			&:before
+				width 272px
+@media screen and (max-width: 1024px)
+	.b15
+		padding-top 50px
+	.b15-img
+		&:before
+			display none
+@media screen and (max-width: 768px)
+	.b15
+		padding 30px 0
+	.b15-img
+		display none
+	.b15-info
+		margin 0
+		display block
+		width 100%
+		h2
+			text-align center

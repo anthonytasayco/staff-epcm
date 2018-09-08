@@ -1,0 +1,140 @@
+.b11
+	position relative
+	&:before
+		content ""
+		width 100%
+		height 100%
+		background linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.01) 1%, rgba(0,0,0,0.99) 99%, rgba(0,0,0,1) 100%)
+		position absolute
+		top 0
+		left 0
+		opacity .8
+
+.b11Table
+	display table-cell
+	vertical-align middle
+	width 2000px
+	height 290px
+	
+.b11Title
+	text-align center
+	position relative
+	z-index 2
+	margin-bottom 20px
+	i
+		display inline-block
+		line-height 1
+		color c-1
+		font-family t-7
+		font-style normal
+		font-size 28px
+		position relative
+		padding 0 44px
+		margin-bottom 10px
+		&:before, &:after
+			content ""
+			display block
+			width 34px
+			height 2px
+			background blanco
+			position absolute
+			top 50%
+			margin-top -1px
+		&:before
+			left 0
+		&:after
+			right 0
+			
+
+	strong
+		display block
+		line-height 1
+		color blanco
+		font-family t-2
+		font-weight normal
+		font-size 30px
+
+.b11Icono
+	display block
+	width 58px
+	height 58px
+	line-height 58px
+	color c-4
+	font-size 56px
+	text-align center
+	position relative
+	z-index 2
+	margin auto
+
+
+// hover y active
+@media screen and (min-width 1025px)
+	.b11Icono	
+		transition all .5s ease-in-out
+		&:hover
+			color c-7
+			animation b11-rebote 1s ease-in-out infinite
+
+	.b11Title
+		i, strong
+			transition all .5s ease-in-out .5s
+		i
+			transform translateY(-10px)
+			opacity 0
+			visibility hidden
+		strong
+			transform translateY(10px)
+			opacity 0
+			visibility hidden
+	
+	.b11Icono
+		transform scale(0)
+		opacity 0
+		visibility hidden
+	
+	.b11.active
+		.b11Title
+			i, strong
+				transform translateY(0px)
+				opacity 1
+				visibility visible
+		
+		.b11Icono
+			transition-delay 1.5s
+			transform scale(1)
+			opacity 1
+			visibility visible
+
+// animation
+@keyframes b11-rebote
+	16.65% 
+		transform translateY(8px)	
+	33.3% 
+		transform translateY(-6px)	
+	49.95% 
+		transform translateY(4px)	
+	66.6% 
+		transform translateY(-2px)	
+	83.25% 
+		transform translateY(1px)	
+	100% 
+		transform translateY(0)
+
+
+// responsive
+@media screen and (max-width 1024px)
+	.b11Table
+		height 250px
+	
+	.b11Title
+		i
+			font-size 22px
+		strong
+			font-size 26px
+	
+@media screen and (max-width 640px)
+	.b11Icono
+		width 50px
+		height 50px
+		line-height 50px
+		font-size 48px

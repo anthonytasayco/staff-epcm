@@ -1,0 +1,68 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{ evento.nombre }}</title>
+	<meta property="og:url"           content="{{ uri_canonical }}" />
+	<meta property="og:type"          content="website" />
+	<meta property="og:title"         content="{{ info.titulo }} | {{ evento.nombre }}" />
+	<meta property="og:description"   content="{{ evento.descript|safe|striptags }}" />
+	<meta property="og:image"         content="{{ base_url }}{{ evento.img.url }}" />
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"Eventos"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- BLOQUE 31 -->
+<section class="b31">
+	<div class="b31-cnt wancho">
+		<a href="{% url 'notivent:eventos' %}" class="b31-back"><< {{"Eventos"|t}}</a>
+		<div class="b31-cnt-prin">
+			<figure class="b31-img">
+				<img src="{{ evento.img.url }}" width="533" alt="373">
+			</figure>
+			<div class="b31-info">
+				<h2>{{ evento.nombre }}</h2>
+				{{ evento.descript|safe }}
+				<div class="b31-compartir">
+					{{"Compartir en:"|t}} <a href="#" class="icon-facebook"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$('.icon-facebook').click( function(){
+		var shareurl = $(this).data('shareurl');
+		window.open('https://www.facebook.com/sharer/sharer.php?u='+escape('{{ uri_canonical }}')+'&t='+document.title, '', 
+		'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+		return false;
+	});
+</script>
+{% endblock %}

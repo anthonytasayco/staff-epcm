@@ -1,0 +1,328 @@
+.cf {
+  zoom: 1;
+}
+.cf:after,
+.cf:before {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.b20 {
+  padding-top: 50px;
+  padding-bottom: 60px;
+  text-align: center;
+}
+.b20 .btn2 .btn-ico {
+  font-size: 15px;
+}
+.b20-cnt {
+  max-width: 885px;
+  width: 95%;
+  margin: auto;
+}
+.b20-titulo {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 50px;
+}
+.b20-titulo h3 {
+  color: #05ce7b;
+  margin: 0;
+  font-size: 30px;
+  padding: 14px 0;
+}
+.b20-titulo strong {
+  font-family: 'Montserrat-SemiBold', sans-serif;
+  color: #0032a0;
+}
+.b20-titulo:before {
+  content: "\e90c";
+  font-family: 'icomoon';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  color: #05ce7b;
+  font-size: 65px;
+  height: 65px;
+  width: 75px;
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+  font-weight: lighter;
+}
+.b20-links {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  font-size: 0;
+  padding-right: 16px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.b20-link {
+  width: 50%;
+  display: inline-block;
+  padding: 0 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #f2f2f2;
+  position: relative;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+.b20-link:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -15px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 23px 0 23px 16px;
+  border-color: transparent transparent transparent #f2f2f2;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  z-index: 1;
+}
+.b20-link.active {
+  background: #05ce7b;
+  color: #fff;
+  font-family: 'Montserrat-SemiBold', sans-serif;
+}
+.b20-link.active:before {
+  border-color: transparent transparent transparent #05ce7b;
+}
+@media screen and (min-width: 1025px) {
+  .b20-link:hover {
+    background: #05ce7b;
+    color: #fff;
+    font-family: 'Montserrat-SemiBold', sans-serif;
+  }
+  .b20-link:hover:before {
+    border-color: transparent transparent transparent #05ce7b;
+  }
+}
+.b20-link-inside {
+  display: table-cell;
+  vertical-align: middle;
+  height: 45px;
+  width: 2000px;
+  font-size: 14px;
+  text-align: center;
+}
+.b20-item {
+  font-size: 0;
+  margin-top: 45px;
+  position: relative;
+}
+.b20-close {
+  display: block;
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  height: 26px;
+  width: 26px;
+  line-height: 26px;
+  color: #fff;
+  background: #0032a0;
+  border-radius: 100%;
+  font-size: 10px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s linear;
+  -moz-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  -ms-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+  z-index: 10;
+}
+@media screen and (min-width: 1025px) {
+  .b20-close:hover {
+    background: #05ce7b;
+  }
+}
+.b20-top {
+  margin-bottom: 20px;
+}
+.b20-cnt-img {
+  display: inline-block;
+  vertical-align: top;
+  width: 36.16%;
+}
+.b20-info {
+  display: inline-block;
+  vertical-align: top;
+  width: 63.84%;
+  text-align: left;
+  background: rgba(21,119,248,0.06);
+}
+.b20-info-table {
+  display: table-cell;
+  vertical-align: middle;
+  height: 220px;
+  padding: 25px 28px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.b20-img {
+  width: 100%;
+  height: 220px;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+}
+.b20-img:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+  background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+  background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+}
+.b20-titulo-inside {
+  margin-bottom: 15px;
+}
+.b20-titulo-inside h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #0032a0;
+}
+.b20-titulo-inside strong {
+  font-family: 'Montserrat-SemiBold', sans-serif;
+  color: #05ce7b;
+}
+.b20-diplomado li {
+  font-size: 13px;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 7px;
+}
+.b20-diplomado li:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: #05ce7b;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.b20-bottom {
+  text-align: left;
+  border-top: 3px solid #05ce7b;
+  padding-top: 20px;
+  zoom: 1;
+}
+.b20-bottom:after,
+.b20-bottom:before {
+  content: "";
+  display: table;
+}
+.b20-bottom:after {
+  clear: both;
+}
+.b20-total {
+  float: left;
+  font-size: 18px;
+}
+.b20-precio {
+  float: right;
+  font-size: 25px;
+  font-family: 'Montserrat-SemiBold', sans-serif;
+  color: #0032a0;
+}
+.b20-boton {
+  margin-top: 30px;
+  text-align: right;
+}
+@media screen and (max-width: 1025px) {
+  .b20 {
+    padding: 50px 0;
+  }
+}
+@media screen and (max-width: 960px) {
+  .b20-cnt-img {
+    width: 30.16%;
+  }
+  .b20-info {
+    width: 69.84%;
+  }
+  .b20-img {
+    height: 280px;
+  }
+  .b20-info-table {
+    height: 280px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .b20 {
+    padding: 30px 0;
+  }
+  .b20-cnt-img {
+    width: 100%;
+  }
+  .b20-img {
+    height: 200px;
+  }
+  .b20-top {
+    margin-bottom: 0;
+  }
+  .b20-info {
+    width: 100%;
+  }
+  .b20-info-table {
+    height: auto;
+    padding: 20px;
+  }
+  .b20-links {
+    padding-right: 0;
+  }
+  .b20-link {
+    width: 100%;
+  }
+  .b20-link:before {
+    display: none;
+  }
+  .b20-titulo {
+    margin-bottom: 30px;
+  }
+  .b20-item {
+    margin-top: 30px;
+  }
+  .b20-total {
+    font-size: 16px;
+  }
+  .b20-precio {
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .b20-boton {
+    text-align: center;
+  }
+}

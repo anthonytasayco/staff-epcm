@@ -1,0 +1,120 @@
+{% load static %}
+{% load app_tags %}
+<!-- {{"Acontinuación adjuntamos los datos de tu registro"|t }} -->
+<span class="header-overlay"></span>
+<header class="header">
+
+    <!--Start of Tawk.to Script-->
+
+    <script type="text/javascript">
+
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+
+    (function(){
+
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+
+    s1.async=true;
+
+    s1.src='https://embed.tawk.to/5a5177e6d7591465c70686ef/1c37asb6s';
+
+    s1.charset='UTF-8';
+
+    s1.setAttribute('crossorigin','*');
+
+    s0.parentNode.insertBefore(s1,s0);
+
+    })();
+
+    </script>
+
+    <!--End of Tawk.to Script-->
+
+
+    <div class="header-position">
+        <div class="main-header">
+            <div class="h1-block">
+                <div class="h1-cnt wancho">
+                    <a href="{% url 'home' %}" class="h1-logo h1-logo-1">
+                        <figure><img src="{{ STATIC_URL }}img/header-logo.png" width="201" height="57" alt="{{ info.titulo }}"></figure>
+                    </a>
+                    <a href="{% url 'home' %}" class="h1-logo h1-logo-2">
+                        <figure><img src="{{ STATIC_URL }}img/header-logo-2.png" width="201" height="57" alt="{{ info.titulo }}"></figure>
+                    </a>
+                    <div class="h1-boxRight">
+                        <div class="h1-group">
+                        {% if not request.user.is_superuser %}
+                            <div class="h1-menuTop">
+                                <ul>
+                                {% if request.user.is_authenticated %}
+                                    <li style="padding: 5px 2px;"><a href="{% url 'custom_auth:micuenta_datos' %}"><span class="icon-ICONOS-SVG-18"></span>{{"Mi cuenta"|t}}</a></li>
+                                    <li style="padding: 5px 2px;"><a href="{% url 'custom_auth:micuenta_pedidos' %}"><span class="icon-ICONOS-SVG-16"></span>{{"Mi Pedidos"|t}}</a></li>
+                                    <li style="padding: 5px 2px;"><a href="{% url 'pedidos:carrito' %}"><span class="icon-ICONOS-SVG-13"></span>{{"Mi Carrito"|t}}</a></li>
+                                    <li style="padding: 5px 2px;"><a href="{% url 'custom_auth:logout' %}" style="padding-left: 14px;"><span style="font-size: 10px;" class="icon-ICONOS-SVG-07"></span>{{"Cerrar sesión"|t}}</a></li>
+                                {% else %}
+                                    <li style="padding: 5px 2px;"><a href="{% url 'custom_auth:login' %}"><span class="icon-ICONOS-SVG-18"></span>{{"Inicia Sesión"|t}}</a></li>
+                                    <li style="padding: 5px 2px;"><a href="" class="b25-fancy"><span class="icon-ICONOS-SVG-12"></span>{{"Registrate"|t}}</a></li>
+                                    <li style="padding: 5px 2px;"><a href="{% url 'pedidos:carrito' %}"><span class="icon-ICONOS-SVG-13"></span>{{"Mi Carrito"|t}}</a></li>
+                                {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                            <a class="h1-resp-carrito" href="{% url 'pedidos:carrito' %}">
+                                <span class="h1-resp-icono icon-ICONOS-SVG-13"></span><span class="h1-resp-number">{{ num_cart }}</span>
+                            </a>
+                            <div class="h1-languaje">
+                                <ul>
+                                    {% for lang in langs %}
+                                        <li {% if lang == request.LANGUAGE_CODE %}class="active"{% endif %}><a href="{% change_lang lang %}">{{ lang|upper }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="h1-wrap">
+                            <nav class="h1-menu">
+                                <ul class="menu-list">
+                                    {% for row in cats %}
+                                    <li {% if request.wHead == row.slug %}class="active"{% endif %}><a href="{% url 'cursos:cursos' row.slug %}">{{ row.nombre }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </nav>
+                            <span class="h1-openDesplegable icon-ICONOS-SVG-06"></span>
+                            <span class="h1-closeDesplegable icon-ICONOS-SVG-07"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h2-block header-desplegable" style="background-image: url('{{ STATIC_URL }}img/header-bg-desplegable.jpg');">
+                <div class="h2-cnt wancho">
+                    <nav class="h2-menu">
+                        <ul class="menu-list-2">
+                            <li><a href="{% url 'conocenos' %}" >{{"Conócenos"|t}}</a></li>
+                            <li><a href="{% url 'termpreg:terms' %}">{{"Terminos y Condiciones"|t}}</a></li>
+                            <li><a href="{% url 'termpreg:quests' %}">{{"Preguntas Frecuentes"|t}}</a></li>
+                            <li><a href="{% url 'notivent:noticias' %}">{{"Noticias"|t}}</a></li>
+                            <li><a href="{% url 'notivent:eventos' %}">{{"Eventos"|t}}</a></li>
+                            <li><a href="{% url 'contacto' %}">{{"Contáctanos"|t}}</a></li>
+                        </ul>
+                    </nav>
+                    <div class="h2-redes">
+                        <div class="h2-subtitle">
+                            <h3>{{"Síguenos en:"|t}}</h3>
+                        </div>
+                        <div class="h2-iconos">
+                            <ul>
+                                {% if info.facebook %}<li><a href="{{ info.facebook }}" class="icon-facebook"></a></li>{% endif %}
+                                {% if info.twitter %}<li><a href="{{ info.twitter }}" class="icon-twiterr"></a></li>{% endif %}
+                                {% if info.linkedin %}<li><a href="{{ info.linkedin }}" class="icon-linkedin"></a></li>{% endif %}
+                                {% if info.youtube %}<li><a href="{{ info.youtube }}" class="icon-youtube-2"></a></li>{% endif %}
+                                {% if info.whatsapp %}<li><a href="{{ info.whatsapp }}" class="icon-telefono"></a></li>{% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="h2-btn">
+                        <a href="{% url 'home' %}" class="btn1">{{"IR A CAMPUS ONLINE"|t}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

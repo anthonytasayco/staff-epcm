@@ -1,0 +1,29 @@
+{% extends "email/base.html" %}
+{% load app_tags %}
+
+{% block title %}{{ "EPCM te da la bienvenida"|t }}{% endblock %}
+
+{% block content %}
+<h1 style="color:#666666; font-size:26px; line-height:1.2; font-weight:normal; margin-top:0; margin-bottom:0.5em;">{{ "EPCM te da la bienvenida"|t }}</h1>
+<p style="margin-top:0; margin-bottom:0;">
+    {{"Acontinuación adjuntamos los datos de tu registro"|t }}:
+    <table>
+        <tr>
+            <th style="text-align: left;width: 90px;">{{"Nombres"|t}} : </th>
+            <td> {{ nombres }}</td>
+        </tr>
+        <tr>
+            <th style="text-align: left;width: 90px;">{{"Apellidos"|t}} : </th>
+            <td> {{ apellidos }}</td>
+        </tr>
+        <tr>
+            <th style="text-align: left;width: 90px;">{{"E-mail"|t}} : </th>
+            <td>{{ username }}</td>
+        </tr>
+        <tr>
+            <th style="text-align: left;width: 90px;">{{"Télefono"|t}} : </th>
+            <td> {{ telefono }}</td>
+        </tr>
+    </table>
+</p>
+{% endblock %}

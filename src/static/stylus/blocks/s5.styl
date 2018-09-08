@@ -1,0 +1,87 @@
+.b5
+	height 230px
+	width 100%
+	background-repeat no-repeat
+	background-size cover
+	background-position center
+	.bx-wrapper .bx-pager.bx-default-pager
+		 padding-top 0
+		 bottom -13px
+		 width 77%
+		 left inherit
+		 right 0
+		 text-align left
+		 a
+			background c-4
+			border 1px solid blanco
+			transtion all .5s ease-in
+			margin 0 3px 0 0
+			&.active, &:hover
+				background blanco	
+.b5-cnt
+	max-width 780px
+	display table
+	height 100%
+.b5-ctn-slider
+	display table-cell
+	vertical-align middle
+.b5-item
+	cf()
+.b5-img, .b5-info
+	float left
+.b5-img
+	width 16.7%
+	margin 15px 0 0 0
+	img
+		border-radius 100%
+		display block
+		height auto
+		width 100%
+		border 3px solid blanco
+.b5-info
+	float right
+	width 77%
+	font-size 14px
+	color blanco
+	h3
+		margin 0 0 15px 0
+		font-weight normal
+		text-transform uppercase
+		font-size 20px
+		font-family t-6
+	p
+		margin 0
+.b5-autor
+	color c-1
+	margin 15px 0 0 0
+	h4
+		margin 0
+		font-size 18px
+		font-family t-6
+		text-transform uppercase
+	h5
+		font-size 14px
+		margin 3px 0 0 0
+		line-height 17px
+@media screen and (max-width 1024px)
+	.b5
+		.bx-wrapper .bx-pager.bx-default-pager 
+			bottom -22px
+			a
+				margin 0 10px 0 0
+@media screen and (max-width 1024px)
+	.b5
+		height auto
+		padding 30px 0
+		.bx-wrapper .bx-pager.bx-default-pager 
+			display none
+	.b5-img, .b5-info
+		float none
+		width 100%
+		margin 0 auto
+	.b5-img
+		max-width 130px
+	.b5-info
+		margin 30px 0 0 0
+	.b5-cnt, .b5-ctn-slider
+		display block

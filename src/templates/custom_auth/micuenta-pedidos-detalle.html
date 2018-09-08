@@ -1,0 +1,96 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 28 -->
+<section class="b2">
+    <div class="b28ctn">
+        <div class="b2ack">
+            <a href="{% url 'custom_auth:micuenta_pedidos' %}" >Volver</a>
+        </div>
+        <div class="b28-title"><h1>resumen de compra</h1></div>
+        <div class="b28-ctn-bottom">
+            <div class="b28-item">
+                <ul>
+                    <li>
+                        <strong>Codigo del pedido:</strong>
+                        <p>{{row.pedido}}</p>
+                    </li>
+                    <li>
+                        <strong>Dirección de envio:</strong>
+                        <p>{{row.envio_direccion}}</p>
+                        <p>{{row_envio_region_nombre}},{{row_envio_provincia_nombre}} {{row_envio_distrito_nombre}} </p>
+                        <p>{{row.envio_referencia}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="b28item">
+                <ul>
+                    <li>
+                        <strong>Codigo de envio:</strong>
+                        <p>{{row.codigo}}</p>
+                    </li>
+                    <li>
+                        <strong>Tipo de pago:</strong>
+                        <p>{{row.medio_pago}}</p>
+                    </li>
+                    <li>
+                        <strong>Estado de pedido:</strong>
+                        <p>{{row.get_status_display}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="b28-table">
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>Producto</td>
+                        <td>Cantidad</td>
+                        <td>Precio</td>
+                    </tr>
+                    {% for i in result %}
+                    <tr>
+                        <td >
+                            <p>{{i.producto_nombre}}</p>
+                            <p><strong>Color de banda :</strong>Plateado</p>
+                        </td>
+                        <td >{{i.cantidad}}</td>
+                        <td >S/ {{i.importe|stringformat:".2f"}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="b28-operacion">
+                <ul>
+                    {% for i in "asd" %}
+                    <li>Sub Total </li>
+                    <li>S/. 799.00</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="b28-total">
+                <ul>
+                    <li>Total</li>
+                    <li>S/ {{row.monto_total|stringformat:".2f"}}</li>
+                </ul>
+            </div>
+            <div class="b28-button">
+                <a class="bt_gnrl bt_1" href=""><span class="icon-imprimir"></span><span>Imprimir</span> </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>
+{% endblock %}

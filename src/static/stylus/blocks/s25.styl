@@ -1,0 +1,126 @@
+
+.b25-content.active
+	.b25
+		top 0
+		bottom 0
+		z-index 1200
+	.b25-overlay
+		opacity .7
+		z-index 1099
+	.b25-close
+		z-index 2000
+
+.b25-hidden
+	overflow hidden
+
+.b25
+	width 100%
+	z-index -1
+	max-width 960px
+	background blanco
+	margin auto
+	position fixed
+	top -9999px
+	transition all .7s
+	left 0
+	right 0
+	height 590px
+	padding-top 55px
+	box-sizing border-box
+.b25-overlay
+	transition .4s ease-in
+	height 100%
+	width 100%
+	position fixed
+	top 0
+	left 0
+	background negro
+	opacity 0
+	z-index -1
+
+.b25-close
+	position absolute
+	top 20px
+	right 20px
+	font-size 25px
+	color c-3
+	cursor pointer
+	z-index -1
+	display block
+	transition all .7s
+
+.b25-ctn
+	max-width 885px
+.b25-title
+	max-width 665px
+	margin 0 auto
+	color c-10
+	padding 25px 0
+	text-align center
+	position relative
+	border-bottom 1px solid c-13
+	&:before
+		position absolute
+		top 0
+		left 0
+		margin auto
+		right 0
+		content "\e915"
+		font-family icomoon
+		color c-4
+		opacity .15
+		font-size 70px
+	h2
+		color c-3
+		display inline-block
+		margin 0
+		position relative
+		font-size 30px
+		font-weight normal
+		text-transform uppercase
+	strong
+		color c-4
+		font-weight normal
+		font-family t-2
+	p
+		margin 16px 0 0 0
+		font-size 15px
+.b25-form
+	margin-top 30px
+	font-size 0
+	.formError .formErrorContent
+		background c-4
+	.formError .formErrorArrow div
+		background c-4
+	.g-input
+		width 48%
+		display inline-block
+		vertical-align top
+		margin 0 4% 15px 0
+		&:nth-child(even)
+			margin-right 0
+		label, input
+			color c-14
+	.btn3
+		margin-top 21px
+@media screen and (max-width: 1024px)
+	.b25
+		padding-top 50px
+@media screen and (max-width: 640px)
+	.b25
+		padding 30px 0
+		height 450px
+		overflow auto
+@media screen and (max-width: 480px)
+	.b25-title
+		h2
+			font-size 25px
+		p
+			margin-top 10px
+	.b25-form
+		.g-input
+			width 100%
+			margin-right 0
+			display block
+		.btn3
+			margin-top 15px

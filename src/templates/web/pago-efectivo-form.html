@@ -1,0 +1,120 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% if realizar_pago_pagoefectivo %}loader-act{% endif %}{% endblock %}
+
+{% block content %}
+<section class="b9">
+  <div class="b9Main wancho">
+    <div class="b9Table">
+      <div class="b9Title">
+        <h1>Realizando pedido</h1>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="b27">
+  <div class="b27-wrapper wancho">
+    <div class="b27-content">
+      <div class="b27-title">
+        <h3>Generando Código Cip. Espere un momento ...</h3>
+      </div>
+    </div>
+  </div>
+  <div class="b27-wrapper wancho">
+    <div class="b27-content">
+      <div class="b27-title">
+        <figure>
+          <img src="{{ STATIC_URL }}img/pagoefectivo_logo.png" alt="" width="50%">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="b16 user-registrado">
+        <form action="" method="POST" id="id_form_pagoefectivo">
+          <input type="hidden" name='idMoneda' value='{{ id_moneda }}' class='idmoneda'>
+          <input type="hidden" name='t-total' value='{{ total|stringformat:".2f" }}' class="total">
+          <input type="hidden" name='metodosPago' value='{{ metodos_pago }}' class='metodopago'>
+          <input type="hidden" name='CodServicio' value='EPA' class='codservicio'>
+          <input type="hidden" name='Codtransaccion' value='{{ cod_transaccion }}' class='codtransaccion'>
+          <input type="hidden" name='email' value='{{ email }}' class='email'>
+          <input type="hidden" name='UsuarioNombre' value='{{ usuarionombres }}' class='usuarionombres'>
+          <input type="hidden" name='UsuarioApellidos' value='{{ usuarioapellidos }}' class='usuarioapellidos'>
+          <input type="hidden" name='usuariodni' value='{{usuariodni}}' class='usuariodni'>
+          <input type="hidden" name='FechaAExpirar' value='{{fecha_expira}}/{{fecha_expira|date:"m"}}/{{fecha_expira|date:"y"}}' class='fechaexpirar'>
+          <input type="hidden" name='usuario' value='{{ usuario}}' class='usuario'>
+          <input type="hidden" name='concepto_pago' value='Compra en Tienda EPCM' class='conceptopago'>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+
+  <script type="text/javascript">
+      $(document).ready(function () {
+        $.ajax({
+          url: "https://epcm.academy/pagoefectivo/demo/cip.php",
+          type: "POST",
+          data: {'idMoneda': $('.idmoneda').val(),
+                 't-total': $('.total').val(),
+                 'metodosPago': $('.metodopago').val(),
+                 'CodServicio': $('.codservicio').val(),
+                 'Codtransaccion': $('.codtransaccion').val(), 
+                 'email': $('.email').val(),
+                 'UsuarioNombre': $('.usuarionombres').val(),
+                 'UsuarioApellidos': $('.usuarioapellidos').val(),
+                 'usuariodni': $('.usuariodni').val(),
+                 'FechaAExpirar': $('.fechaexpirar').val(),
+                 'usuario': $('.usuario').val(),
+                 'concepto_pago': $('.conceptopago').val()
+               },
+          success: function(data){
+            console.log('SUCESS', data)
+            $.ajax({
+              url: "https://epcm.academy/es/pagoe/gracias-compra/get-token",
+              type: "POST",
+              data: {'codtransaccion': $('.codtransaccion').val(), 
+                   },
+              success: function(data){
+                console.log('SUCESS', data)
+                window.location = "https://epcm.academy/es/pagoe/gracias-compra/show-cip"
+              },
+              error: function(error){
+                console.log('SUCESS', error)
+                window.location = "https://epcm.academy/es/pagoe/gracias-compra/show-cip"
+              },
+
+            });
+
+            
+          },
+          error: function(error){
+            console.log('ERROR', error)
+            $.ajax({
+              url: "https://epcm.academy/es/pagoe/gracias-compra/get-token",
+              type: "POST",
+              data: {'codtransaccion': $('.codtransaccion').val(), 
+                   },
+              success: function(data){
+                window.location = "https://epcm.academy/es/pagoe/gracias-compra/show-cip"
+              },
+              error: function(error){
+                window.location = "https://epcm.academy/es/pagoe/gracias-compra/show-cip"
+              },
+
+            });
+          },
+
+        });
+
+      // window.location = "https://epcm.academy/es/pagoe/gracias-compra/show-cip"
+
+      });
+
+  </script>
+
+{% endblock %}

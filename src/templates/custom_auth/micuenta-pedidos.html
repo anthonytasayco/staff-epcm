@@ -1,0 +1,59 @@
+{% extends "common/_base.html" %}
+
+{% block cssadicional %}
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 27 -->
+<section class="b27">
+    <div class="b27-cnt wancho">
+        <div class="bmienta">
+            <h1>Mi cuenta</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'custom_auth:micuenta_datos' %}">Datos</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_direcciones' %}">Direcciones</a></li>
+                    <li><a href="{% url 'custom_auth:micuenta_pedidos' %}" class="active">Pedidos</a></li>
+                    <li><a href="">Lista de Deseos</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="bcuectn">
+            <h2>Mis Pedidos</h2>
+            <div class="b27-cueta-ctn">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>Fecha</td>
+                        <td>Código del pedido</td>
+                        <td>Estado del Pedido</td>
+                        <td>Código de Envio</td>
+                        <td>Total</td>
+                    </tr>
+                    {% for i in rows  %}
+                    <tr>
+                        <td>20/12/15</td>
+                        <td class="b27-codigo"><a href="{% url 'web:micuenta_pedidos_detalle' i.codigo %}">378437</a></td>
+                        <td>{{i.get_status_display}}</td>
+                        <td>{{i.codigo}}</td>
+                        <td>S/ {{i.monto_total|stringformat:".2f"}}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsfinal %}
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>
+{% endblock %}

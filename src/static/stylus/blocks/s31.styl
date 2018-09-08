@@ -1,0 +1,101 @@
+.b31
+	padding 75px 0 85px 0
+	width 100%
+.b31-cnt
+	color c-9
+	max-width 1110px
+.b31-back
+	display block
+	font-size 14px
+	text-transform uppercase
+.b31-cnt-prin
+	font-size 0
+	margin 50px 0 0 0
+.b31-img, .b31-info
+	display inline-block
+	vertical-align top
+	width 48.2%
+	img
+		display block
+		width 100%
+		height auto
+.b31-info
+	width 49.8%
+	margin-left 2%
+	font-size 14px
+	color c-0
+	h2
+		margin 0 0 10px 0
+		font-weight normal
+		font-size 20px
+		font-family t-2
+		color c-3
+		text-transform uppercase
+	p
+		text-align justify
+		margin 0 0 3px 0
+	ol
+		li
+			counter-increment list
+			list-style-type none
+			margin-bottom 13px
+			margin-top 13px
+			line-height 1.9
+			position relative
+			&:before
+				color: c-4
+				content: counter(list) "."
+				left:-32px
+				position: absolute
+				text-align: right
+				width: 26px
+	ul
+		li
+			position relative
+			padding-left 22px
+			line-height 1.9
+			margin-bottom 9px
+			&:before
+				content "\e930"
+				top 2px
+				left 0
+				color c-4
+				font-size 12px
+				font-family icomoon
+				position absolute
+.b31-compartir
+	color c-3
+	margin-top 11px
+	font-size 13px
+	a
+		color blanco
+		margin-left 8px
+		display inline-block
+		background c-4
+		height 25px
+		width 25px
+		text-align center
+		line-height 25px
+		border-radius 25px
+@media screen and (max-width 1024px)
+	.b31
+		padding 50px 0
+@media screen and (max-width 768px)
+	.b31-img, .b31-info
+		display block
+		width 100%
+		margin 0 auto
+	.b31-img
+		max-width 535px
+		margin-bottom 30px
+	.b31-info h2
+		font-size 18px
+@media screen and (max-width 640px)
+	.b31
+		padding 30px 0
+	.b31-cnt-prin
+		margin-top 30px
+@media screen and (max-width 480px)
+	.b31-info
+		h2
+			font-size 16px

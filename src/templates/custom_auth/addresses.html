@@ -1,0 +1,142 @@
+{% extends "common/_base.html" %}
+
+{% load thumbnail %}
+{% block cssadicional %}
+<link href="{{ STATIC_URL }}css/jquery.bxslider.css" rel="stylesheet" />
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- GENERAL 1 -->
+
+<section class="b24">
+  <div class="g-title">
+    <h3>MIS DIRECCIONES</h3>
+  </div>
+      {% if messages %}
+      {% for message in messages %}
+        <div data-alert class="alert-box radius {{ message.tags }}">
+              {{ message }}
+                  <a href="#" class="close">&times;</a>
+              </div>
+          {% endfor %}
+      {% endif %}
+  <div class="b24-cnt editar-direcciones">
+    <div class="b24-bloque">
+           {% for d in direcciones  %}
+      <div class="b24-item">
+        <div class="b24-subtitle">
+          <div class="b24-checkbox-item">
+            <div class="b24-text">
+               <strong>{{d.nombre}}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="b24-list-cnt">
+          <div class="b24-list-item">
+            <ul>
+              <li>nombres</li>
+              <li>{{d.nombres}}</li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>apellidos</li>
+              <li>{{d.apellidos}}</li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>teléfono / celular</li>
+              <li><a href="tel:999-999-999">{{d.telefono}}</a> / <a href="tel:555-5555">{{d.celular}}</a></li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>dirección</li>
+              <li>{{d.direccion}}</li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>Tipo Distrito</li>
+              <li>
+              {{d.get_tipodireccion_display}}
+              </li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>distrito</li>
+              <li>
+              {% if d.tipodireccion == '1' %}
+                  {{d.distrito}}
+              {% else %}
+                  {{d.district}}
+              {% endif %}
+              </li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>empresa / ruc</li>
+              <li>{{d.empresa}} {% if d.ruc %}/ {{d.ruc}} {%endif%}</li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li>referencia</li>
+              <li>{{d.comentario}}</li>
+            </ul>
+          </div>
+          <div class="b24-list-item">
+            <ul>
+              <li><a href="{% url 'custom_auth:address' d.slug %}" class="g-btn-negro">editar</a></li>
+              <li><a href="{% url 'custom_auth:address_del' d.slug %}" class="g-btn-negro eliminaraddress">eliminar</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="b24-cnt-btns2">
+      <div class="b24-btn-item">
+      <a href="{% url 'custom_auth:myaccount' %}" class="b19-btn g-btn-negro">atrás</a>
+      </div>
+      <div class="b24-btn-item">
+        <a href="{% url 'custom_auth:address_add' %}" class="g-btn-negro">Agregar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+{% endblock %}
+{% block jsfinal %}
+
+<script type="text/javascript">
+  $(function(){
+
+
+$(".eliminaraddress").click(function(e) {
+    e.preventDefault();
+    var targetUrl = $(this).attr("href");
+
+    if(confirm('Estás seguro de eliminar?') ) {
+        window.location = targetUrl;
+
+    }
+
+  });
+
+
+  });
+</script>
+{% endblock %}

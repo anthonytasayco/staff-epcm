@@ -1,0 +1,53 @@
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% if result %}
+	{% for i in result %}
+
+	<div class="b20-top"  data-ida="{{i.id}}">
+		<span class="b20-close icon-ICONOS-SVG-07 del-item-car"></span>
+		<div class="b20-cnt-img">
+			<div class="b20-img" style="background-image: url('{{ i.imagen }}');"></div>
+		</div>
+		<div class="b20-info">
+			<div class="b20-info-table">
+				<div class="b20-titulo-inside">
+					<a href="{% url 'cursos:curso' i.slug %}">
+						<h3>{{i.nombre}}</h3>
+					</a>
+				</div>
+				<ul class="b20-diplomado">
+					<li>{{ i.fechas }}</li>
+					<li>{{ i.horarios }}</li>
+					<li>{{ i.lugar }}</li>
+					<li>{{ i.inversion }}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+{% else %}
+	<div class="b18-item" >
+		{{"NO HAY PRODUCTOS EN TU BOLSA DE COMPRAS"|t}}
+	</div>
+{% endif %}
+            {% if request.user.is_authenticated and descuento == 0 %}
+            <div class="b20-bottom wFormToDsct" style="padding-bottom: 10px;padding-top: 10px;">
+                <span class="b20-total">{{"APLICAR CÓDIGO DE DESCUENTO:"|t}}</span>
+                <div class="g-input" style="width: auto;display: inline-block;float: right;">
+                    <input style="float: left;height: 22px;padding:5px;width: auto;" type="text" id="wDsctCod">
+                    <button class="btn1 set_dsct" style="float: right;padding: 0px 10px 0px 10px;height: 22px;line-height: 22px;">{{"APLICAR"|t}}</button>
+                    <p class="wInfoServerContent"></p>
+                </div>
+            </div>
+            {% endif %}
+<div class="b20-bottom">
+	<span class="b20-total">{{"TOTAL A PAGAR"|t}}:</span>
+	<span class="b20-precio">S/. {{suma}}</span>
+</div>
+<div class="b20-boton">
+	<a href="#" class="btn2"><span class="btn-ico icon-ICONOS-SVG-13"></span>{{"COMPRAR CURSO"|t}}</a>
+</div>
