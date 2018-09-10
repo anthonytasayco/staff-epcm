@@ -2,6 +2,7 @@
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from logging import getLogger
+from decimal import Decimal
 import os
 from django.http import Http404
 from django.http import JsonResponse
@@ -59,8 +60,9 @@ log = getLogger('django')
 
 
 def getPercent(monto,porcentaje):
+    monto = Decimal(monto)
     if porcentaje < 100:
-        return monto - (monto*(porcentaje/100.0))
+        return monto - (monto*(porcentaje/Decimal(100.000000)))
     return 0
 
 #
@@ -141,9 +143,10 @@ def setDescuento(request):
             return JsonResponse({'status':401}, safe=True)
         codigo = CodigosDeDescuento.objects.filter(
                     cod=request.POST.get('cod_dsct','_____________')).order_by('-ini').first()
+        print(codigo, 'CODIGO')
         if codigo:
             if codigo.is_valid:
-                request.session['dscnt'] = codigo.pct
+                request.session['dscnt'] = codigo.id
                 request.session['dscnt_cod'] = codigo.cod
                 return JsonResponse({'status':202}, safe=True)
             else:
@@ -153,6 +156,7 @@ def setDescuento(request):
     else:
         raise Http404
 
+
 @client_only
 def carrito(request):
     partial = request.GET.get('partial', '')
@@ -160,32 +164,37 @@ def carrito(request):
         opc = request.GET.get('opc', '0')
         ida = request.GET.get('ida', '0')
         can = request.GET.get('can', '0')
-        result, suma, n, nro = carrito_result(request,opc, ida, can)
+        result, suma, n, nro = carrito_result(request, opc, ida, can)
         if suma == 0:
             descuento = 0
             request.session['dscnt'] = 0
             request.session['dscnt_cod'] = ''
-        descuento = request.session.get('dscnt',0)
+        descuento = request.session.get('dscnt', 0)
         if descuento > 0:
-            suma = getPercent(suma,descuento)        
-        return render('web/_producto-elegido.html' ,  locals(),
-            context_instance=ctx(request))
+            descuento = CodigosDeDescuento.objects.get(id=descuento).pct
+            suma = getPercent(suma, descuento)
+        return render('web/_producto-elegido.html', locals(),
+                      context_instance=ctx(request))
     else:
         result, suma, n, nro = carrito_result(request, 0)
+        print(suma, 'SUMAAAAAAAAA!')
         if suma == 0:
             close_carrito(request)
             request.session['dscnt'] = 0
             request.session['dscnt_cod'] = ''
-        descuento = request.session.get('dscnt',0)
+        print(request.session.get('dscnt'), 'ID DESCUENTO')
+        descuento = request.session.get('dscnt', 0)
         if descuento > 0:
-            suma = getPercent(suma,descuento)
+            descuento = CodigosDeDescuento.objects.get(id=descuento).pct
+            suma = getPercent(suma, descuento)
         return render('web/producto-elegido.html', locals(),
-            context_instance=ctx(request))
+                      context_instance=ctx(request))
 
 
 @login_required(login_url=reverse_lazy('custom_auth:login'))
 @client_only
 def datos_facturacion(request):
+    print('DATOS DE FACTURACION')
     nroitems = carrito_get_nro(request)
     if nroitems < 1:
         return redirect('pedidos:carrito')
@@ -193,7 +202,7 @@ def datos_facturacion(request):
     # pedido = obtenerpedido(request)
     # if pedido:
     #     envio_id = int(pedido.envio_id)
-    paises = Paises.objects.all().order_by('nombre')
+    paises = []
     usuario = request.user
     initial = {}
     initial['usuario_id'] = usuario.id
@@ -205,15 +214,20 @@ def datos_facturacion(request):
     initial['usuario_nrodocumento'] = usuario.nrodocumento
     initial['usuario_pais'] = usuario.pais
 
-
     if request.method == 'POST':
         custom_inf = u''
         usuario_tipodocumento = request.POST.get('usuario_tipodocumento', '')
+        print('POST!!!!!!!!!!!!!!!!!!!!')
         if usuario_tipodocumento:
             request.POST = request.POST.copy()
             request.POST['usuario_id'] = request.user.id
-            request.POST['desc_cod'] = request.session.get('dscnt_cod','')
-            request.POST['desc_num'] = request.session.get('dscnt',0)
+            request.POST['desc_cod'] = request.session.get('dscnt_cod', '')
+            desc_num = request.session.get('dscnt', 0)
+            print(desc_num, 'DESC NUM --- ID')
+            if desc_num > 0:
+                desc_num = CodigosDeDescuento.objects.get(id=desc_num).pct
+                print('GET DESCUENTO!!!!!!!!', desc_num)
+            request.POST['desc_num'] = desc_num
             form = DatosPedidoForm(request.POST)
 
             if form.is_valid():
@@ -237,7 +251,7 @@ def datos_facturacion(request):
                     close_carrito(request)
                     return redirect('pedidos:graciascompra')
                 if p.metodopago == 'paypal':
-                    pyp_inf,created = PaypalInfo.objects.get_or_create(pk=1)
+                    pyp_inf, created = PaypalInfo.objects.get_or_create(pk=1)
                     if pyp_inf.paypal_account:
                         print '>>>>>>>>> hay paypal_account'
                         if request.is_secure():

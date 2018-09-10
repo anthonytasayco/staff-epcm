@@ -4,6 +4,7 @@ from datetime import date
 from logging import getLogger
 from urlparse import urlparse
 from random import randint
+from decimal import Decimal
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -105,7 +106,9 @@ class Pedido(models.Model):
     factura_direccionfiscal = models.CharField("Direccion fiscal", max_length=250, blank=True)
 
     desc_cod = models.CharField("Código de descuento usado", max_length=32, blank=True)
-    desc_num = models.PositiveSmallIntegerField('% de descuento', default=0)
+    desc_num = models.DecimalField('% de descuento', max_digits=8, decimal_places=2)
+
+    # desc_num = models.PositiveSmallIntegerField('% de descuento', default=0)
     # sendp_signature = models.CharField("send_signature", max_length=250, blank=True)
     # sendp_accountId = models.CharField("send_accountId", max_length=50, blank=True)
     # sendp_referenceCode = models.CharField("send_referenceCode codigo", max_length=50, blank=True)
@@ -198,7 +201,8 @@ class Pedido(models.Model):
 
         delivery = self.monto_delivery
         if self.desc_num > 0:
-            descuento_grupo = float(suma)*(self.desc_num/100.0)
+            descuento = Decimal(self.desc_num)
+            descuento_grupo = Decimal(suma) * (descuento / Decimal(100.000000))
         else:
             descuento_grupo = 0
         # pd = self.monto_porcentajedescuento
@@ -269,8 +273,8 @@ class CodigosDeDescuento(AuditableModel):
                                         excepto este habilitado solo por un Día")
     end = models.DateField('Fecha de Fin', default=date.today)
     cod = models.CharField("Código", max_length=16, blank=True, unique_for_year='ini')
-#    pct = models.DecimalField('% de descuento', max_digits=8, decimal_places=6, default=20)
-    pct = models.PositiveSmallIntegerField('% de descuento', default=20)
+    pct = models.DecimalField('% de descuento', max_digits=8, decimal_places=6, default=20)
+    # pct = models.PositiveSmallIntegerField('% de descuento', default=20)
     num = models.PositiveIntegerField("Número máximo de usos", default=0,
                                         help_text='0 significa indefinido')
 

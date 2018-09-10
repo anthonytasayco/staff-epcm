@@ -34,7 +34,7 @@ class DatosPedidoForm(forms.Form):
     usuario_pais = forms.CharField(label='pais', required=False)
     metodopago = forms.CharField(label='Método de pago', required=False)
     desc_cod = forms.CharField(label='Código de descuento', required=False)
-    desc_num = forms.IntegerField(label='% de descuento', required=False)
+    desc_num = forms.DecimalField(label='% de descuento', required=False)
 
     factura_tipo = forms.CharField(label='tipo documento', required=False)
     factura_ruc = forms.CharField(label='ruc', required=False)
