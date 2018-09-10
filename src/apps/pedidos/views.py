@@ -202,7 +202,7 @@ def datos_facturacion(request):
     # pedido = obtenerpedido(request)
     # if pedido:
     #     envio_id = int(pedido.envio_id)
-    paises = []
+    paises = Paises.objects.all().order_by('nombre')
     usuario = request.user
     initial = {}
     initial['usuario_id'] = usuario.id
