@@ -59,7 +59,7 @@ def carrito_result(request, operacion = '0', iditem = None, cantitem = None):
     if sesioncarrito == '':
         request.session['sesioncarrito'] = []
         sesioncarrito = list()
-
+    print(operacion, 'OPERACION')
     result = list()
     tmp = list()
     suma = 0
@@ -73,6 +73,7 @@ def carrito_result(request, operacion = '0', iditem = None, cantitem = None):
     # print sesioncarrito
 
     ubicado_antes = 'no'
+    print(sesioncarrito, 'SESSION CARRITO')
     for c in sesioncarrito:
         # log.warning('item carrito: %s' % c)
         n = n + 1

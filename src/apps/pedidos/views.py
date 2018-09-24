@@ -191,6 +191,19 @@ def carrito(request):
                       context_instance=ctx(request))
 
 
+def promotion(request, token=None):
+    data = {'status': 'Error'}
+    course = get_object_or_404(Cursos, token=token)
+
+    carrito_result(request, '1', course.id, 1)
+
+    data['status'] = 'OK'
+    if request.user.is_authenticated():
+        return redirect('pedidos:carrito')
+
+    return redirect('custom_auth:login')
+
+
 @login_required(login_url=reverse_lazy('custom_auth:login'))
 @client_only
 def datos_facturacion(request):
@@ -217,16 +230,16 @@ def datos_facturacion(request):
     if request.method == 'POST':
         custom_inf = u''
         usuario_tipodocumento = request.POST.get('usuario_tipodocumento', '')
-        print('POST!!!!!!!!!!!!!!!!!!!!')
+
         if usuario_tipodocumento:
             request.POST = request.POST.copy()
             request.POST['usuario_id'] = request.user.id
             request.POST['desc_cod'] = request.session.get('dscnt_cod', '')
             desc_num = request.session.get('dscnt', 0)
-            print(desc_num, 'DESC NUM --- ID')
+
             if desc_num > 0:
                 desc_num = CodigosDeDescuento.objects.get(id=desc_num).pct
-                print('GET DESCUENTO!!!!!!!!', desc_num)
+
             request.POST['desc_num'] = desc_num
             form = DatosPedidoForm(request.POST)
 

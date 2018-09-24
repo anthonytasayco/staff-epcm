@@ -196,6 +196,7 @@ class Cursos(AuditableModel,SlugModel):
     cod = models.CharField("Codigo de curso", max_length=32, blank=True)
     # precio = models.PositiveIntegerField("Precio de curso", default=69)
     precio = models.DecimalField("Precio", max_digits=6, decimal_places=2, default=69)
+    token = models.CharField('Token', blank=True, max_length=32)
 
     class Meta:
         verbose_name = u'curso'
@@ -257,6 +258,9 @@ class Cursos(AuditableModel,SlugModel):
             self.dm_video_id = ''
         if not self.cod:
             self.cod = str(uuid4())[:8]
+
+        if not self.token:
+            self.token = str(uuid4())[:20]
 
         if self.vimeo:
             self.vimeo_id = re.search(r'^(https://)?(www\.)?(vimeo\.com/)?(\d+)', self.vimeo).group(4)

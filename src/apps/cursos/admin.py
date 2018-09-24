@@ -114,6 +114,7 @@ class CursosAdmin(TranslationAdmin):
     # filter_fields = []
     inlines = [ContenidosInline,BeneficiosInline]
     fieldsets = (
+        ('Código Promoción', {'fields': ('token', )}),
         ('Información General', {'fields': ('active','relacion','categoria','rubro', 'idiomas','posicion', 'nombre','slug', 'img')}),
         ('Categorización', {'fields': ('de_interes','nuevo','online','classroom', 'webcast')}),
         ('Información', {'fields': ('inicio','descript','yt_img_usage','video', 'video_id', 'vimeo', 'vimeo_id', 'archivo', 'fechas', 'horarios', 'lugar', 'inversion')}),

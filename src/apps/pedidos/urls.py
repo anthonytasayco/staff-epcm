@@ -8,6 +8,7 @@ urlpatterns = patterns('apps.pedidos.views',
 
     #carrito
     url(r'^carrito/$', 'carrito', name='carrito'),
+    url(r'^promotion/(?P<token>[-\w]+)/$', 'promotion', name='promotion'),
     url(r'^dsct\.io$', 'setDescuento', name='setDescuento'),
 
     # url(r'^carrito_add/$', 'carrito_add', name='carrito_add'),
