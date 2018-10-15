@@ -60,30 +60,36 @@ class PedidoAdmin(admin.ModelAdmin):
     inlines = [DetallePedidoInline
             #    , PayuResponseInline
                ]
-    list_display = ['codigo','_get_estado', 'metodopago', 'usuario_nombres',
+    list_display = ['codigo', '_get_estado', 'metodopago', 'usuario_nombres',
                     'usuario_apellidos',
-                    # 'usuario_dni',
-                    'factura_tipo', 'created', 'monto_total', 'cip']
+                    'factura_tipo', 'created', 'monto_total',
+                    'cip', 'completed', 'usuario_id']
 
     fieldsets = (
-        (u'Información General',{'fields':('created','codigo')}),
-        (u'Información de Estado y Descuento',{'fields':('status_info','desc_cod','desc_num')}),
-        ('Estado de Pedido',{'fields':('status','status_pagado','metodopago',)}),
-        (u'Información de Pago',{'fields':('monto_totalcompra','monto_descuento','monto_delivery', 'monto_total','monto_tasacambio','monto_dolares')}),
-        # (u'Detalle de Envío de Pedido',{'fields':('envio_id','envio_nombres','envio_telefono','envio_direccion','envio_distrito','envio_distrito_nombre',
-        #                 'envio_provincia_nombre','envio_region_nombre','envio_referencia','factura_tipodocumento')}),
+        (u'Información General', {'fields': ('created', 'codigo', 'token', 'completed')}),
+        (u'Información de Estado y Descuento', {'fields': (
+            'status_info', 'desc_cod', 'desc_num')}),
+        ('Estado de Pedido', {'fields': (
+            'status', 'status_pagado', 'metodopago',)}),
+        (u'Información de Pago', {'fields': (
+            'monto_totalcompra', 'monto_descuento', 'monto_delivery',
+            'monto_total', 'monto_tasacambio', 'monto_dolares')}),
+        (u'Información de Usuario', {'fields': (
+            'usuario_id', 'usuario_nombres', 'usuario_apellidos',
+            'usuario_email', 'usuario_telefono', 'usuario_tipodocumento',
+            'usuario_nrodocumento', 'usuario_pais', 'usuario_labora',
+            'usuario_cargo', 'usuario_telefono_oficina', 'usuario_fax')}),
+        (u'Información de Facturación', {'fields': (
+            'factura_tipo', 'factura_ruc', 'factura_razonsocial',
+            'factura_direccionfiscal', 'factura_contacto', 'factura_correo')}),
+        (u'PagoEfectivo', {'fields': (
+            'cip', 'estado_pago_efectivo', 'fecha_estado_pago_efectivo',
+            'token_response',)}),
 
-        (u'Información de Facturación',{'fields':('factura_tipo','factura_ruc','factura_razonsocial','factura_direccionfiscal')}),
-        (u'Información de Usuario',{'fields':('usuario_id','usuario_nombres', 'usuario_apellidos','usuario_email','usuario_telefono',
-                                              'usuario_tipodocumento', 'usuario_nrodocumento', 'usuario_pais',)}),
-        (u'PagoEfectivo',{'fields':('cip','estado_pago_efectivo', 'fecha_estado_pago_efectivo','token_response',)}),
-        # (u'Datos de Envio (Payu)',{'fields':('sendp_signature', 'sendp_accountId', 'sendp_currency','sendp_description',
-        #                                   'sendp_amount','sendp_test', 'sendp_buyerEmail','sendp_shippingAddress',
-        #                                   'sendp_shippingCity', 'sendp_shippingCountry')})
     )
 
     def __init__(self, model, admin_site):
-        self.readonly_fields = [field.name for field in model._meta.fields]
+        self.readonly_fields = [field.name for field in model._meta.fields if field.name != 'completed']
         super(PedidoAdmin, self).__init__(model, admin_site)
 
     def _get_estado(self, obj):

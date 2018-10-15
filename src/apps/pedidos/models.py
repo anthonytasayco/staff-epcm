@@ -62,71 +62,77 @@ class Pedido(models.Model):
         ('3', 'Cancelado/Denegado')
     )
 
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='1')
-    status_info = models.TextField("Información de pedido",blank=True)
+    status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, default='1')
+    status_info = models.TextField(
+        "Información de pedido", blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    codigo = models.CharField('Codigo', max_length=10)
-    metodopago = models.CharField('metodopago', max_length=80)
+    codigo = models.CharField(
+        'Codigo', max_length=10)
+    metodopago = models.CharField(
+        'metodopago', max_length=80)
 
-    status_pagado = models.BooleanField('Pagado Auto', default=False)
-    status_enviado = models.BooleanField('¿Enviado a la pasarela?', default=False)
+    status_pagado = models.BooleanField(
+        'Pagado Auto', default=False)
+    status_enviado = models.BooleanField(
+        '¿Enviado a la pasarela?', default=False)
 
-    monto_totalcompra = models.DecimalField('Total Compra', max_digits=14, decimal_places=2, default=0)
-    monto_delivery = models.DecimalField('Delivery', max_digits=14, decimal_places=2, default=0)
-    monto_descuento = models.DecimalField('Descuento', max_digits=14, decimal_places=2, default=0)
-    monto_total = models.DecimalField('Monto Total', max_digits=14, decimal_places=2, default=0)
-    monto_tasacambio = models.DecimalField('Tasa de Cambio', max_digits=10, decimal_places=2, default=0)
-    monto_dolares = models.DecimalField('Dolares', max_digits=14, decimal_places=2, default=0)
+    monto_totalcompra = models.DecimalField(
+        'Total Compra', max_digits=14, decimal_places=2, default=0)
+    monto_delivery = models.DecimalField(
+        'Delivery', max_digits=14, decimal_places=2, default=0)
+    monto_descuento = models.DecimalField(
+        'Descuento', max_digits=14, decimal_places=2, default=0)
+    monto_total = models.DecimalField(
+        'Monto Total', max_digits=14, decimal_places=2, default=0)
+    monto_tasacambio = models.DecimalField(
+        'Tasa de Cambio', max_digits=10, decimal_places=2, default=0)
+    monto_dolares = models.DecimalField(
+        'Dolares', max_digits=14, decimal_places=2, default=0)
 
-
-    usuario_id = models.CharField("Usuario id", max_length=5, blank=True)
-    usuario_nombres = models.CharField("Nombres", max_length=250, blank=True)
-    usuario_apellidos = models.CharField("Apellidos", max_length=250, blank=True)
-    usuario_email = models.CharField('Email', max_length=250, blank=True)
+    usuario_id = models.CharField(
+        "Usuario id", max_length=5, blank=True)
+    usuario_nombres = models.CharField(
+        "Nombres", max_length=250, blank=True)
+    usuario_apellidos = models.CharField(
+        "Apellidos", max_length=250, blank=True)
+    usuario_email = models.CharField(
+        'Email', max_length=250, blank=True)
     usuario_telefono = models.CharField('Telefono', max_length=150, blank=True)
-    usuario_tipodocumento = models.CharField("tipo documento", max_length=250, blank=True)
-    usuario_nrodocumento = models.CharField("nro documento", max_length=250, blank=True)
+    usuario_tipodocumento = models.CharField(
+        "tipo documento", max_length=250, blank=True)
+    usuario_nrodocumento = models.CharField(
+        "nro documento", max_length=250, blank=True)
     usuario_pais = models.CharField("pais", max_length=250, blank=True)
+    usuario_labora = models.CharField(
+        'Centro laboral', max_length=150, blank=True)
+    usuario_cargo = models.CharField(
+        'Cargo', max_length=150, blank=True)
+    usuario_telefono_oficina = models.CharField(
+        'Telefono Oficina', max_length=150, blank=True)
+    usuario_fax = models.CharField(
+        'Fax', max_length=150, blank=True)
 
-    # envio -------------------------------------------------------------------------------
-    # envio_id = models.CharField("Direccion Envio id", max_length=250, blank=True)
-    # envio_nombres = models.CharField("casa casad campo, etc", max_length=250, blank=True)
-    # envio_telefono = models.CharField('Telefono', max_length=150, blank=True)
-    # envio_direccion = models.CharField('Direccion', max_length=250, blank=True)
-    # envio_distrito = models.CharField('Distrito id', max_length=150, blank=True)
-    # envio_distrito_nombre = models.CharField('Distrito', max_length=150, blank=True)
-    # envio_provincia_nombre = models.CharField('Provincia', max_length=150, blank=True)
-    # envio_region_nombre = models.CharField('Region', max_length=150, blank=True)
-    # envio_referencia = models.TextField('Referencia', blank=True)
+    factura_tipo = models.CharField(
+        'tipo documento', max_length=150, blank=True)
+    factura_ruc = models.CharField(
+        "ruc", max_length=25, blank=True)
+    factura_razonsocial = models.CharField(
+        "Razon social", max_length=250, blank=True)
+    factura_direccionfiscal = models.CharField(
+        "Direccion fiscal", max_length=250, blank=True)
+    factura_contacto = models.CharField(
+        "Contacto de Facturación", max_length=250, blank=True)
+    factura_correo = models.CharField(
+        "Correo de Facturación", max_length=250, blank=True)
 
-    factura_tipo = models.CharField('tipo documento', max_length=150, blank=True)
+    desc_cod = models.CharField(
+        "Código de descuento usado", max_length=32, blank=True)
+    desc_num = models.DecimalField(
+        '% de descuento', max_digits=8, decimal_places=2)
 
-    factura_ruc = models.CharField("ruc", max_length=25, blank=True)
-    factura_razonsocial = models.CharField("Razon social", max_length=250, blank=True)
-    factura_direccionfiscal = models.CharField("Direccion fiscal", max_length=250, blank=True)
-
-    desc_cod = models.CharField("Código de descuento usado", max_length=32, blank=True)
-    desc_num = models.DecimalField('% de descuento', max_digits=8, decimal_places=2)
-
-    # desc_num = models.PositiveSmallIntegerField('% de descuento', default=0)
-    # sendp_signature = models.CharField("send_signature", max_length=250, blank=True)
-    # sendp_accountId = models.CharField("send_accountId", max_length=50, blank=True)
-    # sendp_referenceCode = models.CharField("send_referenceCode codigo", max_length=50, blank=True)
-    # sendp_currency = models.CharField("send_currency", max_length=3, blank=True)
-    #
-    # sendp_description = models.CharField("send_description", max_length=50, blank=True)
-    # sendp_amount = models.CharField("send_amount", max_length=50, blank=True)
-    # sendp_test = models.CharField("send_test", max_length=50, blank=True)
-    # sendp_buyerEmail = models.CharField("send_buyerEmail", max_length=250, blank=True)
-    # sendp_buyerFullName = models.CharField("send_buyerFullName", max_length=250, blank=True)
-    #
-    # sendp_shippingAddress = models.CharField("send_shippingAddress", max_length=150, blank=True)
-    # sendp_shippingCity = models.CharField("send_shippingCity", max_length=150, blank=True)
-    # sendp_shippingCountry = models.CharField("send_shippingCountry", max_length=150, blank=True)
-    #
-    # payu_idpago = models.CharField("send_test", max_length=50, blank=True)
-    # payu_transaction_id = models.CharField("send_test", max_length=150, blank=True)
-    # send_active = models.BooleanField('se envio a la pasarela', default=False)
+    completed = models.BooleanField(
+        'Datos de facturación Completados', default=False)
 
     # PAGO EFECTIVO
 
@@ -138,6 +144,7 @@ class Pedido(models.Model):
     token_response = models.CharField('Token response',
                                       blank=True, max_length=220)
     extornado = models.BooleanField(default=False)
+    token = models.CharField('Token', blank=True, max_length=32)
 
     class Meta:
         verbose_name = u''

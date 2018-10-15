@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from logging import getLogger
 
+from uuid import uuid4
 from django.forms import ModelForm
 from django.template.loader import get_template
 from django.template import Context
@@ -19,9 +20,10 @@ global STATIC_URL, MEDIA_URL
 STATIC_URL = settings.STATIC_URL
 MEDIA_URL = settings.MEDIA_URL
 EMAIL_DEVELOPER = settings.EMAIL_DEVELOPER
-from hashlib import sha512, md5
+# from hashlib import sha512, md5
 
 log = getLogger('django')
+
 
 class DatosPedidoForm(forms.Form):
     usuario_id = forms.CharField(label='id usuario', required=False)
@@ -29,9 +31,16 @@ class DatosPedidoForm(forms.Form):
     usuario_apellidos = forms.CharField(label='apellidos', required=False)
     usuario_email = forms.CharField(label='email', required=False)
     usuario_telefono = forms.CharField(label='telefono', required=False)
-    usuario_tipodocumento = forms.CharField(label='tipo documento', required=False)
-    usuario_nrodocumento = forms.CharField(label='nro documento', required=False)
+    usuario_tipodocumento = forms.CharField(
+        label='tipo documento', required=False)
+    usuario_nrodocumento = forms.CharField(
+        label='nro documento', required=False)
     usuario_pais = forms.CharField(label='pais', required=False)
+    usuario_labora = forms.CharField(label='Centro laboral', required=False)
+    usuario_cargo = forms.CharField(label='Cargo', required=False)
+    usuario_telefono_oficina = forms.CharField(
+        label='Teléfono oficina', required=False)
+    usuario_fax = forms.CharField(label='Fax', required=False)
     metodopago = forms.CharField(label='Método de pago', required=False)
     desc_cod = forms.CharField(label='Código de descuento', required=False)
     desc_num = forms.DecimalField(label='% de descuento', required=False)
@@ -39,20 +48,30 @@ class DatosPedidoForm(forms.Form):
     factura_tipo = forms.CharField(label='tipo documento', required=False)
     factura_ruc = forms.CharField(label='ruc', required=False)
     factura_razonsocial = forms.CharField(label='Razon social', required=False)
-    factura_direccionfiscal = forms.CharField(label='Direccion fiscal', required=False)
+    factura_direccionfiscal = forms.CharField(
+        label='Direccion fiscal', required=False)
+    factura_contacto = forms.CharField(label='Contacto', required=False)
+    factura_correo = forms.CharField(
+        label='Correo de facturación', required=False)
 
     def create_pedido(self, request):
         cd = self.cleaned_data
-        fields = ['metodopago','desc_cod','desc_num',
-                  'usuario_id', 'usuario_nombres', 'usuario_apellidos', 'usuario_email',
-                  'usuario_telefono','usuario_tipodocumento', 'usuario_nrodocumento', 'usuario_pais',
-                   'factura_ruc', 'factura_razonsocial', 'factura_direccionfiscal']
+        fields = ['metodopago', 'desc_cod', 'desc_num',
+                  'usuario_id', 'usuario_nombres', 'usuario_apellidos',
+                  'usuario_email', 'usuario_telefono', 'usuario_tipodocumento',
+                  'usuario_nrodocumento', 'usuario_pais',
+                  'usuario_labora', 'usuario_cargo',
+                  'usuario_telefono_oficina', 'usuario_fax',
+                  'factura_ruc', 'factura_razonsocial',
+                  'factura_direccionfiscal',
+                  'factura_contacto', 'factura_correo']
         dd = {}
         for f in fields:
             dd[f] = cd[f]
         p = Pedido(**dd)
+        p.token = str(uuid4())[:30]
         p.save()
-        if cd.get('factura_tipo',False):
+        if cd.get('factura_tipo', False):
             tipo = 'factura'
         else:
             tipo = 'boleta'
@@ -62,75 +81,54 @@ class DatosPedidoForm(forms.Form):
         return p
 
 
-# class DatosFacturacionForm(forms.Form):
-#     tipodocumento = forms.CharField(label='tipodocumento', required=False)
-#     ruc = forms.CharField(label='ruc', required=False)
-#     razonsocial = forms.CharField(label='Razon social', required=False)
-#     direccionfiscal = forms.CharField(label='Direccion fiscal', required=False)
-#
-#     iddir = forms.CharField(label='Iddir', required=False)
-#     nombres = forms.CharField(label='Nombres', required=False)
-#     nombre = forms.CharField(label='Direccion', required=False)
-#     region = forms.CharField(label='Departamento', required=False)
-#     provincia = forms.CharField(label='Provincia', required=False)
-#     distrito = forms.CharField(label='Distrito', required=False)
-#     telefono = forms.CharField(label='Telefono', required=False)
-#     referencia = forms.CharField(label='Referencia', widget=forms.Textarea(), required=False)
-#
-#     def get_direccion(self, request):
-#         cd = self.cleaned_data
-#         fields = ['nombres', 'nombre', 'telefono', 'referencia', 'region', 'provincia', 'distrito']
-#         dd = {}
-#         for f in fields:
-#             dd[f] = cd[f]
-#         if cd['iddir'] == '0':
-#             distrito = Distrito.objects.get(id=int(cd['distrito']))
-#             row = Direccion(**dd)
-#             row.distrito_nombre = distrito.nombre
-#             row.provincia_nombre = distrito.provincia.nombre
-#             row.region_nombre = distrito.provincia.region.nombre
-#             if request.user:
-#                 row.usuario = Usuario.objects.get(pk=request.user.pk)
-#             row.save()
-#             # print row
-#         else:
-#             row = Direccion.objects.get(id = int(cd['iddir']))
-#         return row
-#
-#     def create_pedido(self, request, direccion):
-#         cd = self.cleaned_data
-#         fields = ['tipodocumento', 'ruc', 'razonsocial', 'direccionfiscal']
-#         dd = {}
-#         for f in fields:
-#             dd['factura_%s'%f] = cd[f]
-#         p = Pedido(**dd)
-#         d = Distrito.objects.get(id=int(direccion.distrito))
-#         delivery = d.deliveryrel()
-#         if request.user:
-#             usuario = Usuario.objects.get(pk=request.user.pk)
-#             p.usuario_id = usuario.id
-#             p.usuario_dni = usuario.dni
-#             p.usuario_nombres = usuario.nombres
-#             p.usuario_email = usuario.email
-#             p.usuario_telefono = usuario.telefono
-#             p.envio_id = direccion.id
-#             p.envio_nombres = direccion.nombres
-#             p.envio_telefono = direccion.telefono
-#             p.envio_direccion = direccion.nombre
-#             p.envio_distrito = direccion.distrito
-#             p.envio_distrito_nombre = d.nombre
-#             p.envio_provincia_nombre = d.provincia.nombre
-#             p.envio_region_nombre = d.provincia.region.nombre
-#             p.envio_referencia = direccion.referencia
-#
-#         info = get_info()
-#         p.monto_delivery = delivery
-#         p.monto_porcentajedescuento = info.porcentajedescuento
-#
-#         p.save()
-#         p.codigo = 'PE-%s' % (p.id + 10000)
-#         request.session['pedido'] = p.codigo
-#         return p
+class UpdatePedidoForm(forms.Form):
+    codigo = forms.CharField(label='codigo', required=False)
+    usuario_nombres = forms.CharField(label='nombres', required=False)
+    usuario_apellidos = forms.CharField(label='apellidos', required=False)
+    usuario_email = forms.CharField(label='email', required=False)
+    usuario_telefono = forms.CharField(label='telefono', required=False)
+    usuario_tipodocumento = forms.CharField(
+        label='tipo documento', required=False)
+    usuario_nrodocumento = forms.CharField(
+        label='nro documento', required=False)
+    usuario_pais = forms.CharField(label='pais', required=False)
+    usuario_labora = forms.CharField(label='Centro laboral', required=False)
+    usuario_cargo = forms.CharField(label='Cargo', required=False)
+    usuario_telefono_oficina = forms.CharField(
+        label='Teléfono oficina', required=False)
+    usuario_fax = forms.CharField(label='Fax', required=False)
+    metodopago = forms.CharField(label='Método de pago', required=False)
+    desc_cod = forms.CharField(label='Código de descuento', required=False)
+    desc_num = forms.DecimalField(label='% de descuento', required=False)
+
+    factura_tipo = forms.CharField(label='tipo documento', required=False)
+    factura_ruc = forms.CharField(label='ruc', required=False)
+    factura_razonsocial = forms.CharField(label='Razon social', required=False)
+    factura_direccionfiscal = forms.CharField(
+        label='Direccion fiscal', required=False)
+    factura_contacto = forms.CharField(label='Contacto', required=False)
+    factura_correo = forms.CharField(
+        label='Correo de facturación', required=False)
+
+    def update_pedido(self, request):
+        cd = self.cleaned_data
+        fields = ['codigo', 'usuario_nombres', 'usuario_apellidos',
+                  'usuario_email', 'usuario_telefono', 'usuario_tipodocumento',
+                  'usuario_nrodocumento', 'usuario_pais',
+                  'usuario_labora', 'usuario_cargo',
+                  'usuario_telefono_oficina', 'usuario_fax',
+                  'factura_ruc', 'factura_razonsocial',
+                  'factura_direccionfiscal',
+                  'factura_contacto', 'factura_correo']
+
+        dd = {}
+        for f in fields:
+            if not f == 'codigo':
+                dd[f] = cd[f]
+        dd['completed'] = True
+        p = Pedido.objects.filter(codigo=cd['codigo']).update(**dd)
+
+        return p
 
 
 class DatosPagoForm(forms.Form):
@@ -192,7 +190,7 @@ class DatosPagoForm(forms.Form):
     #     return (pedido, payudatos)
 
 
-def enviaEmail(pedido):
+def enviaEmail(pedido, base_url):
     if pedido.status == '3':
         return None
     pay_info, created = PaypalInfo.objects.get_or_create(pk=1)
@@ -203,6 +201,9 @@ def enviaEmail(pedido):
         c_d['info'] = info
         c_d['pedido'] = pedido
         c_d['pay'] = pay_info
+
+        c_d['url_complete'] = "{}/{}{}".format(
+            base_url, 'post-payment/datos-facturacion/', pedido.token)
         d = Context(c_d)
 
         htmly = get_template('email/carrito_detalle.html')

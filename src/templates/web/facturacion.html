@@ -1,0 +1,193 @@
+{% extends 'common/_base.html' %}
+{% load app_seo_tags %}
+{% load app_tags %}
+{% load thumbnail %}
+{% load fb_versions %}
+{% load static %}
+{% load i18n %}
+{% block SEOTags %}
+{% if request.get_full_path|getSEOTags:"Verify" %}
+	{{ request.get_full_path|getSEOTags }}
+{% else %}
+	<title>{{ info.titulo }} | {{"DATOS DE FACTURACIÓN"|t|title}}</title>
+{% endif %}
+{% endblock %}
+
+{% block cssadicional %}
+<style type="text/css">
+	#b21-check-text{
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		display: block!important;
+	}
+</style>
+{% endblock %}
+
+{% block classbody %}{% endblock %}
+
+{% block content %}
+
+<!-- BLOQUE 9 -->
+<section class="b9">
+	<div class="b9Main wancho">
+		<div class="b9Table">
+			<div class="b9Title">
+				<h1>{{"FICHA DE INSCRIPCIÓN"|t}}</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BLOQUE 21 -->
+<section class="b20">
+	<div class="b21Main wancho">
+		<form action="." method="post">
+			{% csrf_token %}
+			<input type="hidden" name="codigo" value="{{codigo}}">
+			<div class="b21Title-1">
+				<h2>{{"DATOS DEL PARTICIPANTE:"|t}}</h2>
+			</div>
+			<div class="b21Text">
+				<p></p>
+			</div>
+			<div class="b21Campos-1">
+				<ul>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Nombres:"|t}}*</label>
+							<input name="usuario_nombres" type="text" class="validate[required]" value="{{initial.usuario_nombres}}">
+						</div>
+						<div class="g-input">
+							<label>{{"Apellidos:"|t}}*</label>
+							<input name="usuario_apellidos" type="text" class="validate[required]" value="{{initial.usuario_apellidos}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Correo Electónico:"|t}}*</label>
+							<input name="usuario_email" type="text" class="validate[required,custom[email]]" value="{{initial.usuario_email}}">
+						</div>
+						<div class="g-input">
+							<label>{{"Teléfono / Celular:"|t}}*</label>
+							<input name="usuario_telefono" type="text" class="validate[required]" value="{{initial.usuario_telefono}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input g-select">
+							<label>{{"Tipo de documento:"|t}}*</label>
+							<select name="usuario_tipodocumento" class="validate[required]">
+								<option value="dni" {% if initial.usuario_tipodocumento == 'dni' %}selected{% endif %}>{{"DNI"|t}}</option>
+								<option value="pasaporte" {% if initial.usuario_tipodocumento == 'pasaporte' %}selected{% endif %}>{{"Pasaporte"|t}}</option>
+								<option value="licencia"  {% if initial.usuario_tipodocumento == 'licencia' %}selected{% endif %}>{{"Licencia"|t}}</option>
+								<option value="libreta" {% if initial.usuario_tipodocumento == 'libreta' %}selected{% endif %}>{{"Libreta"|t}}</option>
+							</select>
+						</div>
+						<div class="g-input">
+							<label>{{"Número de Documento:"|t}}*</label>
+							<input name="usuario_nrodocumento" type="text" class="validate[required]" value="{{initial.usuario_nrodocumento}}">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input g-select">
+							<label>{{"País:"|t}}*</label>
+							<select name="usuario_pais" class="validate[required]">
+							<option value="" selected disabled>{{"Selecione su país de procedencia"|t}}</option>
+							{% for row in paises %}
+								<option value="{{ row.nombre }}" {% if initial.usuario_pais == row.nombre %}selected{% endif %}>{{ row.nombre }}</option>
+							{% endfor %}
+							</select>
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Centro laboral:"|t}}</label>
+							<input name="usuario_labora" type="text" class="validate[required]">
+						</div>
+						<div class="g-input">
+							<label>{{"Cargo:"|t}}</label>
+							<input name="usuario_cargo" type="text" class="validate[required]">
+						</div>
+					</li>
+					<li class="b21two">
+						<div class="g-input">
+							<label>{{"Teléfono de Oficina:"|t}}</label>
+							<input name="usuario_telefono_oficina" type="text">
+						</div>
+						<div class="g-input">
+							<label>{{"Fax:"|t}}</label>
+							<input name="usuario_fax" type="text">
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="b21Title-2">
+				<input id="b21-factura" name="factura_tipo" value="factura" type="checkbox" {% if initial.factura_tipo == 'factura' %}checked{% endif %}>
+				<label for="b21-factura" class="js-b21OpenToggle"><span class="b21Circle"></span>{{"DESEO FACTURA"|t}}</label>
+			</div>
+			<div class="b21CntToggle">
+				<div class="b21Campos-2">
+					<ul>
+						<li class="b21two">
+							<div class="g-input dv-factura">
+								<label>{{"RAZÓN SOCIAL:"|t}}</label>
+								<input name="factura_razonsocial" type="text" class="validate[required]" value="{{initial.factura_razonsocial}}">
+							</div>
+							<div class="g-input dv-factura">
+								<label>{{"RUC:"|t}}</label>
+								<input name="factura_ruc" type="text" class="validate[required]" value="{{initia.factura_ruc}}">
+							</div>
+						</li>
+						<li class="b21two">
+							<div class="g-input dv-factura">
+								<label>{{"Dirección:"|t}}</label>
+								<input name="factura_direccionfiscal" type="text" class="validate[required]" value="{{initia.factura_direccionfiscal}}">
+							</div>
+							<div class="g-input dv-factura">
+								<label>{{"Nombre de contacto:"|t}}</label>
+								<input name="factura_contacto" type="text" class="validate[required]" value="{{initia.factura_contacto}}">
+							</div>
+						</li>
+						<li class="b21two">
+							<div class="g-input dv-factura">
+								<label>{{"Correo de facturación electrónica:"|t}}</label>
+								<input name="factura_correo" type="text" class="validate[required]" value="{{initial.factura_correo}}">
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
+			 <div class="b21Btn">
+				<button class="btn2"><span class="btn-ico"></span>{{"ENVIAR"|t}}</button>
+			 </div>
+		</form>
+	</div>
+</section>
+{% endblock %}
+
+{% block jsfinal %}
+<script type="text/javascript">
+	$(function(){
+		$('.b21TextFoot p a').attr('href',"{% url 'termpreg:terms' %}");
+		$('.b21TextFoot p a').attr('target',"_blank");
+		$('.js-b21OpenToggle').click(function(event) {
+			$('.b21CntToggle').slideToggle();
+		});
+
+
+		$('#b21-factura').change(function() {
+			//   if (this.value == 'boleta') {
+			if($(this).is(":checked")){
+				  $('.dv-factura').find('input, textarea, select').addClass('validate[required]');
+			  }
+			  else{
+				  $('.dv-factura').find('input, textarea, select').removeClass('validate[required]');
+			  }
+		  });
+		  $('#b21-factura').change();
+		  setTimeout(function(){$('#wPayPalForm form').submit();},2000);
+	});
+</script>
+{% endblock %}

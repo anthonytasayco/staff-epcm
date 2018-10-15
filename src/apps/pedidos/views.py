@@ -48,7 +48,7 @@ import json
 
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.pdt.views import process_pdt as wCheckPDT
-from .forms import PagoEfectivoForm
+from .forms import PagoEfectivoForm, UpdatePedidoForm
 
 import threading
 import struct
@@ -204,7 +204,7 @@ def promotion(request, token=None):
     return redirect('custom_auth:login')
 
 
-@login_required(login_url=reverse_lazy('custom_auth:login'))
+# @login_required(login_url=reverse_lazy('custom_auth:login'))
 @client_only
 def datos_facturacion(request):
     print('DATOS DE FACTURACION')
@@ -218,36 +218,51 @@ def datos_facturacion(request):
     paises = Paises.objects.all().order_by('nombre')
     usuario = request.user
     initial = {}
-    initial['usuario_id'] = usuario.id
-    initial['usuario_nombres'] = usuario.nombres
-    initial['usuario_apellidos'] = usuario.apellidos
-    initial['usuario_email'] = usuario.email
-    initial['usuario_telefono'] = usuario.telefono
-    initial['usuario_tipodocumento'] = usuario.tipodocumento
-    initial['usuario_nrodocumento'] = usuario.nrodocumento
-    initial['usuario_pais'] = usuario.pais
+
+    if usuario.is_authenticated():
+        initial['usuario_id'] = usuario.id
+        initial['usuario_nombres'] = usuario.nombres
+        initial['usuario_apellidos'] = usuario.apellidos
+        initial['usuario_email'] = usuario.email
+        initial['usuario_telefono'] = usuario.telefono
+        initial['usuario_tipodocumento'] = usuario.tipodocumento
+        initial['usuario_nrodocumento'] = usuario.nrodocumento
+        initial['usuario_pais'] = usuario.pais
 
     if request.method == 'POST':
         custom_inf = u''
         usuario_tipodocumento = request.POST.get('usuario_tipodocumento', '')
 
-        if usuario_tipodocumento:
-            request.POST = request.POST.copy()
+        # if usuario_tipodocumento:
+        request.POST = request.POST.copy()
+        if usuario.is_authenticated():
             request.POST['usuario_id'] = request.user.id
-            request.POST['desc_cod'] = request.session.get('dscnt_cod', '')
-            desc_num = request.session.get('dscnt', 0)
+            request.POST['usuario_telefono'] = request.user.telefono
+            request.POST['usuario_tipodocumento'] = request.user.tipodocumento
+            request.POST['usuario_nrodocumento'] = request.user.nrodocumento
+            request.POST['usuario_pais'] = request.user.pais
+        request.POST['desc_cod'] = request.session.get('dscnt_cod', '')
+        desc_num = request.session.get('dscnt', 0)
 
-            if desc_num > 0:
-                desc_num = CodigosDeDescuento.objects.get(id=desc_num).pct
+        if desc_num > 0:
+            desc_num = CodigosDeDescuento.objects.get(id=desc_num).pct
 
-            request.POST['desc_num'] = desc_num
-            form = DatosPedidoForm(request.POST)
+        request.POST['desc_num'] = desc_num
+        form = DatosPedidoForm(request.POST)
 
-            if form.is_valid():
-                p = form.create_pedido(request)
-                sesioncarrito = getlist_carrito(request)
-                p.update_pedido_compra(sesioncarrito, Cursos)
+        if request.is_secure():
+            http_protocol = "https://"
+        else:
+            http_protocol = "http://"
+        base_url = '{0}{1}'.format(http_protocol, request.get_host())
 
+        if form.is_valid():
+            p = form.create_pedido(request)
+            sesioncarrito = getlist_carrito(request)
+            p.update_pedido_compra(sesioncarrito, Cursos)
+            request.session['num_pedido'] = p.codigo
+
+            if usuario.is_authenticated():
                 if usuario.tipodocumento == '':
                     usuario.tipodocumento = p.usuario_tipodocumento
                 if usuario.nrodocumento == '':
@@ -256,48 +271,49 @@ def datos_facturacion(request):
                     usuario.pais = p.usuario_pais
                 usuario.save()
 
-                # close_carrito(request)
-                # # ---fin guardar datos de usuario --------------------------
-                if p.metodopago == 'deposito':
-                    p.status = '1'
-                    threading.Thread(target=enviarCarrito, args=(p,)).start()
-                    close_carrito(request)
-                    return redirect('pedidos:graciascompra')
-                if p.metodopago == 'paypal':
-                    pyp_inf, created = PaypalInfo.objects.get_or_create(pk=1)
-                    if pyp_inf.paypal_account:
-                        print '>>>>>>>>> hay paypal_account'
-                        if request.is_secure():
-                            http_protocol = "https://"
-                        else:
-                            http_protocol = "http://"
-                        base_url = '{0}{1}'.format(http_protocol, request.get_host())
-                        print(p.monto_dolares, '<-----monto dolares')
-                        print(p.codigo, '<------- codigo')
-                        paypal_dict = {
-                            "business": pyp_inf.paypal_account,
-                            "amount": p.monto_dolares,
-                            "item_name": pyp_inf.paypal_itemname+' x{0}'.format(nroitems,),
-                            "invoice": p.codigo,
-                            "currency_code":"USD",
-                            # "notify_url": base_url+reverse('paypal-pdt'),
-                            "notify_url": base_url+reverse('pedidos:graciascompra_paypal'),
-                            "return_url": base_url+reverse('pedidos:graciascompra_paypal'),
-                            "cancel_return": base_url+reverse('pedidos:datos_facturacion'),
-                            "custom": p.status_info
-                        }
-                        form = PayPalPaymentsForm(initial=paypal_dict)
-                        send_paypal = True
-                        return render('web/datos-envio.html', locals(),
-                            context_instance=ctx(request))                        
+            # close_carrito(request)
+            # # ---fin guardar datos de usuario --------------------------
+            if p.metodopago == 'deposito':
+                p.status = '1'
+                threading.Thread(target=enviarCarrito, args=(p, base_url)).start()
+                close_carrito(request)
+                return redirect('pedidos:graciascompra')
+            if p.metodopago == 'paypal':
+                pyp_inf, created = PaypalInfo.objects.get_or_create(pk=1)
+                if pyp_inf.paypal_account:
+                    print '>>>>>>>>> hay paypal_account'
+                    if request.is_secure():
+                        http_protocol = "https://"
                     else:
-                        print '>>>>>>>>> no hay paypal_account'
-                if p.metodopago == 'pagoefectivo':
-                    request.session['num_pedido'] = p.codigo
-                    return redirect(reverse('pedidos:realizar_pago_pagoefectivo_logged'))
+                        http_protocol = "http://"
+                    base_url = '{0}{1}'.format(http_protocol, request.get_host())
+                    print(p.monto_dolares, '<-----monto dolares')
+                    print(p.codigo, '<------- codigo')
+                    paypal_dict = {
+                        "business": pyp_inf.paypal_account,
+                        "amount": p.monto_dolares,
+                        "item_name": pyp_inf.paypal_itemname+' x{0}'.format(nroitems,),
+                        "invoice": p.codigo,
+                        "currency_code":"USD",
+                        # "notify_url": base_url+reverse('paypal-pdt'),
+                        "notify_url": base_url+reverse('pedidos:graciascompra_paypal'),
+                        "return_url": base_url+reverse('pedidos:graciascompra_paypal'),
+                        "cancel_return": base_url+reverse('pedidos:datos_facturacion'),
+                        "custom": p.status_info
+                    }
+                    form = PayPalPaymentsForm(initial=paypal_dict)
+                    send_paypal = True
+                    return render('web/datos-envio.html', locals(),
+                        context_instance=ctx(request))                        
+                else:
+                    print '>>>>>>>>> no hay paypal_account'
+            if p.metodopago == 'pagoefectivo':
+                request.session['num_pedido'] = p.codigo
+                return redirect(reverse('pedidos:realizar_pago_pagoefectivo_logged'))
 
-                return redirect('pedidos:datos_facturacion')
-
+            return redirect('pedidos:datos_facturacion')
+        else:
+            print(form.errors)
         # metodopago = request.POST.get('metodopago', '')
         # if metodopago and pedido:
         #     form = DatosPagoForm(request.POST)
@@ -315,14 +331,20 @@ def datos_facturacion(request):
                   context_instance=ctx(request))
 
 
-@login_required(login_url=reverse_lazy('custom_auth:login'))
+# @login_required(login_url=reverse_lazy('custom_auth:login'))
 def realizar_pago_pagoefectivo_logged(request):
 
+    if request.is_secure():
+        http_protocol = "https://"
+    else:
+        http_protocol = "http://"
+    base_url = '{0}{1}'.format(http_protocol, request.get_host())
     log.info("VIEW: Realizar Pago PagoEfectivo Logged")
     pedido_codigo = request.session.get('num_pedido')
     info = get_info()
 
     p = Pedido.objects.get(codigo=pedido_codigo)
+    threading.Thread(target=enviarCarrito, args=(p, base_url)).start()
     # Limpiamos la session
     del request.session['num_pedido']
 
@@ -363,6 +385,7 @@ def realizar_pago_pagoefectivo_logged(request):
     if pagoefectivo_form.is_valid():
         log.info("PagoEfectivo Form is valid")
         pagoefectivo_form.save()
+
     else:
         log.warning("PagoEfectivo Form is invalid: ")
         print(pagoefectivo_form.errors)
@@ -471,11 +494,16 @@ def show_cip(request):
                   locals(), context_instance=ctx(request))
 
 
-@login_required(login_url=reverse_lazy('custom_auth:login'))
+# @login_required(login_url=reverse_lazy('custom_auth:login'))
 def graciascompra_paypal(request):
     pyp_inf, created = PaypalInfo.objects.get_or_create(pk=1)
     pdt_obj, failed = wCheckPDT(request)
     pedido = obtenerpedido(request)
+    if request.is_secure():
+        http_protocol = "https://"
+    else:
+        http_protocol = "http://"
+    base_url = '{0}{1}'.format(http_protocol, request.get_host())
     if pedido is not None:
         monto_a_pagar = pedido.monto_dolares
         # print(pdt_obj,failed)
@@ -498,39 +526,50 @@ def graciascompra_paypal(request):
                     pdt_obj.save()
                     # request.session['countcart'] = 0
                     pedido.status = '2'
-                    threading.Thread(target=enviarCarrito, args=(pedido,)).start()
+                    threading.Thread(
+                        target=enviarCarrito, args=(pedido, base_url)).start()
                     request.session["paypal_pay"] = True
                     return redirect('pedidos:graciascompra')
-                    # return render('web/mensaje-pago-exitoso.html', locals(), context_instance=ctx(request))
+
                 else:
                     pedido.status = '3'
                     pedido.save()
                     reason_tmp = "Monto abonado {0} monto solicitado {1}"
-                    pdt_obj.flag_info = reason_tmp.format(pdt_obj.payment_gross,monto_a_pagar)
+                    pdt_obj.flag_info = reason_tmp.format(
+                        pdt_obj.payment_gross, monto_a_pagar)
                     pdt_obj.flag = False
                     pdt_obj.save()
                     close_carrito(request)
             else:
                 pedido.status = '1'
-                threading.Thread(target=enviarCarrito, args=(pedido,)).start()
+                threading.Thread(
+                    target=enviarCarrito, args=(pedido, base_url)).start()
                 pedido.save()
                 # close_carrito(request)
         else:
             pedido.status = '2'
             pedido.save()
-            threading.Thread(target=enviarCarrito, args=(pedido,)).start()
+            threading.Thread(
+                target=enviarCarrito, args=(pedido, base_url)).start()
             close_carrito(request)
             # print(pdt_obj,failed)
         return redirect('pedidos:errorcompra_paypal')
     return redirect('pedidos:datos_facturacion')
 
-@login_required(login_url=reverse_lazy('custom_auth:login'))
-def graciascompra(request):
-    paypal_pay = request.session.get("paypal_pay",False)
-    seccion, created = PaypalInfo.objects.get_or_create(pk=1)
-    return render('web/mensaje-pago-exitoso.html', locals(), context_instance=ctx(request))
 
-@login_required(login_url=reverse_lazy('custom_auth:login'))
+# @login_required(login_url=reverse_lazy('custom_auth:login'))
+def graciascompra(request):
+    paypal_pay = request.session.get("paypal_pay", False)
+    seccion, created = PaypalInfo.objects.get_or_create(pk=1)
+    # print(request.session['num_pedido'])
+    pedido = Pedido.objects.get(codigo=request.session['num_pedido'])
+    print(pedido, 'PEDIDO')
+    return render(
+        'web/mensaje-pago-exitoso.html',
+        locals(), context_instance=ctx(request))
+
+
+# @login_required(login_url=reverse_lazy('custom_auth:login'))
 def errorcompra_paypal(request):
     error_pyp = True
     return render('404.html', locals(), context_instance=ctx(request))
@@ -748,3 +787,44 @@ def errorcompra_paypal(request):
 #
 #     return render('web/mensaje-compraexitosa.html', locals(),
 #         context_instance=ctx(request))
+
+
+def facturacion(request, token):
+    log.info('VIEW: facturacion')
+    # head = 'datos de facturacion'
+    # pedido_codigo = request.session.get('num_pedido')
+    pedido = Pedido.objects.get(token=token)
+    codigo = pedido.codigo
+    if pedido.completed:
+        return redirect('pedidos:gracias_datos')
+
+    paises = Paises.objects.all().order_by('nombre')
+    initial = {}
+    if pedido.usuario_id != "0":
+        client = Usuario.objects.get(id=pedido.usuario_id)
+        initial['usuario_telefono'] = client.telefono
+        initial['usuario_tipodocumento'] = client.tipodocumento
+        initial['usuario_nrodocumento'] = client.nrodocumento
+        initial['usuario_pais'] = client.pais
+
+    initial['usuario_nombres'] = pedido.usuario_nombres
+    initial['usuario_apellidos'] = pedido.usuario_apellidos
+    initial['usuario_email'] = pedido.usuario_email
+    if request.POST:
+        form = UpdatePedidoForm(request.POST)
+        if form.is_valid():
+            form.update_pedido(request)
+            return redirect('pedidos:gracias_datos')
+        else:
+            print(form.errors)
+    return render(
+        'web/facturacion.html', locals(),
+        context_instance=ctx(request))
+
+
+def gracias_datos(request):
+    log.info('VIEW: Datos completados')
+
+    return render(
+        'web/mensaje-datos-completados.html', locals(),
+        context_instance=ctx(request))

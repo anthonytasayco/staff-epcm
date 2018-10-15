@@ -37,7 +37,10 @@ urlpatterns = patterns('apps.pedidos.views',
         'show_cip', name='show_cip'),
     url(r'^pagoe/gracias-compra/get-token$',
         'get_token', name='get_token'),
-    
+    url(r'^post-payment/datos-facturacion/(?P<token>[-\w]+)/$',
+        'facturacion', name='facturacion'),
+    url(r'^post-payment/gracias_datos/$',
+        'gracias_datos', name='gracias_datos'),
 )
 
 urlpatterns += patterns('apps.pedidos.ajax',

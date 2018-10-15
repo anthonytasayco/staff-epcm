@@ -99,7 +99,7 @@
             </div>
 
             {% endif %}
-            {% if request.user.is_authenticated and descuento == 0 and not was_limited %}
+            {% if descuento == 0 and not was_limited %}
             <div class="b20-bottom wFormToDsct" style="padding-bottom: 10px;padding-top: 10px;">
                 <span class="b20-total">{{"APLICAR CÓDIGO DE DESCUENTO:"|t}}</span>
                 <div class="g-input" style="width: auto;display: inline-block;float: right;">

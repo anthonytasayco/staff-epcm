@@ -22,7 +22,7 @@
                                             </td>
                                             <td style="text-align: right;">
                                                 <p style="text-align: right;">
-                                                    <b>EPCM Todos los Derechos Reservados &copy; {% now "Y" %}</b><br>
+                                                    <b>EPCM PROJECT ACADEMY Todos los Derechos Reservados &copy; {% now "Y" %}</b><br>
                                                     Central: {{ info.telefono|html_tel:" / " }}<br>
                                                     Visitenos en <a href="{{ info.site }}" target="_blank" style="color: #000; text-decoration: none; font-weight: bold;">{{ info.site }}</a>
                                                 </p>
@@ -34,18 +34,29 @@
                                                 <div style="width:65%;color:#666666;display:inline-block;vertical-align: top;border-spacing: 0px;">
                                                     <p style="margin: 0 0 0 5px;">
                                                             CLIENTE: <strong>{{ pedido.usuario_nombres }} {{ pedido.usuario_apellidos }}</strong><br />
+                                                            {% if pedido.usuario_tipodocumento %}
                                                             {{ pedido.usuario_tipodocumento|upper }}: {{ pedido.usuario_nrodocumento }}<br>
-                                                            EMAIL: {{ pedido.usuario_email }}<br>
-                                                            TLF: {{ pedido.usuario_telefono }}<br>
+                                                            {% endif %}
+                                                            EMAIL: <strong>{{ pedido.usuario_email }}</strong><br>
+                                                            {% if pedido.usuario_telefono %}
+                                                            TLF: <strong>{{ pedido.usuario_telefono }}</strong><br>
+                                                            {% endif %}
+                                                            {% if pedido.usuario_pais %}
                                                             PAÍS: {{ pedido.usuario_pais }}<br>
-                                                            <strong>FACTURA:</strong> {{ pedido.factura_razonsocial }} | {{ pedido.factura_ruc }}
+                                                            {% endif %}
+                                                            {% if pedido.factura_ruc %}
+                                                            <strong>FACTURA:</strong> {{ pedido.factura_razonsocial }} | {{ pedido.factura_ruc }}<br>
+                                                                
+                                                            {% endif %}
+
+                                                            <strong><p style="background-color: #05ce7b; color='white';">IMPORTANTE: Ingrese <a href="{{ url_complete }}">aquí</a> para completar sus datos de facturación.</p></strong>  
                                                     </p>
                                                     </div>
                                                     <div style="width:35%;color:#666666;display:inline-block;vertical-align: top;border-spacing: 0px;">
                                                         <p style="margin: 0px; text-align: right;">
                                                             Lima, {{ pedido.created|date:'DATE_FORMAT' }}<br>
                                                             Orden de Compra Nº <strong>{{ pedido.codigo }}</strong><br>
-                                                            Método de Pago: {{ pedido.metodopago }}<br>
+                                                            Método de Pago: <strong>{{ pedido.metodopago }}</strong><br>
                                                             {% if pedido.desc_cod %}
                                                             Código de descuento: {{ pedido.desc_cod }} (-{{ pedido.desc_num }}%)<br>
                                                             {% endif %}
