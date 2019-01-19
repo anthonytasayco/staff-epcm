@@ -198,10 +198,10 @@ def promotion(request, token=None):
     carrito_result(request, '1', course.id, 1)
 
     data['status'] = 'OK'
-    if request.user.is_authenticated():
-        return redirect('pedidos:carrito')
+    # if request.user.is_authenticated():
+    return redirect('pedidos:carrito')
 
-    return redirect('custom_auth:login')
+    # return redirect('custom_auth:login')
 
 
 # @login_required(login_url=reverse_lazy('custom_auth:login'))
