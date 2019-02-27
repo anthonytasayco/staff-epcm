@@ -128,7 +128,6 @@
 <script type="text/javascript">
     $(function(){
 
-        //{% if request.user.is_authenticated and descuento == 0 %}
         $('#bolsa-update').on('click','.wFormToDsct .g-input .set_dsct',function(){
             console.log('{% url "pedidos:setDescuento" %}');
             $.ajax({
@@ -171,7 +170,7 @@
             });
 
         });
-        //{% endif %}
+
 
         function update_carrito(opc, ida, can){
             url_filtro = "{% url 'pedidos:carrito' %}";
