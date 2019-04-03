@@ -110,15 +110,15 @@
                                         <table style="width:100%;border-spacing: 0px;font-size:11px;text-align:right">
                                             <tr>
                                                 <td style="text-align:right;font-weight: bold;">SUB-TOTAL</td>
-                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_totalcompra|floatformat:2 }}</td>
+                                                <td style="text-align:right;font-weight: bold;">{% if not pedido.memetodopago == "payme" %}S/ {% else %}${% endif %}{{ pedido.monto_totalcompra|floatformat:2 }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="text-align:right;font-weight: bold;">DESCUENTO</td>
-                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_descuento|floatformat:2 }}</td>
+                                                <td style="text-align:right;font-weight: bold;">{% if not pedido.memetodopago == "payme" %}S/ {% else %}${% endif %}{{ pedido.monto_descuento|floatformat:2 }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="text-align:right;font-weight: bold;">TOTAL</td>
-                                                <td style="text-align:right;font-weight: bold;">S/ {{ pedido.monto_total|floatformat:2 }}</td>
+                                                <td style="text-align:right;font-weight: bold;">{% if not pedido.memetodopago == "payme" %}S/ {% else %}${% endif %}{{ pedido.monto_total|floatformat:2 }}</td>
                                             </tr>
                                         </table>
                                     <br>
