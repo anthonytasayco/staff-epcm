@@ -104,6 +104,8 @@ def librec(request):
 
 
 def contacto(request):
+    captcha_code = settings.CAPTCHA_SITE_CODE
+    print(captcha_code, '<--------------- CAPTCHA CODE')
     log.info('VIEW: contacto')
     head = 'contacto'
     seccion, created = ContactoSeccion.objects.get_or_create(pk=1)

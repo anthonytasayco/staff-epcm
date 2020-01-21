@@ -74,8 +74,14 @@
 								<textarea class="validate[required]" name="mensaje"></textarea>
 							</div>
 						</li>
+      					<br/>
 					</ul>
-					<button class="btn1">{{"ENVIAR"|t}}</button>
+					<div class="g-recaptcha" style="padding-top: 30px;" data-sitekey="{{captcha_code}}"></div>
+					<div class="b33-texto" id="error_captcha" style="color:red;display:none;">
+						<p>{{"Por favor verifique la casilla reCAPTCHA"|t}}</p>
+					</div>
+					
+					<button class="btn1 boton_contacto">{{"ENVIAR"|t}}</button>
 				</form>
 			</div>
 		</div>
@@ -90,6 +96,7 @@
 
 			</div>
 		</div>
+
 	</div>
 </section>
 {% endblock %}
@@ -98,6 +105,7 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp{{ GOOGLE_APIKEY }}"></script> -->
 <script src="{{ STATIC_URL }}js/validationform/jquery.validationEngine.js"></script>
 <script src="{{ STATIC_URL }}js/validationform/jquery.validationEngine-es.js"></script>
+
 <script type="text/javascript">
 	$(window).load(function() {
 		$('.b33').addClass('active');
@@ -114,12 +122,20 @@
 		});
 
 		//contacto
+
 		$("#form-escribenos").submit(function(e) {
 			var valid = $(this).validationEngine('validate');
 			if (!valid){
 				return false;
 			}else{
-				return true;
+				if(grecaptcha && grecaptcha.getResponse().length <= 0){
+					$('#error_captcha').show('slow');
+					setTimeout(function() {
+                        $('#error_captcha').hide('slow');
+                    }, 2500);
+			  		return false;
+				}else{
+					return true;}
 			};
 		});
 
