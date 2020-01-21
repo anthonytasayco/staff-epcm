@@ -76,6 +76,6 @@ tablib==0.10.0
 Unidecode==0.4.18
 unrar==0.3
 Voodoo==1.4.1
-Werkzeug==0.10.4
+Werkzeug==0.15.3
 xlrd==0.9.4
 xlwt==1.0.0
