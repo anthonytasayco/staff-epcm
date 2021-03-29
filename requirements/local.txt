@@ -62,7 +62,7 @@ polib==1.0.7
 psycopg2==2.7.5
 pycrypto==2.6.1
 pyExcelerator==0.6.4.1
-Pygments==2.0.2
+Pygments==2.7.4
 pyjade==3.1.0
 python-slugify==1.1.4
 raven==5.5.0
